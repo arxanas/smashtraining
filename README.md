@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/arxanas/smashtraining.svg?style=svg&circle-token=62070292aa6ff07692322252af7850f79a6701e6)](https://circleci.com/gh/arxanas/smashtraining)
+
 # smashtraining
 
 ## Project setup
