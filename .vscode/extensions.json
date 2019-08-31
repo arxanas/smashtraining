@@ -1,6 +1,7 @@
 {
-    "recommendations": [
-        "octref.vetur",
-        "editorconfig.editorconfig",
-    ]
+  "recommendations": [
+    "octref.vetur",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode"
+  ]
 }
