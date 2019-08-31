@@ -36,6 +36,9 @@ jobs:
       - run:
           name: Lint commit message
           command: git log -n 1 --format='%B' | npx commitlint
+      - run:
+          name: Check formatting
+          command: npx prettier --check "src/**/*.{ts,js,vue}" --check "tests/**/*.{ts,js}" --check "*.js"
       - run: npm run lint
       - run: npm run build
       - run: npm run test:unit
