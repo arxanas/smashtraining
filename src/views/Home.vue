@@ -8,7 +8,7 @@ import HelloWorld from "../components/HelloWorld.vue";
 
 export default Vue.extend({
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+  },
 });
 </script>

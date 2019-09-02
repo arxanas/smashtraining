@@ -10,5 +10,5 @@ module.exports = {
       .assert.containsText("h1", "Welcome to Your Vue.js + TypeScript App")
       .assert.elementCount("img", 1)
       .end();
-  }
+  },
 };

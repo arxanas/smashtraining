@@ -40,5 +40,6 @@ jobs:
           name: Check formatting
           command: npx prettier --check "src/**/*.{ts,js,vue}" --check "tests/**/*.{ts,js}" --check "*.js"
       - run: npm run lint
+      - run: npx tslint --project .
       - run: npm run build
       - run: npm run test:unit
