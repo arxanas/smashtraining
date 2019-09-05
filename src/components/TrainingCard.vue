@@ -31,7 +31,7 @@
             text
             color="info"
             :to="{ name: 'learn-tech', params: { game, techId } }"
-            >Learn this tech</v-btn
+            >Learn about this tech</v-btn
           >
           <v-btn text color="error">Skip</v-btn>
         </v-card-actions>
