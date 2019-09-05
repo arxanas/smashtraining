@@ -31,6 +31,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "husky": "^3.0.4",
+    "lint-staged": "^9.2.5",
     "prettier": "1.18.2",
     "pretty-quick": "^1.11.1",
     "sass": "^1.17.4",
@@ -91,8 +92,19 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "npm run lint",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "trailingComma": "all"
