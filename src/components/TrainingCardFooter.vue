@@ -9,19 +9,20 @@
       <p>Guide:</p>
       <ul>
         <li>
-          <v-icon>mdi-emoticon-excited-outline</v-icon> All or almost all reps
+          <TrainingPerformanceSelector :value="4" /> All or almost all reps
           completed correctly.
         </li>
         <li>
-          <v-icon>mdi-emoticon-outline</v-icon> Most reps completed correctly.
-        </li>
-        <li>
-          <v-icon>mdi-emoticon-neutral-outline</v-icon> Some reps completed
+          <TrainingPerformanceSelector :value="3" /> Most reps completed
           correctly.
         </li>
-        <li><v-icon>mdi-emoticon-sad-outline</v-icon> Most reps failed.</li>
         <li>
-          <v-icon>mdi-emoticon-cry-outline</v-icon> All or almost all reps
+          <TrainingPerformanceSelector :value="2" /> Some reps completed
+          correctly.
+        </li>
+        <li><TrainingPerformanceSelector :value="1" /> Most reps failed.</li>
+        <li>
+          <TrainingPerformanceSelector :value="0" /> All or almost all reps
           failed.
         </li>
       </ul>
@@ -32,7 +33,8 @@
 <script lang="ts">
 import Vue from "vue";
 import BaseCard from "./BaseCard.vue";
+import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 export default Vue.extend({
-  components: { BaseCard },
+  components: { BaseCard, TrainingPerformanceSelector },
 });
 </script>

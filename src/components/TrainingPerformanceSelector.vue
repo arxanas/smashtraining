@@ -1,6 +1,6 @@
 <template>
-  <v-btn icon @click="tap()">
-    <v-icon :color="color">{{ icon }}</v-icon>
+  <v-btn :color="color" icon @click="tap()">
+    <v-icon>{{ icon }}</v-icon>
   </v-btn>
 </template>
 
@@ -30,6 +30,10 @@ function nextState(currentState: State): State {
 
 export default Vue.extend({
   props: {
+    disabled: {
+      required: false,
+      default: false,
+    },
     value: {
       required: false,
       default: null,
