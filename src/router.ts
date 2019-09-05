@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import LearnTech from "./views/LearnTech.vue";
+import Training from "./views/Training.vue";
 
 Vue.use(Router);
 
@@ -10,8 +11,13 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home,
+      name: "training",
+      component: Training,
+    },
+    {
+      path: "/tech/:game/:techId",
+      name: "learn-tech",
+      component: LearnTech,
     },
     {
       path: "/about",

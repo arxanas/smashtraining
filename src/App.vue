@@ -7,7 +7,9 @@
     </v-app-bar>
 
     <v-content>
-      <router-view />
+      <keep-alive include="training">
+        <router-view />
+      </keep-alive>
     </v-content>
   </v-app>
 </template>

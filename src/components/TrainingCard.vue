@@ -4,15 +4,7 @@
       <v-form>
         <v-card-title>
           <v-row no-gutters>
-            <v-col v-if="skillShortName">
-              <v-tooltip bottom>
-                {{ skillName }}
-                <template v-slot:activator="{ on }"
-                  ><span v-on="on">{{ skillShortName }}</span></template
-                >
-              </v-tooltip>
-            </v-col>
-            <v-col v-else>{{ skillName }}</v-col>
+            <v-col>{{ techName }}</v-col>
             <v-col class="flex-grow-0">
               <v-btn icon><v-icon>mdi-settings</v-icon></v-btn></v-col
             >
@@ -35,7 +27,12 @@
           </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn text color="info">Learn this tech</v-btn>
+          <v-btn
+            text
+            color="info"
+            :to="{ name: 'learn-tech', params: { game, techId } }"
+            >Learn this tech</v-btn
+          >
           <v-btn text color="error">Skip</v-btn>
         </v-card-actions>
       </v-form>
@@ -51,11 +48,15 @@ import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 export default Vue.extend({
   components: { BaseCard, TrainingPerformanceSelector },
   props: {
-    skillShortName: {
+    game: {
       type: String,
-      required: false,
+      required: true,
     },
-    skillName: {
+    techName: {
+      type: String,
+      required: true,
+    },
+    techId: {
       type: String,
       required: true,
     },
