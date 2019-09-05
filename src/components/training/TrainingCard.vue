@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import BaseCard from "./BaseCard.vue";
+import BaseCard from "../BaseCard.vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
 export default Vue.extend({

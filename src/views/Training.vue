@@ -26,9 +26,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import TrainingCard from "../components/TrainingCard.vue";
-import TrainingCardFooter from "../components/TrainingCardFooter.vue";
-import TrainingCardHeader from "../components/TrainingCardHeader.vue";
+import TrainingCard from "../components/training/TrainingCard.vue";
+import TrainingCardFooter from "../components/training/TrainingCardFooter.vue";
+import TrainingCardHeader from "../components/training/TrainingCardHeader.vue";
 
 export default Vue.extend({
   name: "training",
