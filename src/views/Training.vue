@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <TrainingCardHeader />
     <TrainingCard
       game="ssbu"
       tech-id="sh-ff-fair"
@@ -27,9 +28,10 @@
 import Vue from "vue";
 import TrainingCard from "../components/TrainingCard.vue";
 import TrainingCardFooter from "../components/TrainingCardFooter.vue";
+import TrainingCardHeader from "../components/TrainingCardHeader.vue";
 
 export default Vue.extend({
   name: "training",
-  components: { TrainingCard, TrainingCardFooter },
+  components: { TrainingCard, TrainingCardFooter, TrainingCardHeader },
 });
 </script>

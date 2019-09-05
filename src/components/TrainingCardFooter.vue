@@ -1,11 +1,6 @@
 <template>
   <BaseCard>
     <v-card-text>
-      <p>
-        For each set, complete about 30 seconds worth of reps. Then take a short
-        break, or start a set of a different exercise.
-      </p>
-      <p>Complete or skip one of the above exercises to reveal a new one.</p>
       <p>Guide:</p>
       <ul>
         <li>
