@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelloWorld.vue renders inputs 1`] = `"Gently tap up Gently tap down Gently tilt backward Gently tilt forward Release controls Hard tap up Hard tap down Hard tap backward Hard tap forward Slight pause Press A Simultaneous input Press B Short-hop Full hop"`;
