@@ -2,7 +2,7 @@
   <div>
     <TrainingHeader />
     <h1 class="headline mt-4 mb-2">Exercises</h1>
-    <v-expansion-panels multiple>
+    <v-expansion-panels multiple :value="[0]">
       <TrainingPanel
         game="ssbu"
         tech-id="sh-ff-fair"
