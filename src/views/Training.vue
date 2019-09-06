@@ -20,18 +20,16 @@
       tech-name="Sliding tilt"
       :num-sets="3"
     />
-    <TrainingCardFooter />
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import TrainingCard from "../components/training/TrainingCard.vue";
-import TrainingCardFooter from "../components/training/TrainingCardFooter.vue";
 import TrainingCardHeader from "../components/training/TrainingCardHeader.vue";
 
 export default Vue.extend({
   name: "training",
-  components: { TrainingCard, TrainingCardFooter, TrainingCardHeader },
+  components: { TrainingCard, TrainingCardHeader },
 });
 </script>

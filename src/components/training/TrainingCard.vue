@@ -5,6 +5,11 @@
         <v-row no-gutters>
           <v-col>{{ techName }}</v-col>
           <v-col class="flex-grow-0">
+            <v-btn icon :to="{ name: 'learn-tech', params: { game, techId } }"
+              ><v-icon>mdi-help</v-icon></v-btn
+            ></v-col
+          >
+          <v-col class="flex-grow-0">
             <v-btn icon><v-icon>mdi-settings</v-icon></v-btn></v-col
           >
         </v-row>
@@ -25,15 +30,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card-actions>
-        <v-btn
-          text
-          color="info"
-          :to="{ name: 'learn-tech', params: { game, techId } }"
-          >Learn about this tech</v-btn
-        >
-        <v-btn text color="error">Skip</v-btn>
-      </v-card-actions>
     </BaseCard>
   </v-container>
 </template>
