@@ -49,7 +49,7 @@ export default Vue.extend({
           return "mdi-emoticon-excited-outline";
 
         case 3:
-          return "mdi-emoticon-outline";
+          return "mdi-emoticon-happy-outline";
 
         case 2:
           return "mdi-emoticon-neutral-outline";
