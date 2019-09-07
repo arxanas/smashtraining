@@ -52,6 +52,11 @@
     "> 1%",
     "last 2 versions"
   ],
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -85,7 +90,11 @@
     ],
     "globals": {
       "ts-jest": {
-        "babelConfig": true
+        "babelConfig": {
+          "presets": [
+            "@vue/app"
+          ]
+        }
       }
     }
   },
