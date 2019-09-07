@@ -23,7 +23,7 @@
           text
           color="primary"
           :to="{ name: 'learn-tech', params: { game, techId } }"
-          >Learn more</v-btn
+          >Learn this tech</v-btn
         >
       </v-card-actions>
     </v-expansion-panel-content>

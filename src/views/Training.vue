@@ -17,8 +17,8 @@
       />
       <TrainingPanel
         game="ssbu"
-        tech-id="sliding-tilt"
-        tech-name="Sliding tilt"
+        tech-id="running-tilt"
+        tech-name="Running tilt"
         :num-sets="3"
       />
     </v-expansion-panels>

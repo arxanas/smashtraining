@@ -15,7 +15,7 @@ export default new Router({
       component: Training,
     },
     {
-      path: "/tech/:game/:techId",
+      path: "/tech/:techId",
       name: "learn-tech",
       component: LearnTech,
     },
