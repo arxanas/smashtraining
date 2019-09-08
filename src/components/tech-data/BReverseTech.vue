@@ -70,5 +70,6 @@ export default makeTechDataComponent({
   id: "b-reverse",
   name: "B-reverse",
   games: ["ssbu"],
+  variants: {},
 });
 </script>

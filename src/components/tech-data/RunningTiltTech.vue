@@ -59,5 +59,6 @@ export default makeTechDataComponent({
   id: "running-tilt",
   name: "Running tilt",
   games: ["ssbu"],
+  variants: {},
 });
 </script>

@@ -1,5 +1,7 @@
 <template>
   <div class="text--primary">
+    <p v-if="$slots.variant">Selected variant: <slot name="variant" /></p>
+
     <h2 id="description" class="subtitle-1">Description</h2>
     <slot name="description">
       <i>No description is currently available.</i>

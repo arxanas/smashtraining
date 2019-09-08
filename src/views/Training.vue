@@ -5,22 +5,12 @@
     <v-expansion-panels multiple :value="[0]">
       <TrainingPanel
         game="ssbu"
-        tech-id="sh-ff-fair"
-        tech-name="Short-hop fast-fall forward-aerial"
+        tech-id="short-hop-fast-fall-aerial"
+        :variant="{ jumpDistance: '1.0', aerialType: 'fair' }"
         :num-sets="3"
       />
-      <TrainingPanel
-        game="ssbu"
-        tech-id="b-reverse"
-        tech-name="B-reverse"
-        :num-sets="3"
-      />
-      <TrainingPanel
-        game="ssbu"
-        tech-id="running-tilt"
-        tech-name="Running tilt"
-        :num-sets="3"
-      />
+      <TrainingPanel game="ssbu" tech-id="b-reverse" :num-sets="3" />
+      <TrainingPanel game="ssbu" tech-id="running-tilt" :num-sets="3" />
     </v-expansion-panels>
   </div>
 </template>

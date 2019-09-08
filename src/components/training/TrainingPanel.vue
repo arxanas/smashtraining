@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header class="py-2 subtitle-1">
-      <div>{{ techName }}</div>
+      <div>{{ techData.name }}</div>
       <div class="flex-grow-1"></div>
       <v-btn icon class="flex-grow-0" v-on:click.stop
         ><v-icon small>mdi-settings</v-icon></v-btn
@@ -22,7 +22,7 @@
         <v-btn
           text
           color="primary"
-          :to="{ name: 'learn-tech', params: { game, techId } }"
+          :to="{ name: 'learn-tech', params: { techId }, query: variant }"
           >Learn this tech</v-btn
         >
       </v-card-actions>
@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts">
+import { allTechData, TechData } from "@/components/tech/BaseTechData";
 import Vue from "vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
@@ -41,13 +42,13 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    techName: {
-      type: String,
-      required: true,
-    },
     techId: {
       type: String,
       required: true,
+    },
+    variant: {
+      type: Object,
+      required: false,
     },
     numSets: {
       type: Number,
@@ -60,6 +61,16 @@ export default Vue.extend({
     };
   },
   computed: {
+    techData(): TechData {
+      const techData = allTechData.get(this.techId);
+      if (techData === undefined) {
+        throw new Error(
+          `tried to render non-existent tech with ID '${this.techId}'`,
+        );
+      } else {
+        return techData;
+      }
+    },
     allSetsEntered(): boolean {
       return this.setResults.every(result => result !== null);
     },
