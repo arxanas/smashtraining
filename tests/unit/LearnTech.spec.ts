@@ -1,8 +1,23 @@
+import allTechMetadata from "@/tech/AllTechMetadata";
+import { TechMetadata, TechVariants } from "@/tech/TechMetadata";
 import LearnTech from "@/views/LearnTech.vue";
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import Vue from "vue";
 import Vuetify from "vuetify";
 import { flagConsoleErrors } from "../utils";
+
+function generateVariantData(
+  techMetadata: TechMetadata,
+): Partial<TechVariants> {
+  const result: Partial<TechVariants> = {};
+  if (techMetadata.variants.jumpDistance) {
+    result.jumpDistance = "0.5";
+  }
+  if (techMetadata.variants.aerialType) {
+    result.aerialType = "fair";
+  }
+  return result;
+}
 
 describe("LearnTech.vue", () => {
   beforeAll(() => {
@@ -95,4 +110,22 @@ describe("LearnTech.vue", () => {
       /Error: Bad variant 'aerialType' for tech 'short-hop-fast-fall-aerial'/,
     );
   });
+
+  it.each(Object.entries(allTechMetadata))(
+    "should render all available techs without errors",
+    (techId: string, techMetadata: TechMetadata) => {
+      const params = { techId };
+      const query = generateVariantData(techMetadata);
+      const wrapper = mount(LearnTech, {
+        mocks: {
+          $route: {
+            params,
+            query,
+          },
+        },
+      });
+      expect(wrapper.text()).toMatch(/Description/);
+      expect(wrapper.text()).not.toMatch(/Error/);
+    },
+  );
 });

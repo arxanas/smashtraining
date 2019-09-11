@@ -1,8 +1,3 @@
-import ControlInputs from "@/components/ControlInputs.vue";
-import Vue from "vue";
-import BaseTech from "./BaseTech.vue";
-import TechVideo from "./TechVideo.vue";
-
 type Game = "ssbu";
 
 /**
@@ -16,8 +11,7 @@ export interface TechVariants {
   aerialType: "nair" | "fair" | "uair" | "bair" | "dair";
 }
 
-export interface TechData {
-  id: string;
+export interface TechMetadata {
   name: string;
   games: Game[];
   variants: Partial<Record<keyof TechVariants, boolean>>;
@@ -63,7 +57,7 @@ const variantVerifiers: {
   aerialType: aerialTypeVerifier,
 };
 
-const variantPrinters: {
+export const variantPrinters: {
   [key in keyof TechVariants]: (variantValue: TechVariants[key]) => string;
 } = {
   jumpDistance(variantValue) {
@@ -97,8 +91,12 @@ const variantPrinters: {
 };
 
 export function verifyVariantValue<
-  VariantName extends keyof TechData["variants"]
->(techData: TechData, variantName: VariantName, variantValue: any): boolean {
+  VariantName extends keyof TechMetadata["variants"]
+>(
+  techData: TechMetadata,
+  variantName: VariantName,
+  variantValue: any,
+): boolean {
   const techExpectsThisVariantType = Boolean(techData.variants[variantName]);
   if (techExpectsThisVariantType) {
     if (typeof variantValue !== "string") {
@@ -110,43 +108,4 @@ export function verifyVariantValue<
   } else {
     return typeof variantValue === "undefined";
   }
-}
-
-export const allTechData: Map<string, TechData> = new Map();
-
-/**
- * Get the name of the component corresponding to a given tech. This can then
- * be rendered as a tag.
- */
-export function getTechDataComponentName(techData: TechData): string {
-  return `tech-${techData.id}`;
-}
-
-/**
- * Register metadata about a tech in the global tech index.
- */
-export function makeTechDataComponent(
-  data: TechData,
-  mixins: any = null,
-): typeof Vue {
-  const computed: Record<string, () => string> = {};
-  for (const key of Object.keys(data.variants)) {
-    computed[key + "Pretty"] = function() {
-      // @ts-ignore
-      return variantPrinters[key](this.variant[key]);
-    };
-  }
-
-  allTechData.set(data.id, data);
-  return Vue.component(getTechDataComponentName(data), {
-    mixins: mixins ? [mixins] : [],
-    components: { BaseTech, ControlInputs, TechVideo },
-    props: {
-      variant: {
-        type: Object,
-        required: Boolean(data.variants),
-      },
-    },
-    computed,
-  });
 }

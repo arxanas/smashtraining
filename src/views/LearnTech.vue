@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card v-if="componentName && !badVariantName">
-      <v-card-title>Learn: {{ techData.name }}</v-card-title>
+    <v-card v-if="component && !badVariantName">
+      <v-card-title>Learn: {{ techMetadata.name }}</v-card-title>
       <v-card-text>
-        <component :is="componentName" :variant="variant" />
+        <component :is="component" :variant="variant" />
       </v-card-text>
       <v-divider />
       <GithubReportIssueBanner>
@@ -31,45 +31,45 @@
 </template>
 
 <script lang="ts">
-import "@/components/tech/AllTechData";
+import GithubReportIssueBanner from "@/components/GithubReportIssueBanner.vue";
+import allTechDataDescriptions from "@/tech/AllTechDataDescriptions";
 import {
-  allTechData,
-  getTechDataComponentName,
-  TechData,
-  TechVariants,
-  verifyVariantValue,
-} from "@/components/tech/BaseTechData";
+  AllTechMetadata,
+  getTechMetadata,
+  TechId,
+} from "@/tech/AllTechMetadata";
+import { TechVariants, verifyVariantValue } from "@/tech/TechMetadata";
 import Vue from "vue";
-import GithubReportIssueBanner from "../components/GithubReportIssueBanner.vue";
 
 export default Vue.extend({
-  components: { GithubReportIssueBanner },
+  components: { GithubReportIssueBanner, ...allTechDataDescriptions },
   data() {
     const { techId } = this.$route.params;
     const { jumpDistance, aerialType } = this.$route.query;
 
-    const techData = allTechData.get(techId);
-    if (techData === undefined) {
+    const techData = getTechMetadata(techId);
+    if (techData === null) {
       return {
-        componentName: null,
+        component: null,
         badVariantName: null,
       };
     } else {
-      if (!verifyVariantValue(techData, "jumpDistance", jumpDistance)) {
+      const techMetadata = techData.metadata;
+      if (!verifyVariantValue(techMetadata, "jumpDistance", jumpDistance)) {
         return {
-          componentName: null,
+          component: null,
           badVariantName: "jumpDistance",
         };
-      } else if (!verifyVariantValue(techData, "aerialType", aerialType)) {
+      } else if (!verifyVariantValue(techMetadata, "aerialType", aerialType)) {
         return {
-          componentName: null,
+          component: null,
           badVariantName: "aerialType",
         };
       } else {
         return {
-          componentName: getTechDataComponentName(techData),
+          component: allTechDataDescriptions[techData.techId],
           badVariantName: null,
-          techData,
+          techMetadata,
           variant: {
             jumpDistance,
             aerialType,

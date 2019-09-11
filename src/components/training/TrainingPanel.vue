@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header class="py-2 subtitle-1">
-      <div>{{ techData.name }}</div>
+      <div>{{ techMetadata.name }}</div>
       <div class="flex-grow-1"></div>
       <v-btn icon class="flex-grow-0" v-on:click.stop
         ><v-icon small>mdi-settings</v-icon></v-btn
@@ -31,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import { allTechData, TechData } from "@/components/tech/BaseTechData";
+import allTechData, { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
+import { TechMetadata } from "@/tech/TechMetadata";
 import Vue from "vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
@@ -61,14 +62,14 @@ export default Vue.extend({
     };
   },
   computed: {
-    techData(): TechData {
-      const techData = allTechData.get(this.techId);
-      if (techData === undefined) {
+    techMetadata(): TechMetadata {
+      const techData = getTechMetadata(this.techId);
+      if (techData === null) {
         throw new Error(
           `tried to render non-existent tech with ID '${this.techId}'`,
         );
       } else {
-        return techData;
+        return techData.metadata;
       }
     },
     allSetsEntered(): boolean {

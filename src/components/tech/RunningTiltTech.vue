@@ -1,5 +1,5 @@
 <template>
-  <BaseTech>
+  <BaseTechDescription>
     <template v-slot:description>
       <p>
         A running tilt is a tilt attack used immediately out of a run (rather
@@ -48,17 +48,14 @@
       This tech is easier to do if you've bound the C-stick to perform tilt
       attacks.
     </template>
-  </BaseTech>
+  </BaseTechDescription>
 </template>
 
 <script lang="ts">
-import { makeTechDataComponent } from "@/components/tech/BaseTechData";
+import allTechData from "@/tech/AllTechMetadata";
 import Vue from "vue";
+import makeTechDataComponent from "./base/MakeTechDataComponent";
 
-export default makeTechDataComponent({
-  id: "running-tilt",
-  name: "Running tilt",
-  games: ["ssbu"],
-  variants: {},
-});
+const techId = "running-tilt";
+export default makeTechDataComponent(techId);
 </script>

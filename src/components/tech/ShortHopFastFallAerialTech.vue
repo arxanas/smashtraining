@@ -1,5 +1,5 @@
 <template>
-  <BaseTech>
+  <BaseTechDescription>
     <template v-slot:variant>
       <b>{{ aerialTypePretty }}</b
       >, <b>{{ jumpDistancePretty }}</b>
@@ -69,76 +69,64 @@
       </ul>
     </template>
     <template v-slot:hints> </template>
-  </BaseTech>
+  </BaseTechDescription>
 </template>
 
 <script lang="ts">
-import {
-  makeTechDataComponent,
-  TechVariants,
-} from "@/components/tech/BaseTechData";
+import allTechData from "@/tech/AllTechMetadata";
+import { TechVariants } from "@/tech/TechMetadata";
 import Vue from "vue";
+import makeTechDataComponent from "./base/MakeTechDataComponent";
 
-export default makeTechDataComponent(
-  {
-    id: "short-hop-fast-fall-aerial",
-    name: "Short-hop fast-fall aerial",
-    games: ["ssbu"],
-    variants: {
-      jumpDistance: true,
-      aerialType: true,
+export default makeTechDataComponent("short-hop-fast-fall-aerial").extend({
+  computed: {
+    isInPlaceJump(): boolean {
+      return this.getVariant().jumpDistance === "0.0";
+    },
+    jumpDirection(): string {
+      switch (this.getVariant().jumpDistance) {
+        case "0.0":
+          return "in-place";
+        case "0.5":
+        case "1.0":
+        case "1.5":
+        case "2.0":
+        case "2.5":
+        case "max":
+          return `forward ${this.jumpDistancePretty}`;
+      }
+    },
+    controlInputs(): string {
+      return `${this.jumpInputs} - d . ${this.aerialInputs}`;
+    },
+    jumpInputs(): string {
+      switch (this.getVariant().jumpDistance) {
+        case "0.0":
+          return "sh";
+        case "0.5":
+        case "1.0":
+        case "1.5":
+        case "2.0":
+        case "2.5":
+          return "sh r";
+        case "max":
+          return "sh R";
+      }
+    },
+    aerialInputs(): string {
+      switch (this.getVariant().aerialType) {
+        case "nair":
+          return "a";
+        case "fair":
+          return "a + r";
+        case "bair":
+          return "a + l";
+        case "uair":
+          return "a + u";
+        case "dair":
+          return "a + d";
+      }
     },
   },
-  Vue.mixin({
-    computed: {
-      isInPlaceJump(): boolean {
-        return (this.variant as TechVariants).jumpDistance === "0.0";
-      },
-      jumpDirection(): string {
-        switch ((this.variant as TechVariants).jumpDistance) {
-          case "0.0":
-            return "in-place";
-          case "0.5":
-          case "1.0":
-          case "1.5":
-          case "2.0":
-          case "2.5":
-          case "max":
-            return `forward ${this.jumpDistancePretty}`;
-        }
-      },
-      controlInputs(): string {
-        return `${this.jumpInputs} - d . ${this.aerialInputs}`;
-      },
-      jumpInputs(): string {
-        switch ((this.variant as TechVariants).jumpDistance) {
-          case "0.0":
-            return "sh";
-          case "0.5":
-          case "1.0":
-          case "1.5":
-          case "2.0":
-          case "2.5":
-            return "sh r";
-          case "max":
-            return "sh R";
-        }
-      },
-      aerialInputs(): string {
-        switch ((this.variant as TechVariants).aerialType) {
-          case "nair":
-            return "a";
-          case "fair":
-            return "a + r";
-          case "bair":
-            return "a + l";
-          case "uair":
-            return "a + u";
-          case "dair":
-            return "a + d";
-        }
-      },
-    },
-  }),
-);
+});
 </script>

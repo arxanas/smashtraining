@@ -1,5 +1,5 @@
 <template>
-  <BaseTech>
+  <BaseTechDescription>
     <template v-slot:description>
       B-reversing is a technique which allows you to reverse your horizontal
       momentum in mid-air while carrying out your neutral special attack. The
@@ -59,17 +59,12 @@
         series.
       </TechVideo>
     </template>
-  </BaseTech>
+  </BaseTechDescription>
 </template>
 
 <script lang="ts">
-import { makeTechDataComponent } from "@/components/tech/BaseTechData";
 import Vue from "vue";
+import makeTechDataComponent from "./base/MakeTechDataComponent";
 
-export default makeTechDataComponent({
-  id: "b-reverse",
-  name: "B-reverse",
-  games: ["ssbu"],
-  variants: {},
-});
+export default makeTechDataComponent("b-reverse");
 </script>
