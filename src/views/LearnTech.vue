@@ -36,10 +36,16 @@ import allTechDataDescriptions from "@/tech/AllTechDataDescriptions";
 import { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
 import { verifyVariantValue } from "@/tech/TechMetadata";
 import Vue from "vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({
-  components: { GithubReportIssueBanner, ...allTechDataDescriptions },
-  data() {
+@Component({
+  components: {
+    GithubReportIssueBanner,
+    ...allTechDataDescriptions,
+  },
+})
+export default class extends Vue {
+  public data() {
     const { techId } = this.$route.params;
     const { jumpDistance, aerialType } = this.$route.query;
 
@@ -73,6 +79,6 @@ export default Vue.extend({
         };
       }
     }
-  },
-});
+  }
+}
 </script>

@@ -28,8 +28,8 @@ a {
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({
-  name: "App",
-});
+@Component({ name: "App" })
+export default class extends Vue {}
 </script>

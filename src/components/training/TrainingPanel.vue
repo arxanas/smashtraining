@@ -44,57 +44,60 @@ import {
 } from "@/tech/TechMetadata";
 import { entries } from "@/utils";
 import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
-export default Vue.extend({
+@Component({
   components: { TrainingPerformanceSelector },
-  props: {
-    techId: {
-      type: String,
-      required: true,
-    },
-    variant: {
-      type: Object,
-      required: false,
-    },
-    numSets: {
-      type: Number,
-      required: true,
-    },
-  },
-  data() {
+})
+export default class extends Vue {
+  @Prop({ type: String, required: true })
+  public techId!: string;
+
+  @Prop({ type: Object, required: false, default: {} })
+  public variant!: object;
+
+  @Prop({ type: Number, required: true })
+  public numSets!: number;
+
+  // defined in `data`
+  public setResults!: number[];
+
+  public data() {
     return {
       setResults: Array(this.numSets).fill(null),
     };
-  },
-  computed: {
-    techVariantDescription(): string | null {
-      const variantInfo = entries(this.variant);
-      if (variantInfo.length === 0) {
-        return null;
-      }
-      const nbsp = "\xa0";
-      const descriptions: string[] = [];
-      for (const [k, v] of variantInfo) {
-        // @ts-ignore
-        const description = variantPrinters[k](v);
-        descriptions.push(description.replace(" ", nbsp));
-      }
-      return `(${descriptions.join(", ")})`;
-    },
-    techMetadata(): TechMetadata {
-      const techData = getTechMetadata(this.techId);
-      if (techData === null) {
-        throw new Error(
-          `tried to render non-existent tech with ID '${this.techId}'`,
-        );
-      } else {
-        return techData.metadata;
-      }
-    },
-    allSetsEntered(): boolean {
-      return this.setResults.every(result => result !== null);
-    },
-  },
-});
+  }
+
+  get techVariantDescription(): string | null {
+    const variantInfo = entries(this.variant);
+    if (variantInfo.length === 0) {
+      return null;
+    }
+    const nbsp = "\xa0";
+    const descriptions: string[] = [];
+    for (const [k, v] of variantInfo) {
+      // @ts-ignore
+      const description = variantPrinters[k](v);
+      descriptions.push(description.replace(" ", nbsp));
+    }
+    return `(${descriptions.join(", ")})`;
+  }
+
+  get techMetadata(): TechMetadata {
+    const techData = getTechMetadata(this.techId);
+    if (techData === null) {
+      throw new Error(
+        `tried to render non-existent tech with ID '${this.techId}'`,
+      );
+    } else {
+      return techData.metadata;
+    }
+  }
+
+  get allSetsEntered(): boolean {
+    return this.setResults.every(result => result !== null);
+  }
+}
 </script>

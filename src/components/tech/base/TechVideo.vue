@@ -42,19 +42,18 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
-export default Vue.extend({
-  props: {
-    videoId: {
-      type: String,
-      required: true,
-    },
-    startTime: {
-      type: String,
-      required: false,
-    },
-  },
-  data() {
+@Component
+export default class extends Vue {
+  @Prop({ type: String, required: true })
+  public videoId!: string;
+
+  @Prop({ type: String, required: false })
+  public startTime: string | undefined;
+
+  get src(): string {
     // I tried to use `https://youtube-nocookie.com` -- which is apparently the
     // legitimate "privacy-enhanced" mode in the embed widget on YouTube -- but
     // it failed with an HSTS error. Maybe one day!
@@ -63,14 +62,10 @@ export default Vue.extend({
     if (this.startTime !== undefined) {
       const [minutes, seconds] = this.startTime.split(":");
       const startSeconds = 60 * parseInt(minutes, 10) + parseInt(seconds, 10);
-      return {
-        src: `${baseUrl}/embed/${this.videoId}?start=${startSeconds}`,
-      };
+      return `${baseUrl}/embed/${this.videoId}?start=${startSeconds}`;
     } else {
-      return {
-        src: `${baseUrl}/embed/${this.videoId}`,
-      };
+      return `${baseUrl}/embed/${this.videoId}`;
     }
-  },
-});
+  }
+}
 </script>

@@ -17,6 +17,7 @@
 <script lang="ts">
 import { entries } from "@/utils";
 import Vue from "vue";
+import Component from "vue-class-component";
 import TrainingHeader from "../components/training/TrainingHeader.vue";
 import TrainingPanel from "../components/training/TrainingPanel.vue";
 import allTechMetadata, { TechId } from "../tech/AllTechMetadata";
@@ -57,11 +58,11 @@ function createPanels(): PanelData[] {
   return result;
 }
 
-export default Vue.extend({
+@Component({
   name: "training",
   components: { TrainingHeader, TrainingPanel },
-  data: () => ({
-    panels: createPanels(),
-  }),
-});
+})
+export default class extends Vue {
+  public panels = createPanels();
+}
 </script>

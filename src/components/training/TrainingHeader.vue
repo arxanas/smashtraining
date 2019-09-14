@@ -48,10 +48,13 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
-export default Vue.extend({
+
+@Component({
   components: {
     TrainingPerformanceSelector,
   },
-});
+})
+export default class extends Vue {}
 </script>

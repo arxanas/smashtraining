@@ -42,4 +42,4 @@ jobs:
       - run: npm run lint
       - run: npx tslint --project .
       - run: npm run build
-      - run: npm run test:unit
+      - run: npm run test

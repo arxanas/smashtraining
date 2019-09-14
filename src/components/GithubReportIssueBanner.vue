@@ -16,10 +16,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({
-  data: () => ({
-    issueUrl: "https://github.com/arxanas/smashtraining/issues",
-  }),
-});
+@Component
+export default class extends Vue {
+  public issueUrl: string = "https://github.com/arxanas/smashtraining/issues";
+}
 </script>

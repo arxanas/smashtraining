@@ -6,6 +6,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
 type State = 0 | 1 | 2 | 3 | 4 | null;
 
@@ -28,77 +30,70 @@ function nextState(currentState: State): State {
   }
 }
 
-export default Vue.extend({
-  props: {
-    disabled: {
-      required: false,
-      default: false,
-    },
-    value: {
-      required: false,
-      default: null,
-    },
-  },
-  computed: {
-    icon() {
-      switch (this.value as State) {
-        case null:
-          return "mdi-circle-edit-outline";
+@Component
+export default class extends Vue {
+  @Prop({ required: false, default: false })
+  public disabled!: boolean;
 
-        case 4:
-          return "mdi-emoticon-excited-outline";
+  @Prop({ required: false, default: null })
+  public value!: boolean | null;
 
-        case 3:
-          return "mdi-emoticon-happy-outline";
+  get icon() {
+    switch (this.value as State) {
+      case null:
+        return "mdi-circle-edit-outline";
 
-        case 2:
-          return "mdi-emoticon-neutral-outline";
+      case 4:
+        return "mdi-emoticon-excited-outline";
 
-        case 1:
-          return "mdi-emoticon-sad-outline";
+      case 3:
+        return "mdi-emoticon-happy-outline";
 
-        case 0:
-          return "mdi-emoticon-cry-outline";
+      case 2:
+        return "mdi-emoticon-neutral-outline";
 
-        default:
-          throw new Error(
-            "Expected only six states to be possible: " + this.value,
-          );
-      }
-    },
+      case 1:
+        return "mdi-emoticon-sad-outline";
 
-    color() {
-      // see https://vuetifyjs.com/en/styles/colors#material-colors
-      switch (this.value as State) {
-        case null:
-          return null;
+      case 0:
+        return "mdi-emoticon-cry-outline";
 
-        case 4:
-          return "light-green";
+      default:
+        throw new Error(
+          "Expected only six states to be possible: " + this.value,
+        );
+    }
+  }
 
-        case 3:
-          return "light-green darken-2";
+  get color() {
+    // see https://vuetifyjs.com/en/styles/colors#material-colors
+    switch (this.value as State) {
+      case null:
+        return null;
 
-        case 2:
-          return "amber";
+      case 4:
+        return "light-green";
 
-        case 1:
-          return "deep-orange lighten-2";
+      case 3:
+        return "light-green darken-2";
 
-        case 0:
-          return "deep-orange darken-2";
+      case 2:
+        return "amber";
 
-        default:
-          throw new Error(
-            "Expected only six states to be possible: " + this.value,
-          );
-      }
-    },
-  },
-  methods: {
-    tap() {
-      this.$emit("input", nextState(this.value as State));
-    },
-  },
-});
+      case 1:
+        return "deep-orange lighten-2";
+
+      case 0:
+        return "deep-orange darken-2";
+
+      default:
+        throw new Error(
+          "Expected only six states to be possible: " + this.value,
+        );
+    }
+  }
+  public tap(): void {
+    this.$emit("input", nextState(this.value as State));
+  }
+}
 </script>

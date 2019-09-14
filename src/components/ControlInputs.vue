@@ -132,10 +132,7 @@ function inputToIconName(input: string): InputInfo {
 
 @Component
 export default class extends Vue {
-  @Prop({
-    type: String,
-    required: true,
-  })
+  @Prop({ type: String, required: true })
   public inputs!: string;
 
   get inputIcons(): InputInfo[] {

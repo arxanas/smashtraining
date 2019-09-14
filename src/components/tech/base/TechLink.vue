@@ -7,20 +7,21 @@
 <script lang="ts">
 import { getTechMetadata } from "@/tech/AllTechMetadata";
 import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
-export default Vue.extend({
-  props: {
-    techId: {
-      type: String,
-      required: true,
-      validator(value: string) {
-        return getTechMetadata(value) !== null;
-      },
+@Component
+export default class extends Vue {
+  @Prop({
+    type: String,
+    required: true,
+    validator(value: string): boolean {
+      return getTechMetadata(value) !== null;
     },
-    variant: {
-      type: Object,
-      required: false,
-    },
-  },
-});
+  })
+  private techId!: string;
+
+  @Prop({ type: Object, required: false })
+  private variant: object | undefined;
+}
 </script>
