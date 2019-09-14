@@ -90,6 +90,16 @@ function inputToIconName(input: string): InputInfo {
         iconName: "mdi-alpha-b-circle",
         description: "Press B",
       };
+    case "x":
+      return {
+        iconName: "mdi-alpha-x-circle",
+        description: "Press X",
+      };
+    case "y":
+      return {
+        iconName: "mdi-alpha-y-circle",
+        description: "Press Y",
+      };
     case "z":
       return {
         iconName: "mdi-alpha-z-circle",
@@ -126,7 +136,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    inputIcons() {
+    inputIcons(): InputInfo[] {
       return this.inputs.split(" ").map(inputToIconName);
     },
   },
