@@ -29,4 +29,12 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue"),
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // See https://router.vuejs.org/guide/advanced/scroll-behavior.html
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });
