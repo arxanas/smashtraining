@@ -11,7 +11,7 @@
         <v-row align="center" justify="center">
           <v-col :cols="12" :sm="8" :md="8">
             <keep-alive include="training">
-              <router-view />
+              <router-view :key="$route.fullPath" />
             </keep-alive>
           </v-col>
         </v-row>
