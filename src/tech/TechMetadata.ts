@@ -1,4 +1,4 @@
-type Game = "ssbu";
+import { entries } from "@/utils";
 
 /**
  * Techs may have multiple "variants" for their exercises. For example,
@@ -6,59 +6,63 @@ type Game = "ssbu";
  * exercises require practicing different jump distances and different aerials.
  * This is the listing of all possible variant types and their values.
  */
-export interface TechVariants {
+export interface AllTechVariants {
   jumpDistance: "0.0" | "0.5" | "1.0" | "1.5" | "2.0" | "2.5" | "max";
   aerialType: "nair" | "fair" | "uair" | "bair" | "dair";
 }
 
+export type TechVariantType = keyof AllTechVariants;
+
+export const variantValues: {
+  [key in TechVariantType]: Array<AllTechVariants[key]>;
+} = {
+  jumpDistance: ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "max"],
+  aerialType: ["nair", "fair", "uair", "bair", "dair"],
+};
+
+export type TechVariantConfig = Partial<Record<TechVariantType, boolean>>;
+
 export interface TechMetadata {
   name: string;
-  games: Game[];
-  variants: Partial<Record<keyof TechVariants, boolean>>;
+  games: {
+    ssbu: {};
+  };
+  variants: TechVariantConfig;
 }
 
-function jumpDistanceVerifier(
-  jumpDistance: string,
-): TechVariants["jumpDistance"] | null {
-  switch (jumpDistance) {
-    case "0.0":
-    case "0.5":
-    case "1.0":
-    case "1.5":
-    case "2.0":
-    case "max":
-      return jumpDistance;
-    default:
-      return null;
-  }
-}
-
-function aerialTypeVerifier(
-  aerialType: string,
-): TechVariants["aerialType"] | null {
-  switch (aerialType) {
-    case "nair":
-    case "fair":
-    case "uair":
-    case "bair":
-    case "dair":
-      return aerialType;
-    default:
-      return null;
-  }
-}
+export type TechGame = keyof TechMetadata["games"];
 
 const variantVerifiers: {
-  [key in keyof TechVariants]: (
+  [key in TechVariantType]: (
     variantValue: string,
-  ) => TechVariants[key] | null;
+  ) => AllTechVariants[key] | null;
 } = {
-  jumpDistance: jumpDistanceVerifier,
-  aerialType: aerialTypeVerifier,
+  jumpDistance(jumpDistance: string): AllTechVariants["jumpDistance"] | null {
+    if (
+      variantValues.jumpDistance.includes(
+        jumpDistance as AllTechVariants["jumpDistance"],
+      )
+    ) {
+      return jumpDistance as AllTechVariants["jumpDistance"];
+    } else {
+      return null;
+    }
+  },
+  aerialType(aerialType: string): AllTechVariants["aerialType"] | null {
+    if (
+      variantValues.aerialType.includes(
+        aerialType as AllTechVariants["aerialType"],
+      )
+    ) {
+      return aerialType as AllTechVariants["aerialType"];
+    } else {
+      return null;
+    }
+  },
 };
 
 export const variantPrinters: {
-  [key in keyof TechVariants]: (variantValue: TechVariants[key]) => string;
+  [key in TechVariantType]: (variantValue: AllTechVariants[key]) => string;
 } = {
   jumpDistance(variantValue) {
     switch (variantValue) {

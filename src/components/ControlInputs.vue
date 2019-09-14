@@ -17,12 +17,14 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
 
 interface InputInfo {
   iconName: string;
   description: string;
   extraSmall?: boolean;
 }
+
 function inputToIconName(input: string): InputInfo {
   switch (input) {
     case "l":
@@ -128,17 +130,16 @@ function inputToIconName(input: string): InputInfo {
   }
 }
 
-export default Vue.extend({
-  props: {
-    inputs: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    inputIcons(): InputInfo[] {
-      return this.inputs.split(" ").map(inputToIconName);
-    },
-  },
-});
+@Component
+export default class extends Vue {
+  @Prop({
+    type: String,
+    required: true,
+  })
+  public inputs!: string;
+
+  get inputIcons(): InputInfo[] {
+    return this.inputs.split(" ").map(inputToIconName);
+  }
+}
 </script>

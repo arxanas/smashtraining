@@ -1,15 +1,12 @@
 <template>
   <BaseTechDescription>
-    <template v-slot:variant>
-      <b>{{ aerialTypePretty }}</b
-      >, <b>{{ jumpDistancePretty }}</b>
-    </template>
     <template v-slot:description></template>
     <template v-slot:inputs>
       <p>
-        <ControlInputs :inputs="controlInputs" />: Jump {{ jumpDirection }},
-        then initiate a fast-fall with <ControlInputs inputs="d" />. While
-        falling, perform the aerial attack before reaching the ground.
+        <ControlInputs :inputs="controlInputs" />: Short-hop
+        {{ jumpDirection }}, then initiate a fast-fall with
+        <ControlInputs inputs="d" />. While falling, perform the aerial attack
+        before reaching the ground.
       </p>
       <p>
         The exact timing of the aerial attack depends on your character, as some
@@ -21,14 +18,15 @@
     <template v-slot:exercise>
       <ol>
         <li>
-          Jump {{ jumpDirection }}, fast-fall, and aerial attack at the bottom
-          of the jump.
+          Short-hop {{ jumpDirection }}, fast-fall, and aerial attack at the
+          bottom of the jump.
         </li>
-        <li v-if="!isInPlaceJump">
-          Without turning around, jump backward to the original position,
+        <li>
+          <i>(Non-in-place jumps only.)</i>
+          Without turning around, short-hop backward to the original position,
           fast-fall, and aerial attack at the bottom of the jump.
         </li>
-        <li>Repeat</li>
+        <li>Repeat.</li>
       </ol>
       <p>
         Consider the rep failed if the aerial does not produce a hitbox at the
@@ -74,59 +72,33 @@
 
 <script lang="ts">
 import allTechData from "@/tech/AllTechMetadata";
-import { TechVariants } from "@/tech/TechMetadata";
 import Vue from "vue";
-import makeTechDataComponent from "./base/MakeTechDataComponent";
+import Component, { mixins } from "vue-class-component";
+import BaseTechComponent from "./base/BaseTechComponent";
+import JumpDistanceVariantMixin from "./base/JumpDistanceVariantMixin";
 
-export default makeTechDataComponent("short-hop-fast-fall-aerial").extend({
-  computed: {
-    isInPlaceJump(): boolean {
-      return this.getVariant().jumpDistance === "0.0";
-    },
-    jumpDirection(): string {
-      switch (this.getVariant().jumpDistance) {
-        case "0.0":
-          return "in-place";
-        case "0.5":
-        case "1.0":
-        case "1.5":
-        case "2.0":
-        case "2.5":
-        case "max":
-          return `forward ${this.jumpDistancePretty}`;
-      }
-    },
-    controlInputs(): string {
-      return `${this.jumpInputs} - d . ${this.aerialInputs}`;
-    },
-    jumpInputs(): string {
-      switch (this.getVariant().jumpDistance) {
-        case "0.0":
-          return "sh";
-        case "0.5":
-        case "1.0":
-        case "1.5":
-        case "2.0":
-        case "2.5":
-          return "sh r";
-        case "max":
-          return "sh R";
-      }
-    },
-    aerialInputs(): string {
-      switch (this.getVariant().aerialType) {
-        case "nair":
-          return "a";
-        case "fair":
-          return "a + r";
-        case "bair":
-          return "a + l";
-        case "uair":
-          return "a + u";
-        case "dair":
-          return "a + d";
-      }
-    },
-  },
-});
+@Component
+export default class extends mixins(
+  BaseTechComponent,
+  JumpDistanceVariantMixin,
+) {
+  get controlInputs(): string {
+    return `${this.jumpInputs} - d . ${this.aerialInputs}`;
+  }
+
+  get aerialInputs(): string {
+    switch (this.variant.aerialType) {
+      case "nair":
+        return "a";
+      case "fair":
+        return "a + r";
+      case "bair":
+        return "a + l";
+      case "uair":
+        return "a + u";
+      case "dair":
+        return "a + d";
+    }
+  }
+}
 </script>

@@ -1,7 +1,5 @@
 <template>
   <div class="text--primary">
-    <p v-if="$slots.variant">Selected variant: <slot name="variant" /></p>
-
     <h2 id="description" class="subtitle-1">Description</h2>
     <slot name="description">
       <i>No description is currently available.</i>
@@ -36,10 +34,12 @@
 <script lang="ts">
 import GithubReportIssueBanner from "@/components/GithubReportIssueBanner.vue";
 import Vue from "vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({
+@Component({
   components: {
     GithubReportIssueBanner,
   },
-});
+})
+export default class extends Vue {}
 </script>

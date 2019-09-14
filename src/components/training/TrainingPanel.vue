@@ -1,8 +1,12 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header class="py-2 subtitle-1">
-      <div>{{ techMetadata.name }}</div>
-      <div class="flex-grow-1"></div>
+      <div>
+        {{ techMetadata.name }}
+        <span class="grey--text" v-if="techVariantDescription">{{
+          techVariantDescription
+        }}</span>
+      </div>
       <v-btn icon class="flex-grow-0" v-on:click.stop
         ><v-icon small>mdi-settings</v-icon></v-btn
       >
@@ -32,17 +36,19 @@
 
 <script lang="ts">
 import allTechData, { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
-import { TechMetadata } from "@/tech/TechMetadata";
+import {
+  AllTechVariants,
+  TechMetadata,
+  TechVariantConfig,
+  variantPrinters,
+} from "@/tech/TechMetadata";
+import { entries } from "@/utils";
 import Vue from "vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
 export default Vue.extend({
   components: { TrainingPerformanceSelector },
   props: {
-    game: {
-      type: String,
-      required: true,
-    },
     techId: {
       type: String,
       required: true,
@@ -62,6 +68,20 @@ export default Vue.extend({
     };
   },
   computed: {
+    techVariantDescription(): string | null {
+      const variantInfo = entries(this.variant);
+      if (variantInfo.length === 0) {
+        return null;
+      }
+      const nbsp = "\xa0";
+      const descriptions: string[] = [];
+      for (const [k, v] of variantInfo) {
+        // @ts-ignore
+        const description = variantPrinters[k](v);
+        descriptions.push(description.replace(" ", nbsp));
+      }
+      return `(${descriptions.join(", ")})`;
+    },
     techMetadata(): TechMetadata {
       const techData = getTechMetadata(this.techId);
       if (techData === null) {

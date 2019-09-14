@@ -33,12 +33,8 @@
 <script lang="ts">
 import GithubReportIssueBanner from "@/components/GithubReportIssueBanner.vue";
 import allTechDataDescriptions from "@/tech/AllTechDataDescriptions";
-import {
-  AllTechMetadata,
-  getTechMetadata,
-  TechId,
-} from "@/tech/AllTechMetadata";
-import { TechVariants, verifyVariantValue } from "@/tech/TechMetadata";
+import { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
+import { verifyVariantValue } from "@/tech/TechMetadata";
 import Vue from "vue";
 
 export default Vue.extend({

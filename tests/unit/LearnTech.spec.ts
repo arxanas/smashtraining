@@ -1,5 +1,5 @@
 import allTechMetadata from "@/tech/AllTechMetadata";
-import { TechMetadata, TechVariants } from "@/tech/TechMetadata";
+import { AllTechVariants, TechMetadata } from "@/tech/TechMetadata";
 import LearnTech from "@/views/LearnTech.vue";
 import { mount, shallowMount } from "@vue/test-utils";
 import Vue from "vue";
@@ -8,8 +8,8 @@ import { flagConsoleErrors } from "../utils";
 
 function generateVariantData(
   techMetadata: TechMetadata,
-): Partial<TechVariants> {
-  const result: Partial<TechVariants> = {};
+): Partial<AllTechVariants> {
+  const result: Partial<AllTechVariants> = {};
   if (techMetadata.variants.jumpDistance) {
     result.jumpDistance = "0.5";
   }
@@ -112,11 +112,12 @@ describe("LearnTech.vue", () => {
   });
 
   it.each(Object.entries(allTechMetadata))(
-    "should render all available techs without errors",
+    "should render tech %s without errors",
     (techId: string, techMetadata: TechMetadata) => {
       const params = { techId };
       const query = generateVariantData(techMetadata);
       const wrapper = mount(LearnTech, {
+        stubs: ["router-link"],
         mocks: {
           $route: {
             params,

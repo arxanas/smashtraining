@@ -64,7 +64,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import makeTechDataComponent from "./base/MakeTechDataComponent";
+import Component from "vue-class-component";
+import BaseTechComponent from "./base/BaseTechComponent";
 
-export default makeTechDataComponent("b-reverse");
+@Component
+export default class extends BaseTechComponent {}
 </script>

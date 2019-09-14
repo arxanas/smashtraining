@@ -3,7 +3,7 @@
     <p>
       <slot />
       <span v-if="startTime"
-        >The relevant portion begins at <b>{{ startTime }}</b
+        >The relevant segment begins at <b>{{ startTime }}</b
         >.</span
       >
     </p>

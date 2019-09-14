@@ -54,8 +54,9 @@
 <script lang="ts">
 import allTechData from "@/tech/AllTechMetadata";
 import Vue from "vue";
-import makeTechDataComponent from "./base/MakeTechDataComponent";
+import Component from "vue-class-component";
+import BaseTechComponent from "./base/BaseTechComponent";
 
-const techId = "running-tilt";
-export default makeTechDataComponent(techId);
+@Component
+export default class extends BaseTechComponent {}
 </script>
