@@ -24,14 +24,14 @@ import allTechMetadata, { TechId } from "../tech/AllTechMetadata";
 import {
   AllTechVariants,
   TechMetadata,
-  TechVariantType,
+  TechVariant,
   variantValues,
 } from "../tech/TechMetadata";
 import { generateAllVariantCombinations } from "../tech/TechTraining";
 
 interface PanelData {
   techId: TechId;
-  variant: Partial<AllTechVariants>;
+  variant: TechVariant;
   numSets: number;
 }
 

@@ -1,4 +1,5 @@
 import { AllTechVariants, variantPrinters } from "@/tech/TechMetadata";
+import { unreachable } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -9,7 +10,8 @@ export default class extends Vue {
   }
 
   get jumpDirection(): string {
-    switch (this.getVariant().jumpDistance) {
+    const { jumpDistance } = this.getVariant();
+    switch (jumpDistance) {
       case "0.0":
         return "in-place";
       case "0.5":
@@ -19,11 +21,14 @@ export default class extends Vue {
       case "2.5":
       case "max":
         return `forward ${this.jumpDistancePretty}`;
+      default:
+        return unreachable(jumpDistance, "jumpDistance check is exhaustive");
     }
   }
 
   get jumpInputs(): string {
-    switch (this.getVariant().jumpDistance) {
+    const { jumpDistance } = this.getVariant();
+    switch (jumpDistance) {
       case "0.0":
         return "sh";
       case "0.5":
@@ -34,6 +39,8 @@ export default class extends Vue {
         return "sh r";
       case "max":
         return "sh R";
+      default:
+        return unreachable(jumpDistance, "jumpDistance check is exhaustive");
     }
   }
 

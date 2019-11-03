@@ -1,15 +1,13 @@
 import allTechMetadata from "@/tech/AllTechMetadata";
-import { AllTechVariants, TechMetadata } from "@/tech/TechMetadata";
+import { TechMetadata, TechVariant } from "@/tech/TechMetadata";
 import LearnTech from "@/views/LearnTech.vue";
 import { mount, shallowMount } from "@vue/test-utils";
 import Vue from "vue";
 import Vuetify from "vuetify";
 import { flagConsoleErrors } from "../utils";
 
-function generateVariantData(
-  techMetadata: TechMetadata,
-): Partial<AllTechVariants> {
-  const result: Partial<AllTechVariants> = {};
+function generateVariantData(techMetadata: TechMetadata): TechVariant {
+  const result: TechVariant = {};
   if (techMetadata.variants.jumpDistance) {
     result.jumpDistance = "0.5";
   }

@@ -1,5 +1,3 @@
-import { entries } from "@/utils";
-
 /**
  * Techs may have multiple "variants" for their exercises. For example,
  * short-hop fast-fall aerials are fundamentally the same tech, but the
@@ -11,16 +9,18 @@ export interface AllTechVariants {
   aerialType: "nair" | "fair" | "uair" | "bair" | "dair";
 }
 
-export type TechVariantType = keyof AllTechVariants;
+export type TechVariantKind = keyof AllTechVariants;
+
+export type TechVariant = Partial<AllTechVariants>;
 
 export const variantValues: {
-  [key in TechVariantType]: Array<AllTechVariants[key]>;
+  [key in TechVariantKind]: Array<AllTechVariants[key]>;
 } = {
   jumpDistance: ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "max"],
   aerialType: ["nair", "fair", "uair", "bair", "dair"],
 };
 
-export type TechVariantConfig = Partial<Record<TechVariantType, boolean>>;
+export type TechVariantConfig = Partial<Record<TechVariantKind, boolean>>;
 
 export interface TechMetadata {
   name: string;
@@ -33,7 +33,7 @@ export interface TechMetadata {
 export type TechGame = keyof TechMetadata["games"];
 
 const variantVerifiers: {
-  [key in TechVariantType]: (
+  [key in TechVariantKind]: (
     variantValue: string,
   ) => AllTechVariants[key] | null;
 } = {
@@ -62,7 +62,7 @@ const variantVerifiers: {
 };
 
 export const variantPrinters: {
-  [key in TechVariantType]: (variantValue: AllTechVariants[key]) => string;
+  [key in TechVariantKind]: (variantValue: AllTechVariants[key]) => string;
 } = {
   jumpDistance(variantValue) {
     switch (variantValue) {
