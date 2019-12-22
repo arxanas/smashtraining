@@ -1,7 +1,8 @@
 import BReverseTech from "@/components/tech/BReverseTech.vue";
+import FallingAerialTech from "@/components/tech/FallingAerialTech.vue";
+import FastFallTech from "@/components/tech/FastFallTech.vue";
 import FullHopTech from "@/components/tech/FullHopTech.vue";
 import RunningTiltTech from "@/components/tech/RunningTiltTech.vue";
-import ShortHopFastFallAerialTech from "@/components/tech/ShortHopFastFallAerialTech.vue";
 import ShortHopTech from "@/components/tech/ShortHopTech.vue";
 import { VueConstructor } from "vue";
 import { TechId } from "./AllTechMetadata";
@@ -15,6 +16,7 @@ const allTechDataComponents: Record<TechId, VueConstructor> = {
   "full-hop": FullHopTech,
   "running-tilt": RunningTiltTech,
   "short-hop": ShortHopTech,
-  "short-hop-fast-fall-aerial": ShortHopFastFallAerialTech,
+  "fast-fall": FastFallTech,
+  "falling-aerial": FallingAerialTech,
 };
 export default allTechDataComponents;

@@ -10,7 +10,7 @@
             exercise.
           </li>
           <li>
-            When you're done with an exercise, tap "Record".
+            When you're done with every set of an exercise, tap "Record".
           </li>
         </ul>
       </v-expansion-panel-content>

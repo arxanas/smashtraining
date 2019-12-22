@@ -31,15 +31,3 @@
     </slot>
   </div>
 </template>
-<script lang="ts">
-import GithubReportIssueBanner from "@/components/GithubReportIssueBanner.vue";
-import Vue from "vue";
-import Component from "vue-class-component";
-
-@Component({
-  components: {
-    GithubReportIssueBanner,
-  },
-})
-export default class extends Vue {}
-</script>

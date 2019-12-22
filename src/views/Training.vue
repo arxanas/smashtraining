@@ -60,13 +60,15 @@ function createPanelsForTech(
 function getSatisfactoryTech(): SatisfactoryTech {
   // TODO: store and load actual satisfactory tech. This function may need to be
   // `async`. Need to look up the way to do async data loading in Vue.
-  return { "short-hop": { jumpDistance: ["0.0"] } };
+  return {
+    "short-hop": { facing: ["forward"], jumpDistance: ["0.0"] },
+  };
 }
 
 function createPanels(): PanelData[] {
   const satisfactoryTech = getSatisfactoryTech();
-  return entries(allTechMetadata).flatMap(param => {
-    const [techId, techMetadata] = param;
+  return entries(allTechMetadata).flatMap(entry => {
+    const [techId, techMetadata] = entry;
     return createPanelsForTech(satisfactoryTech, techId, techMetadata);
   });
 }

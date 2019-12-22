@@ -77,7 +77,7 @@ describe("LearnTech.vue", () => {
       mocks: {
         $route: {
           params: {
-            techId: "short-hop-fast-fall-aerial",
+            techId: "falling-aerial",
           },
           query: {
             jumpDistance: "999.0",
@@ -86,7 +86,7 @@ describe("LearnTech.vue", () => {
       },
     });
     expect(wrapper.text()).toMatch(
-      /Error: Bad variant 'jumpDistance' for tech 'short-hop-fast-fall-aerial'/,
+      /Error: Bad variant 'jumpDistance' for tech 'falling-aerial'/,
     );
   });
 
@@ -95,7 +95,7 @@ describe("LearnTech.vue", () => {
       mocks: {
         $route: {
           params: {
-            techId: "short-hop-fast-fall-aerial",
+            techId: "falling-aerial",
           },
           query: {
             // Missing `aerialType`.
@@ -105,7 +105,7 @@ describe("LearnTech.vue", () => {
       },
     });
     expect(wrapper.text()).toMatch(
-      /Error: Bad variant 'aerialType' for tech 'short-hop-fast-fall-aerial'/,
+      /Error: Bad variant 'aerialType' for tech 'falling-aerial'/,
     );
   });
 

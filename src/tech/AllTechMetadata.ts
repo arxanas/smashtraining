@@ -15,6 +15,7 @@ const allTechMetadata = {
       ssbu: {},
     },
     variants: {
+      facing: true,
       jumpDistance: true,
     },
   },
@@ -31,17 +32,32 @@ const allTechMetadata = {
       ssbu: {},
     },
     variants: {
+      facing: true,
       jumpDistance: true,
     },
   },
-  "short-hop-fast-fall-aerial": {
-    name: "Short-hop fast-fall aerial",
+  "fast-fall": {
+    name: "Fast-fall",
     games: {
       ssbu: {},
     },
     variants: {
+      facing: true,
+      hop: true,
       jumpDistance: true,
+    },
+  },
+  "falling-aerial": {
+    name: "Falling aerial",
+    games: {
+      ssbu: {},
+    },
+    variants: {
       aerialType: true,
+      facing: true,
+      fall: true,
+      hop: true,
+      jumpDistance: true,
     },
   },
 };
@@ -113,42 +129,68 @@ export function getTechDependencies<T extends TechId>(
   const techId: TechId = upcast(techId_);
   switch (techId) {
     case "short-hop":
-    case "full-hop":
-      const jumpDistance = (variant as TechVariantOf<typeof techId>)
-        .jumpDistance;
+    case "full-hop": {
+      const { facing, jumpDistance } = variant as TechVariantOf<typeof techId>;
       switch (jumpDistance) {
         case "0.0":
           return [];
         case "0.5":
-          return [dep(techId, { jumpDistance: "0.0" })];
+          return [dep(techId, { facing, jumpDistance: "0.0" })];
         case "1.0":
-          return [dep(techId, { jumpDistance: "0.5" })];
+          return [dep(techId, { facing, jumpDistance: "0.5" })];
         case "1.5":
-          return [dep(techId, { jumpDistance: "1.0" })];
+          return [dep(techId, { facing, jumpDistance: "1.0" })];
         case "2.0":
-          return [dep(techId, { jumpDistance: "1.5" })];
+          return [dep(techId, { facing, jumpDistance: "1.5" })];
         case "2.5":
-          return [dep(techId, { jumpDistance: "2.0" })];
+          return [dep(techId, { facing, jumpDistance: "2.0" })];
         case "max":
-          return [dep(techId, { jumpDistance: "0.0" })];
+          return [dep(techId, { facing, jumpDistance: "0.0" })];
         default:
-          return unreachable(jumpDistance, "jumpDistance");
+          return unreachable(jumpDistance, "jumpDistance check is exhaustive");
       }
+    }
 
-    case "short-hop-fast-fall-aerial":
-      // TODO: should have dependencies on short-hop-fast-falls, which should in
-      // turn have dependencies on short-hopping.
-      return [
-        dep("short-hop", {
-          jumpDistance: (variant as TechVariantOf<typeof techId>).jumpDistance,
-        }),
-      ];
+    case "fast-fall": {
+      const { facing, jumpDistance, hop } = variant as TechVariantOf<
+        typeof techId
+      >;
+      switch (hop) {
+        case "short":
+          return [dep("short-hop", { facing, jumpDistance })];
+        case "full":
+          return [dep("full-hop", { facing, jumpDistance })];
+        default:
+          return unreachable(hop, "hop check is exhaustive");
+      }
+    }
+
+    case "falling-aerial": {
+      const { facing, fall, jumpDistance, hop } = variant as TechVariantOf<
+        typeof techId
+      >;
+      switch (fall) {
+        case "normal":
+          switch (hop) {
+            case "short":
+              return [dep("short-hop", { facing, jumpDistance })];
+            case "full":
+              return [dep("full-hop", { facing, jumpDistance })];
+            default:
+              return unreachable(hop, "hop check is exhaustive");
+          }
+        case "fast":
+          return [dep("fast-fall", { facing, hop, jumpDistance })];
+        default:
+          return unreachable(fall, "fall check is exhaustive.");
+      }
+    }
 
     case "b-reverse":
     case "running-tilt":
       return [];
 
     default:
-      return unreachable(techId, "techId");
+      return unreachable(techId, "techId check is exhaustive");
   }
 }

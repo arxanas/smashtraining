@@ -15,6 +15,11 @@
         It also lets you quickly put out aerial attacks close to the ground,
         while remaining relatively safe.
       </p>
+      <p>
+        This exercise has you practice short-hopping various distances. Smash is
+        a game that takes place primarily in the air, so it's important to be
+        able to space yourself very precisely when jumping.
+      </p>
     </template>
     <template v-slot:inputs>
       There are multiple ways to input a short-hop:
@@ -31,8 +36,9 @@
           scheme to use one or two shoulder buttons as jump buttons.
         </li>
         <li>
-          <ControlInputs inputs="u" />: Tap the control stick up. You must have
-          Stick Jump enabled in your control scheme to do this.
+          <ControlInputs inputs="u" />: Tap the control stick up for a very
+          short period of time (3 frames). You must have Stick Jump enabled in
+          your control scheme to do this.
         </li>
       </ul>
     </template>
@@ -53,9 +59,13 @@
           jump button for too long.
         </li>
         <li>
-          <b>Character double-jumps</b>: You are using the two-jump-button
-          approach to short-hopping, and you pressed one jump button too long
-          after the other. They must be pressed at the same time.
+          <b>Character double-jumps</b>: One possibility is that you were
+          attempting to lightly tap the jump button once, but you stuttered and
+          tapped it twice in quick succession. Another is that you are
+          two-jump-button approach to short-hopping, and you pressed one jump
+          button too long after the other. They must be pressed at the same
+          time. (This is more likely to happen if you have mapped the buttons to
+          be pressed with different hands.)
         </li>
         <li>
           <b>Character turns around when hopping back to original position</b>:

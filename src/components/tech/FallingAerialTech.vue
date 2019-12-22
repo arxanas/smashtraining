@@ -1,10 +1,12 @@
 <template>
   <BaseTechDescription>
-    <template v-slot:description></template>
+    <template v-slot:description
+      >TODO</template
+    >
     <template v-slot:inputs>
       <p>
-        <ControlInputs :inputs="controlInputs" />: Short-hop
-        {{ jumpDirection }}, then initiate a fast-fall with
+        <ControlInputs :inputs="controlInputs" />: Hop {{ jumpDirection }}, then
+        TODO: fast-fall?? initiate a fast-fall with
         <ControlInputs inputs="d" />. While falling, perform the aerial attack
         before reaching the ground.
       </p>
@@ -18,8 +20,8 @@
     <template v-slot:exercise>
       <ol>
         <li>
-          Short-hop {{ jumpDirection }}, fast-fall, and aerial attack at the
-          bottom of the jump.
+          Hop {{ jumpDirection }}, fast-fall, and aerial attack at the bottom of
+          the jump.
         </li>
         <li>
           <i>(Non-in-place jumps only.)</i>

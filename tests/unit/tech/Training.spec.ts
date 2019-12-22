@@ -18,11 +18,13 @@ describe("Training", () => {
       isTechAvailable(
         {
           "short-hop": {
+            facing: ["forward"],
             jumpDistance: ["0.0"],
           },
         },
         "short-hop",
         {
+          facing: "forward",
           // Requires short-hop with jumpDistance 0.0.
           jumpDistance: "0.5",
         },
@@ -33,11 +35,13 @@ describe("Training", () => {
       isTechAvailable(
         {
           "short-hop": {
+            facing: ["forward"],
             jumpDistance: ["0.0"],
           },
         },
         "short-hop",
         {
+          facing: "forward",
           // Requires short-hop with jumpDistance 0.5.
           jumpDistance: "1.0",
         },
@@ -52,6 +56,7 @@ describe("Training", () => {
         },
         "short-hop",
         {
+          facing: "forward",
           // Requires short-hop with jumpDistance 0.5.
           jumpDistance: "1.0",
         },
