@@ -27,7 +27,11 @@ import {
   TechVariant,
   variantValues,
 } from "../tech/TechMetadata";
-import { generateAllVariantCombinations } from "../tech/TechTraining";
+import {
+  generateAllVariantCombinations,
+  isTechAvailable,
+  SatisfactoryTech,
+} from "../tech/TechTraining";
 
 interface PanelData {
   techId: TechId;
@@ -36,6 +40,7 @@ interface PanelData {
 }
 
 function createPanelsForTech(
+  satisfactoryTech: SatisfactoryTech,
   techId: TechId,
   techMetadata: TechMetadata,
 ): PanelData[] {
@@ -43,19 +48,27 @@ function createPanelsForTech(
     entries(techMetadata.variants)
       .filter(x => x[1])
       .map(x => x[0]),
-  ).map(variant => ({
-    techId,
-    variant,
-    numSets: 3,
-  }));
+  )
+    .filter(variant => isTechAvailable(satisfactoryTech, techId, variant))
+    .map(variant => ({
+      techId,
+      variant,
+      numSets: 3,
+    }));
+}
+
+function getSatisfactoryTech(): SatisfactoryTech {
+  // TODO: store and load actual satisfactory tech. This function may need to be
+  // `async`. Need to look up the way to do async data loading in Vue.
+  return { "short-hop": { jumpDistance: ["0.0"] } };
 }
 
 function createPanels(): PanelData[] {
-  let result: PanelData[] = [];
-  for (const [techId, techMetadata] of entries(allTechMetadata)) {
-    result = result.concat(createPanelsForTech(techId, techMetadata));
-  }
-  return result;
+  const satisfactoryTech = getSatisfactoryTech();
+  return entries(allTechMetadata).flatMap(param => {
+    const [techId, techMetadata] = param;
+    return createPanelsForTech(satisfactoryTech, techId, techMetadata);
+  });
 }
 
 @Component({

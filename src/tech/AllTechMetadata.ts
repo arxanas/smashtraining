@@ -136,8 +136,13 @@ export function getTechDependencies<T extends TechId>(
       }
 
     case "short-hop-fast-fall-aerial":
-      // TODO: add proper dependencies.
-      return [];
+      // TODO: should have dependencies on short-hop-fast-falls, which should in
+      // turn have dependencies on short-hopping.
+      return [
+        dep("short-hop", {
+          jumpDistance: (variant as TechVariantOf<typeof techId>).jumpDistance,
+        }),
+      ];
 
     case "b-reverse":
     case "running-tilt":
