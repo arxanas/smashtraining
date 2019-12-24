@@ -1,8 +1,17 @@
 <template>
   <v-expansion-panels accordion>
     <v-expansion-panel>
-      <v-expansion-panel-header>Instructions</v-expansion-panel-header>
+      <v-expansion-panel-header>How to use</v-expansion-panel-header>
       <v-expansion-panel-content class="body-2">
+        <p>
+          <i>Smash Training</i> is a
+          <a href="https://en.wikipedia.org/wiki/Spaced_repetition"
+            >spaced repetition trainer</a
+          >
+          for Super Smash Bros. drills. Do the exercises at the top of the list
+          regularly. The trainer will learn your weak points and drill you on
+          them.
+        </p>
         <ul>
           <li>For each set, complete about 30 seconds worth of reps.</li>
           <li>
@@ -24,7 +33,7 @@
             through values.
           </li>
           <li>
-            <TrainingPerformanceSelector :value="4" /> All or almost all reps
+            <TrainingPerformanceSelector :value="4" /> All/nearly all reps
             completed correctly.
           </li>
           <li>
@@ -37,7 +46,7 @@
           </li>
           <li><TrainingPerformanceSelector :value="1" /> Most reps failed.</li>
           <li>
-            <TrainingPerformanceSelector :value="0" /> All or almost all reps
+            <TrainingPerformanceSelector :value="0" /> All/nearly all reps
             failed.
           </li>
         </ul>
