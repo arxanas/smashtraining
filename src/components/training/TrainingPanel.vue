@@ -21,11 +21,17 @@
           Set {{ i }}
         </v-col>
       </v-row>
-      <v-card-actions class="pa-0">
-        <v-btn text color="primary" :disabled="!allSetsEntered">Record</v-btn>
+      <v-card-actions right class="pa-0">
         <v-btn
           text
           color="primary"
+          :disabled="!allSetsEntered"
+          @click="recordSet"
+          >Record</v-btn
+        >
+        <v-btn
+          text
+          color="secondary"
           :to="{ name: 'learn-tech', params: { techId }, query: variant }"
           >Learn this tech</v-btn
         >
@@ -35,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import { getStore } from "@/store";
 import allTechData, { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
 import {
   AllTechVariants,
@@ -42,7 +49,7 @@ import {
   TechVariantConfig,
   variantPrinters,
 } from "@/tech/TechMetadata";
-import { entries } from "@/utils";
+import { assert, entries, unreachable } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
@@ -53,7 +60,7 @@ import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 })
 export default class extends Vue {
   @Prop({ type: String, required: true })
-  public techId!: string;
+  public techId!: TechId;
 
   @Prop({ type: Object, required: false, default: {} })
   public variant!: object;
@@ -98,6 +105,28 @@ export default class extends Vue {
 
   get allSetsEntered(): boolean {
     return this.setResults.every(result => result !== null);
+  }
+
+  public recordSet(): void {
+    getStore().commit.recordPracticeSet({
+      timestamp: Date.now(),
+      techId: this.techId,
+      reps: this.setResults.map(performance => {
+        switch (performance) {
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+          case 5:
+            return { performance };
+          default:
+            return unreachable(
+              performance as never,
+              `Invalid performance: ${performance}`,
+            );
+        }
+      }),
+    });
   }
 }
 </script>

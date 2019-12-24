@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import { getStore } from "@/store";
 import { entries } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -79,5 +80,9 @@ function createPanels(): PanelData[] {
 })
 export default class extends Vue {
   public panels = createPanels();
+
+  public async mounted() {
+    await getStore().dispatch.restoreState();
+  }
 }
 </script>
