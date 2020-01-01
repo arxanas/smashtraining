@@ -1,6 +1,46 @@
 <template>
   <v-app>
+    <v-navigation-drawer app v-model="drawer">
+      <v-list>
+        <v-list-item to="/">
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="training">
+          <v-list-item-action>
+            <v-icon>mdi-dumbbell</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Training</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="stats">
+          <v-list-item-action>
+            <v-icon>mdi-poll-box</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Stats</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="about">
+          <v-list-item-action>
+            <v-icon>mdi-information</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>About</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="headline"
         ><router-link to="/">Smash Training</router-link></v-toolbar-title
       >
@@ -31,5 +71,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component({ name: "App" })
-export default class extends Vue {}
+export default class extends Vue {
+  public data() {
+    return {
+      drawer: false,
+    };
+  }
+}
 </script>

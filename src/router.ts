@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Home from "./views/Home.vue";
 import LearnTech from "./views/LearnTech.vue";
+import Stats from "./views/Stats.vue";
 import Training from "./views/Training.vue";
 
 Vue.use(Router);
@@ -11,8 +13,18 @@ export default new Router({
   routes: [
     {
       path: "/",
+      name: "home",
+      component: Home,
+    },
+    {
+      path: "/training",
       name: "training",
       component: Training,
+    },
+    {
+      path: "/stats",
+      name: "stats",
+      component: Stats,
     },
     {
       path: "/tech/:techId",
