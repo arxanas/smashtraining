@@ -1,3 +1,5 @@
+import { GameId } from "./AllCharacterMetadata";
+
 /**
  * Techs may have multiple "variants" for their exercises. For example,
  * short-hop fast-fall aerials are fundamentally the same tech, but the
@@ -31,7 +33,7 @@ export type TechVariantConfig = Partial<Record<TechVariantKind, boolean>>;
 export interface TechMetadata {
   name: string;
   games: {
-    ssbu: {};
+    [game in GameId]: {};
   };
   variants: TechVariantConfig;
 }
