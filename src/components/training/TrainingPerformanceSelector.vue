@@ -92,6 +92,7 @@ export default class extends Vue {
         );
     }
   }
+
   public tap(): void {
     this.$emit("input", nextState(this.value as State));
   }

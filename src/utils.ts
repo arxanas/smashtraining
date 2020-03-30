@@ -19,6 +19,11 @@ export function upcast<From extends To, To>(t: From): To {
   return t;
 }
 
+export async function log(message: string, ...params: any[]): Promise<void> {
+  // tslint:disable-next-line: no-console
+  console.log(message, ...params);
+}
+
 export function assert(condition: boolean, message: string): condition is true {
   if (!condition) {
     throw new Error(`Assertion failed: ${message}`);

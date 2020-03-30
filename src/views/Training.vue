@@ -1,27 +1,55 @@
 <template>
   <div>
-    <TrainingHeader />
-    <h1 class="headline mt-4 mb-2">Exercises</h1>
-    <v-expansion-panels multiple :value="[0]">
-      <TrainingPanel
-        v-for="(panel, i) in panels"
-        :key="i"
-        :tech-id="panel.techId"
-        :variant="panel.variant"
-        :num-sets="panel.numSets"
-      />
-    </v-expansion-panels>
+    <TrainingHeader ref="trainingHeader" />
+    <v-overlay v-if="panels === 'loading'">
+      <v-progress-circular indeterminate></v-progress-circular>
+      Loading your training data...
+    </v-overlay>
+    <div v-else-if="panels === 'no-character-selected'">
+      <p class="title text-center pa-4 text--secondary">
+        Select a character to begin.
+      </p>
+    </div>
+    <div v-else>
+      <h1 class="headline mt-4 mb-2">Exercises</h1>
+      <v-expansion-panels multiple :value="shownExpansionPanels">
+        <TrainingPanel
+          v-for="(panel, i) in panels"
+          v-on:recorded="onRecorded(i, $event)"
+          :key="i"
+          :tech-id="panel.techId"
+          :variant="panel.variant"
+          :num-sets="panel.numSets"
+        />
+      </v-expansion-panels>
+      <p class="title text-center pa-4 text--secondary">
+        <v-btn text v-on:click="refresh">
+          <v-icon>mdi-refresh</v-icon>
+          Refresh
+        </v-btn>
+      </p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { getStore } from "@/store";
+import { getStore, PracticeSet, Store } from "@/store";
+import { compareItem, createItem } from "@/tech/SpacedRepetition";
 import { entries } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
+import CharacterSelector from "../components/training/CharacterSelector.vue";
 import TrainingHeader from "../components/training/TrainingHeader.vue";
 import TrainingPanel from "../components/training/TrainingPanel.vue";
-import allTechMetadata, { TechId } from "../tech/AllTechMetadata";
+import {
+  CharacterId,
+  GameAndCharacterId,
+  GameId,
+} from "../tech/AllCharacterMetadata";
+import allTechMetadata, {
+  serializeTechVariant,
+  TechId,
+} from "../tech/AllTechMetadata";
 import {
   AllTechVariants,
   TechMetadata,
@@ -30,6 +58,7 @@ import {
 } from "../tech/TechMetadata";
 import {
   generateAllVariantCombinations,
+  isSatisfactoryPracticeSet,
   isTechAvailable,
   SatisfactoryTech,
 } from "../tech/TechTraining";
@@ -39,6 +68,10 @@ interface PanelData {
   variant: TechVariant;
   numSets: number;
 }
+
+type Panels = "loading" | "no-character-selected" | PanelData[];
+
+const MAX_NUM_EXERCISES: number = 8;
 
 function createPanelsForTech(
   satisfactoryTech: SatisfactoryTech,
@@ -58,20 +91,47 @@ function createPanelsForTech(
     }));
 }
 
-function getSatisfactoryTech(): SatisfactoryTech {
-  // TODO: store and load actual satisfactory tech. This function may need to be
-  // `async`. Need to look up the way to do async data loading in Vue.
-  return {
-    "short-hop": { facing: ["forward"], jumpDistance: ["0.0"] },
-  };
+function getSatisfactoryTech<T extends GameId>(
+  store: Store,
+  gameAndCharacterId: GameAndCharacterId<T>,
+): SatisfactoryTech {
+  const { gameId, characterId } = gameAndCharacterId;
+  const satisfactoryTech: SatisfactoryTech = {};
+  for (const practiceSet of store.state.remote.recordedPracticeSets) {
+    const { techId, techVariant } = practiceSet;
+    if (isSatisfactoryPracticeSet(practiceSet)) {
+      const serializedTechVariant = serializeTechVariant(techId, techVariant);
+      satisfactoryTech[serializedTechVariant] = true;
+    }
+  }
+  return satisfactoryTech;
 }
 
-function createPanels(): PanelData[] {
-  const satisfactoryTech = getSatisfactoryTech();
-  return entries(allTechMetadata).flatMap(entry => {
-    const [techId, techMetadata] = entry;
-    return createPanelsForTech(satisfactoryTech, techId, techMetadata);
-  });
+function createPanels<T extends GameId>(
+  store: Store,
+  gameAndCharacterId: GameAndCharacterId<T>,
+): PanelData[] {
+  const spacedRepetitionItems = store.getters.spacedRepetitionItems;
+  const satisfactoryTech = getSatisfactoryTech(store, gameAndCharacterId);
+  return entries(allTechMetadata)
+    .flatMap(entry => {
+      const [techId, techMetadata] = entry;
+      return createPanelsForTech(satisfactoryTech, techId, techMetadata);
+    })
+    .sort((lhs, rhs) => {
+      const lhsItem = spacedRepetitionItems.get(
+        serializeTechVariant(lhs.techId, lhs.variant),
+      );
+      const rhsItem = spacedRepetitionItems.get(
+        serializeTechVariant(rhs.techId, rhs.variant),
+      );
+      const result = compareItem(
+        lhsItem !== undefined ? lhsItem : createItem(),
+        rhsItem !== undefined ? rhsItem : createItem(),
+      );
+      return result;
+    })
+    .slice(0, MAX_NUM_EXERCISES);
 }
 
 @Component({
@@ -79,10 +139,82 @@ function createPanels(): PanelData[] {
   components: { TrainingHeader, TrainingPanel },
 })
 export default class extends Vue {
-  public panels = createPanels();
+  public panels: Panels = "loading";
+  public gameId: GameId = "ssbu";
 
-  public async mounted() {
+  public shownExpansionPanels!: number[];
+  public hiddenExpansionPanels!: number[];
+
+  public data() {
+    return {
+      panels: "loading",
+      shownExpansionPanels: [0],
+      hiddenExpansionPanels: [],
+    };
+  }
+
+  public async created() {
     await getStore().dispatch.restoreState();
+
+    this.$watch(
+      () => getStore().state.local.selectedCharacters[this.gameId],
+      function(newSelectedCharacter) {
+        if (newSelectedCharacter === null) {
+          this.panels = "no-character-selected";
+        } else {
+          this.resetExpansionPanels({
+            gameId: this.gameId,
+            characterId: newSelectedCharacter,
+          });
+        }
+      },
+      {
+        immediate: true,
+      },
+    );
+  }
+
+  public refresh(): void {
+    location.reload();
+  }
+
+  public resetExpansionPanels(
+    gameAndCharacterId: GameAndCharacterId<GameId>,
+  ): void {
+    this.panels = createPanels(getStore(), gameAndCharacterId);
+    this.shownExpansionPanels = [0];
+    this.hiddenExpansionPanels = [];
+  }
+
+  public async onRecorded(
+    i: number,
+    practiceSet: PracticeSet<TechId>,
+  ): Promise<void> {
+    this.hidePanel(i);
+    getStore().commit.recordPracticeSet(practiceSet);
+    await getStore().dispatch.saveState();
+  }
+
+  public hidePanel(i: number): void {
+    this.shownExpansionPanels = this.shownExpansionPanels.filter(j => j !== i);
+    this.hiddenExpansionPanels.push(i);
+
+    // Show the next available panel, if any. If the user already has another
+    // open panel, don't open any other panels.
+    if (
+      this.panels !== "no-character-selected" &&
+      this.panels !== "loading" &&
+      this.shownExpansionPanels.length === 0
+    ) {
+      const maxNumPanels = this.panels.length;
+      const maxSeenPanel = this.hiddenExpansionPanels.reduce(
+        (acc, j) => Math.max(acc, j),
+        -1,
+      );
+      if (maxSeenPanel + 1 < maxNumPanels) {
+        this.shownExpansionPanels.push(maxSeenPanel + 1);
+      }
+    }
   }
 }
 </script>

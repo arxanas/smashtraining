@@ -89,6 +89,18 @@ export type TechVariantOf<T extends TechId> = {
   [x in keyof AllTechMetadata[T]["variants"]]: AllTechVariants[x];
 };
 
+export type SerializedTechVariant = string;
+
+export function serializeTechVariant<T extends TechId>(
+  techId: T,
+  techVariant: TechVariantOf<T>,
+): SerializedTechVariant {
+  // From https://stackoverflow.com/a/16168003/344643
+  const serialize = (value: {}) =>
+    JSON.stringify(value, Object.keys(value).sort());
+  return `${techId}-${serialize(techVariant)}`;
+}
+
 /**
  * A tech is said to depend on another tech if the other tech should be learned
  * before practicing the new tech. For example, short-hop fast-falls should be
@@ -101,7 +113,7 @@ export type TechVariantOf<T extends TechId> = {
  */
 interface TechDependency<T extends TechId> {
   id: T;
-  variant: TechVariantOf<T> | null;
+  variant: TechVariantOf<T>;
 }
 
 /**
@@ -186,9 +198,10 @@ export function getTechDependencies<T extends TechId>(
       }
     }
 
-    case "b-reverse":
     case "running-tilt":
       return [];
+    case "b-reverse":
+      return [dep("running-tilt", {})];
 
     default:
       return unreachable(techId, "techId check is exhaustive");

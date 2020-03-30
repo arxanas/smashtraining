@@ -1,4 +1,9 @@
-import { compareItem, createItem, updateItem } from "@/tech/SpacedRepetition";
+import {
+  averagePerformance,
+  compareItem,
+  createItem,
+  updateItem,
+} from "@/tech/SpacedRepetition";
 
 describe("SpacedRepetition", () => {
   const item1 = createItem();
@@ -41,5 +46,11 @@ describe("SpacedRepetition", () => {
       }
       currentItem = nextItem;
     }
+  });
+
+  it("should average performances by rounding", () => {
+    expect(averagePerformance([5, 5, 4])).toBe(5);
+    expect(averagePerformance([4, 4, 4])).toBe(4);
+    expect(averagePerformance([4, 4, 5])).toBe(4);
   });
 });

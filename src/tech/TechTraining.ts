@@ -1,7 +1,9 @@
+import { PracticeSet } from "@/store";
 import { entries } from "@/utils";
 import {
   AllTechMetadata,
   getTechDependencies,
+  serializeTechVariant,
   TechId,
   TechVariantOf,
 } from "./AllTechMetadata";
@@ -19,24 +21,16 @@ import {
  * altogether.
  *
  * New tech becomes available when all of its dependencies are satisfactory.
- *
- * This is a mapping in the form:
- *
- *     {
- *       "short-hop": {
- *         "jumpDistance": ["0.0", "1.5", "max"],
- *       },
- *     }
  */
-export type SatisfactoryTech = Partial<
-  {
-    [techId in keyof AllTechMetadata]: {
-      [variant in keyof AllTechMetadata[techId]["variants"]]: Array<
-        TechVariantOf<techId>[variant]
-      >;
-    };
-  }
->;
+export interface SatisfactoryTech {
+  [serializedTechVariant: string]: boolean;
+}
+
+export function isSatisfactoryPracticeSet(
+  practiceSet: PracticeSet<TechId>,
+): boolean {
+  return practiceSet.reps.every(rep => rep.performance >= 4);
+}
 
 /**
  * Generate all the possible variant combinations for each variant registered
@@ -89,32 +83,6 @@ export function isTechAvailable<T extends TechId>(
   const dependencies = getTechDependencies(techId, variant);
   return dependencies.every(dependency => {
     const { id: dependencyId, variant: dependencyVariant } = dependency;
-    const enabledVariants = enabledTech[dependencyId];
-    if (enabledVariants === undefined) {
-      // This dependency tech was never practiced or doesn't appear in
-      // `enabledTech` for some other reason, so it's not satisfied.
-      return false;
-    }
-    if (dependencyVariant === null) {
-      // There are no variants for this dependency tech, so we don't have to
-      // check that the variant is satisfied. Return `variant === null` as a
-      // sanity-check, as it should also be `null` if there are no other
-      // possible variants.
-      return variant === null;
-    }
-
-    // Now, we need to check that every sub-variant is satisfied.
-    return entries(dependencyVariant).every(
-      // @ts-ignore Type 'U' cannot be used to index type 'AllTechVariants'.
-      <U extends keyof TechVariantOf<T>>(arg: [U, AllTechVariants[U]]) => {
-        // Should be of the form
-        //
-        //     variantId === "jump-distance";
-        //     variantValue === "0.5";
-        const [variantId, variantValue] = arg;
-        // @ts-ignore Type 'U' cannot be used to index type {} | ...
-        return enabledVariants[variantId].indexOf(variantValue) !== -1;
-      },
-    );
+    return !!enabledTech[serializeTechVariant(dependencyId, dependencyVariant)];
   });
 }

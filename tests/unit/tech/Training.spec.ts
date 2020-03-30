@@ -1,3 +1,4 @@
+import { serializeTechVariant } from "@/tech/AllTechMetadata";
 import { variantValues } from "@/tech/TechMetadata";
 import {
   generateAllVariantCombinations,
@@ -17,10 +18,10 @@ describe("Training", () => {
     expect(
       isTechAvailable(
         {
-          "short-hop": {
-            facing: ["forward"],
-            jumpDistance: ["0.0"],
-          },
+          [serializeTechVariant("short-hop", {
+            facing: "forward",
+            jumpDistance: "0.0",
+          })]: true,
         },
         "short-hop",
         {
@@ -34,10 +35,10 @@ describe("Training", () => {
     expect(
       isTechAvailable(
         {
-          "short-hop": {
-            facing: ["forward"],
-            jumpDistance: ["0.0"],
-          },
+          [serializeTechVariant("short-hop", {
+            facing: "forward",
+            jumpDistance: "0.0",
+          })]: true,
         },
         "short-hop",
         {
@@ -52,7 +53,7 @@ describe("Training", () => {
       isTechAvailable(
         {
           // Unrelated tech.
-          "b-reverse": {},
+          [serializeTechVariant("b-reverse", {})]: true,
         },
         "short-hop",
         {

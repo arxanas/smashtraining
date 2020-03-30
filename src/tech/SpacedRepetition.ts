@@ -1,4 +1,4 @@
-// This code is adapted from https://github.com/sunaiwen/supermemo2.js/, which
+// This module is adapted from https://github.com/sunaiwen/supermemo2.js/, which
 // is licensed under the following terms:
 //
 // The MIT License (MIT)
@@ -22,6 +22,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+import { unreachable } from "@/utils";
 
 export type Performance = 1 | 2 | 3 | 4 | 5;
 
@@ -45,7 +46,7 @@ type Schedule = number;
  */
 export type Factor = number;
 
-interface Item {
+export interface Item {
   factor: Factor;
   schedule: Schedule;
 }
@@ -74,5 +75,24 @@ export function updateItem(item: Item, performance: Performance): Item {
       factor: newFactor,
       schedule: newSchedule - item.schedule,
     };
+  }
+}
+
+export function averagePerformance(performances: Performance[]): Performance {
+  const sum = performances.reduce((x, y) => x + y, 0);
+  const average = sum / performances.length;
+  const result = Math.round(average);
+  switch (result) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return result;
+    default:
+      return unreachable(
+        result as never,
+        `Invalid average performance: ${result}`,
+      );
   }
 }

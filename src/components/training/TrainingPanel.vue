@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-header class="py-2 subtitle-1">
+    <v-expansion-panel-header disable-icon-rotate class="py-2 subtitle-1">
       <div>
         {{ techMetadata.name }}
         <span class="grey--text" v-if="techVariantDescription">{{
@@ -10,8 +10,11 @@
       <v-btn icon class="flex-grow-0" v-on:click.stop
         ><v-icon small>mdi-settings</v-icon></v-btn
       >
+      <template v-slot:actions v-if="recorded">
+        <v-icon color="teal">mdi-check</v-icon>
+      </template>
     </v-expansion-panel-header>
-    <v-expansion-panel-content class="pb-0">
+    <v-expansion-panel-content eager class="pb-0">
       <v-row align="center" justify="center" class="pa-0">
         <v-col class="text-center" v-for="i in setResults.length" :key="i">
           <TrainingPerformanceSelector
@@ -25,10 +28,12 @@
         <v-btn
           text
           color="primary"
-          :disabled="!allSetsEntered"
+          :disabled="!allSetsEntered || recorded"
           @click="recordSet"
-          >Record</v-btn
         >
+          Record
+        </v-btn>
+
         <v-btn
           text
           color="secondary"
@@ -70,10 +75,12 @@ export default class extends Vue {
 
   // defined in `data`
   public setResults!: number[];
+  public recorded!: boolean;
 
   public data() {
     return {
       setResults: Array(this.numSets).fill(null),
+      recorded: false,
     };
   }
 
@@ -108,16 +115,18 @@ export default class extends Vue {
   }
 
   public recordSet(): void {
-    getStore().commit.recordPracticeSet({
+    this.recorded = true;
+    this.$emit("recorded", {
       timestamp: Date.now(),
       techId: this.techId,
+      techVariant: this.variant,
       reps: this.setResults.map(performance => {
         switch (performance) {
+          case 0:
           case 1:
           case 2:
           case 3:
           case 4:
-          case 5:
             return { performance };
           default:
             return unreachable(

@@ -121,7 +121,16 @@
             No login necessary. Your data is stored on your device.
           </v-card-text>
           <v-card-actions>
-            <v-btn to="training" block color="primary">Start training</v-btn>
+            <v-container>
+              <v-row>
+                <CharacterSelector gameId="ssbu" />
+              </v-row>
+              <v-row>
+                <v-btn :to="{ name: 'training' }" block color="primary"
+                  >Start training</v-btn
+                >
+              </v-row>
+            </v-container>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -244,3 +253,15 @@
   width: 1rem;
 }
 </style>
+
+<script lang="ts">
+import CharacterSelector from "@/components/training/CharacterSelector.vue";
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({
+  name: "home",
+  components: { CharacterSelector },
+})
+export default class extends Vue {}
+</script>
