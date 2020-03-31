@@ -7,7 +7,8 @@
     "serve-prod": "vue-cli-service build && serve -s dist",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit"
+    "test": "vue-cli-service test:unit",
+    "build-gsp": "node ./bin/update-gsp.js"
   },
   "dependencies": {
     "core-js": "^2.6.11",
@@ -30,8 +31,10 @@
     "@vue/cli-plugin-unit-jest": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "@vue/test-utils": "1.0.0-beta.29",
+    "axios": "^0.19.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
+    "cheerio": "^1.0.0-rc.3",
     "diff": "^4.0.2",
     "growl": "^1.10.5",
     "http-proxy-agent": "^2.1.0",
@@ -113,7 +116,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,vue}": [
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,vue}": [
       "npm run lint",
       "prettier --write",
       "git add"
