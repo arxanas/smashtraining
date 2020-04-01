@@ -1,7 +1,9 @@
-interface GspDataRow {
+export type Gsp = number;
+
+export interface GspDataRow {
   timestamp: number;
-  averageGsp: number;
-  maxGsp: number;
+  averageGsp: Gsp;
+  maxGsp: Gsp;
 }
 
 // This data is automatically generated from `update-gsp.js`. Do not manually

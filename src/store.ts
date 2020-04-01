@@ -25,6 +25,11 @@ export interface Rep {
   performance: Performance;
 }
 
+export interface RawGspDatum {
+  timestamp: number;
+  gsp: number;
+}
+
 export interface PracticeSet<T extends TechId> {
   techId: T;
   techVariant: TechVariantOf<T>;
@@ -40,14 +45,17 @@ interface MainState {
     selectedCharacters: { [game in GameId]: CharacterId<game> | null };
   };
   remote: {
+    recordedRawGspData?: {
+      [gameId in GameId]?: {
+        [character in CharacterId<gameId>]?: RawGspDatum[];
+      };
+    };
     recordedPracticeSets: Array<PracticeSet<TechId>>;
   };
 }
 
 interface RootState {
-  modules: {
-    main: MainState;
-  };
+  main: MainState;
 }
 
 export const defaultMainState: MainState = {
@@ -60,6 +68,9 @@ export const defaultMainState: MainState = {
     },
   },
   remote: {
+    recordedRawGspData: {
+      ssbu: {},
+    },
     recordedPracticeSets: [],
   },
 };
@@ -81,6 +92,11 @@ const mainStore = {
       state: MainState,
     ): MainState["remote"]["recordedPracticeSets"] {
       return state.remote.recordedPracticeSets;
+    },
+    recordedRawGspData(
+      state: MainState,
+    ): MainState["remote"]["recordedRawGspData"] {
+      return state.remote.recordedRawGspData;
     },
     spacedRepetitionItems(
       state: MainState,
@@ -123,6 +139,25 @@ const mainStore = {
       practiceSet: PracticeSet<T>,
     ): void {
       state.remote.recordedPracticeSets.push(practiceSet);
+    },
+    recordGspDatum<T extends GameId>(
+      state: MainState,
+      param: {
+        gameAndCharacterId: GameAndCharacterId<T>;
+        gspDatum: RawGspDatum;
+      },
+    ): void {
+      const { gameAndCharacterId, gspDatum } = param;
+      const { gameId, characterId } = gameAndCharacterId;
+      const recordedRawGspData = state.remote.recordedRawGspData || {};
+      state.remote.recordedRawGspData = recordedRawGspData;
+      const gameData = (recordedRawGspData[gameId] || {}) as {
+        [x: string]: RawGspDatum[];
+      };
+      recordedRawGspData[gameId] = gameData;
+      const characterData = gameData[characterId] || [];
+      gameData[characterId] = characterData;
+      characterData.push(gspDatum);
     },
     restoreState(state: MainState, newState: MainState) {
       Object.assign(state, newState);
@@ -191,6 +226,7 @@ export const readSpacedRepetitionItems = read(
 export const readRecordedPracticeSets = read(
   mainStore.getters.recordedPracticeSets,
 );
+export const readRawGspData = read(mainStore.getters.recordedRawGspData);
 export const readSelectedCharacters = read(
   mainStore.getters.selectedCharacters,
 );
@@ -199,6 +235,7 @@ export const dispatchSaveState = dispatch(mainStore.actions.saveState);
 export const commitRecordPracticeSet = commit(
   mainStore.mutations.recordPracticeSet,
 );
+export const commitRecordGspDatum = commit(mainStore.mutations.recordGspDatum);
 export const commitSelectCharacter = commit(
   mainStore.mutations.selectCharacter,
 );

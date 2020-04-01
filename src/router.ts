@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import GspTracker from "./views/GspTracker.vue";
 import Home from "./views/Home.vue";
 import LearnTech from "./views/LearnTech.vue";
 import Stats from "./views/Stats.vue";
@@ -20,6 +21,11 @@ export default new Router({
       path: "/training",
       name: "training",
       component: Training,
+    },
+    {
+      path: "/gsp-tracker",
+      name: "gsp-tracker",
+      component: GspTracker,
     },
     {
       path: "/stats",

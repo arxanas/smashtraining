@@ -11,8 +11,11 @@
     "build-gsp": "node ./bin/update-gsp.js"
   },
   "dependencies": {
+    "chart.js": "^2.9.3",
     "core-js": "^2.6.11",
     "mem": "^5.1.1",
+    "moment": "^2.24.0",
+    "normal-distribution": "0.0.9",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.1",
@@ -24,6 +27,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@types/chart.js": "^2.9.18",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.12.1",
     "@vue/cli-plugin-e2e-nightwatch": "^4.3.1",
@@ -41,6 +45,7 @@
     "https-proxy-agent": "^2.2.4",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
+    "jest-canvas-mock": "^2.2.0",
     "lint-staged": "^9.5.0",
     "lodash.defaultsdeep": "^4.6.1",
     "prettier": "1.18.2",
@@ -76,6 +81,9 @@
       "vue",
       "ts",
       "tsx"
+    ],
+    "setupFiles": [
+      "jest-canvas-mock"
     ],
     "transform": {
       "^.+\\.vue$": "vue-jest",

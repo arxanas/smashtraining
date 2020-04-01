@@ -10,7 +10,7 @@ export interface CharacterMetadata {
 // tslint wants to be consistent about whether object keys are quoted or not.
 // However, Prettier quotes as-needed, and this behavior isn't configurable.
 // tslint:disable:object-literal-key-quotes
-export const allCharacterMetadata = {
+const allCharacterMetadataInternal = {
   ssbu: {
     mario: {
       idNumber: 1,
@@ -501,17 +501,15 @@ export const allCharacterMetadata = {
   },
 };
 
-export type CharacterId<
-  T extends GameId
-> = keyof ((typeof allCharacterMetadata)[T]);
+export type CharacterId<_T extends GameId> = string;
 
-const exportedAllCharacterMetadata: {
+export const allCharacterMetadata: {
   [game in GameId]: {
-    [characterId in CharacterId<game>]: CharacterMetadata;
+    [x: string]: CharacterMetadata;
   };
-} = allCharacterMetadata;
+} = allCharacterMetadataInternal;
 
-export type AllCharacterMetadata = typeof exportedAllCharacterMetadata;
+export type AllCharacterMetadata = typeof allCharacterMetadata;
 
 export interface GameAndCharacterId<T extends GameId> {
   gameId: T;

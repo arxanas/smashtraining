@@ -20,6 +20,15 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item to="gsp-tracker">
+          <v-list-item-action>
+            <v-icon>mdi-trending-up</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>GSP Tracker</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item to="stats">
           <v-list-item-action>
             <v-icon>mdi-poll-box</v-icon>
