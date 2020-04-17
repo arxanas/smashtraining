@@ -81,10 +81,10 @@
 </template>
 
 <script lang="ts">
-import { getStore } from "@/store";
 import { allCharacterMetadata, GameId } from "@/tech/AllCharacterMetadata";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { dispatchRestoreState, readSelectedCharacters } from "../../store";
 import CharacterSelector from "./CharacterSelector.vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
@@ -99,7 +99,8 @@ export default class extends Vue {
   public value: number | null | undefined = null;
 
   get selectedCharacter() {
-    return getStore().state.local.selectedCharacters[this.gameId];
+    const selectedCharacters = readSelectedCharacters(this.$store);
+    return selectedCharacters[this.gameId];
   }
 
   get selectedCharacterName(): string {
@@ -112,7 +113,7 @@ export default class extends Vue {
   }
 
   public async created() {
-    await getStore().dispatch.restoreState();
+    await dispatchRestoreState(this.$store);
     if (this.selectedCharacter === null) {
       this.value = 2;
     }

@@ -5,9 +5,9 @@ import {
   Performance,
   updateItem,
 } from "@/tech/SpacedRepetition";
-import { createDirectStore } from "direct-vuex";
 import Vue from "vue";
 import Vuex, { ActionContext } from "vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import {
   CharacterId,
   GameAndCharacterId,
@@ -32,7 +32,7 @@ export interface PracticeSet<T extends TechId> {
   timestamp: number;
 }
 
-interface State {
+interface MainState {
   version: 1;
   local: {
     loaded: boolean;
@@ -44,7 +44,13 @@ interface State {
   };
 }
 
-const defaultState: State = {
+interface RootState {
+  modules: {
+    main: MainState;
+  };
+}
+
+const defaultState: MainState = {
   version: 1,
   local: {
     loaded: false,
@@ -60,11 +66,24 @@ const defaultState: State = {
 
 Vue.use(Vuex);
 
-const { store } = createDirectStore({
+type MainContext = ActionContext<MainState, RootState>;
+
+const mainStore = {
+  namespaced: true,
   state: defaultState,
   getters: {
+    selectedCharacters(
+      state: MainState,
+    ): MainState["local"]["selectedCharacters"] {
+      return state.local.selectedCharacters;
+    },
+    recordedPracticeSets(
+      state: MainState,
+    ): MainState["remote"]["recordedPracticeSets"] {
+      return state.remote.recordedPracticeSets;
+    },
     spacedRepetitionItems(
-      state: State,
+      state: MainState,
     ): Map<SerializedTechVariant, SpacedRepetitionItem> {
       const result = new Map<SerializedTechVariant, SpacedRepetitionItem>();
       for (const practiceSet of state.remote.recordedPracticeSets) {
@@ -86,7 +105,7 @@ const { store } = createDirectStore({
   },
   mutations: {
     selectCharacter<T extends GameId>(
-      state: State,
+      state: MainState,
       gameAndCharacterId: GameAndCharacterId<T>,
     ): void {
       const { gameId, characterId } = gameAndCharacterId;
@@ -96,25 +115,25 @@ const { store } = createDirectStore({
       // with `characterId as CharacterId<typeof gameId>` doesn't work.
       selectedCharacters[gameId] = characterId;
     },
-    unselectCharacter(state: State, gameId: GameId): void {
+    unselectCharacter(state: MainState, gameId: GameId): void {
       state.local.selectedCharacters[gameId] = null;
     },
     recordPracticeSet<T extends TechId>(
-      state: State,
+      state: MainState,
       practiceSet: PracticeSet<T>,
     ): void {
       state.remote.recordedPracticeSets.push(practiceSet);
     },
-    restoreState(state: State, newState: State) {
+    restoreState(state: MainState, newState: MainState) {
       Object.assign(state, newState);
     },
   },
   actions: {
-    async saveState(context: ActionContext<State, {}>): Promise<void> {
+    async saveState(context: MainContext): Promise<void> {
       const state = { ...context.state, loaded: false };
       localStorage.setItem("state", JSON.stringify(state));
     },
-    async restoreState(context: ActionContext<State, {}>): Promise<void> {
+    async restoreState(context: MainContext): Promise<void> {
       if (context.state.local.loaded) {
         return;
       }
@@ -123,7 +142,7 @@ const { store } = createDirectStore({
       if (previousStateString === null) {
         return;
       }
-      const previousState: State = JSON.parse(previousStateString);
+      const previousState: MainState = JSON.parse(previousStateString);
       const oldVersion: number = previousState.version;
       const currentVersion = context.state.version;
       if (oldVersion !== currentVersion) {
@@ -140,12 +159,41 @@ const { store } = createDirectStore({
       });
     },
   },
+};
+
+export type MainStore = typeof mainStore;
+
+const rootStore = new Vuex.Store({
+  modules: {
+    main: mainStore,
+  },
 });
 
-export default store;
+export type RootStore = typeof rootStore;
 
-export type Store = typeof store;
+export default rootStore;
 
-export function getStore(): Store {
-  return store;
-}
+const { commit, read, dispatch } = getStoreAccessors<MainState, RootState>(
+  "main",
+);
+
+export const readSpacedRepetitionItems = read(
+  mainStore.getters.spacedRepetitionItems,
+);
+export const readRecordedPracticeSets = read(
+  mainStore.getters.recordedPracticeSets,
+);
+export const readSelectedCharacters = read(
+  mainStore.getters.selectedCharacters,
+);
+export const dispatchRestoreState = dispatch(mainStore.actions.restoreState);
+export const dispatchSaveState = dispatch(mainStore.actions.saveState);
+export const commitRecordPracticeSet = commit(
+  mainStore.mutations.recordPracticeSet,
+);
+export const commitSelectCharacter = commit(
+  mainStore.mutations.selectCharacter,
+);
+export const commitUnselectCharacter = commit(
+  mainStore.mutations.unselectCharacter,
+);

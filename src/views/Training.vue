@@ -33,11 +33,21 @@
 </template>
 
 <script lang="ts">
-import { getStore, PracticeSet, Store } from "@/store";
+import {
+  commitRecordPracticeSet,
+  dispatchRestoreState,
+  dispatchSaveState,
+  PracticeSet,
+  readRecordedPracticeSets,
+  readSelectedCharacters,
+  readSpacedRepetitionItems,
+  RootStore,
+} from "@/store";
 import { compareItem, createItem } from "@/tech/SpacedRepetition";
 import { entries } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Store } from "vuex";
 import CharacterSelector from "../components/training/CharacterSelector.vue";
 import TrainingHeader from "../components/training/TrainingHeader.vue";
 import TrainingPanel from "../components/training/TrainingPanel.vue";
@@ -92,12 +102,13 @@ function createPanelsForTech(
 }
 
 function getSatisfactoryTech<T extends GameId>(
-  store: Store,
+  store: RootStore,
   gameAndCharacterId: GameAndCharacterId<T>,
 ): SatisfactoryTech {
   const { gameId, characterId } = gameAndCharacterId;
   const satisfactoryTech: SatisfactoryTech = {};
-  for (const practiceSet of store.state.remote.recordedPracticeSets) {
+  const recordedPracticeSets = readRecordedPracticeSets(store);
+  for (const practiceSet of recordedPracticeSets) {
     const { techId, techVariant } = practiceSet;
     if (isSatisfactoryPracticeSet(practiceSet)) {
       const serializedTechVariant = serializeTechVariant(techId, techVariant);
@@ -108,10 +119,10 @@ function getSatisfactoryTech<T extends GameId>(
 }
 
 function createPanels<T extends GameId>(
-  store: Store,
+  store: RootStore,
   gameAndCharacterId: GameAndCharacterId<T>,
 ): PanelData[] {
-  const spacedRepetitionItems = store.getters.spacedRepetitionItems;
+  const spacedRepetitionItems = readSpacedRepetitionItems(store);
   const satisfactoryTech = getSatisfactoryTech(store, gameAndCharacterId);
   return entries(allTechMetadata)
     .flatMap(entry => {
@@ -154,10 +165,12 @@ export default class extends Vue {
   }
 
   public async created() {
-    await getStore().dispatch.restoreState();
+    await dispatchRestoreState(this.$store);
 
     this.$watch(
-      () => getStore().state.local.selectedCharacters[this.gameId],
+      function() {
+        return readSelectedCharacters(this.$store)[this.gameId];
+      },
       function(newSelectedCharacter) {
         if (newSelectedCharacter === null) {
           this.panels = "no-character-selected";
@@ -181,7 +194,7 @@ export default class extends Vue {
   public resetExpansionPanels(
     gameAndCharacterId: GameAndCharacterId<GameId>,
   ): void {
-    this.panels = createPanels(getStore(), gameAndCharacterId);
+    this.panels = createPanels(this.$store, gameAndCharacterId);
     this.shownExpansionPanels = [0];
     this.hiddenExpansionPanels = [];
   }
@@ -191,8 +204,8 @@ export default class extends Vue {
     practiceSet: PracticeSet<TechId>,
   ): Promise<void> {
     this.hidePanel(i);
-    getStore().commit.recordPracticeSet(practiceSet);
-    await getStore().dispatch.saveState();
+    commitRecordPracticeSet(this.$store, practiceSet);
+    await dispatchSaveState(this.$store);
   }
 
   public hidePanel(i: number): void {

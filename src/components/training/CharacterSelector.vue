@@ -37,7 +37,12 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import { getStore } from "../../store";
+import {
+  commitSelectCharacter,
+  commitUnselectCharacter,
+  dispatchSaveState,
+  readSelectedCharacters,
+} from "../../store";
 import {
   allCharacterMetadata,
   CharacterId,
@@ -66,21 +71,22 @@ export default class extends Vue {
   }
 
   get selectedCharacterId() {
-    return getStore().state.local.selectedCharacters[this.gameId];
+    const selectedCharacters = readSelectedCharacters(this.$store);
+    return selectedCharacters[this.gameId];
   }
 
   public async onChange(
     characterId: CharacterId<GameId> | undefined,
   ): Promise<void> {
     if (characterId !== undefined) {
-      getStore().commit.selectCharacter({
+      commitSelectCharacter(this.$store, {
         gameId: this.gameId,
         characterId,
       });
     } else {
-      getStore().commit.unselectCharacter(this.gameId);
+      commitUnselectCharacter(this.$store, this.gameId);
     }
-    await getStore().dispatch.saveState();
+    await dispatchSaveState(this.$store);
   }
 
   public filter(

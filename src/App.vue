@@ -69,7 +69,7 @@ a {
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { getStore } from "./store";
+import { dispatchRestoreState, dispatchSaveState } from "./store";
 
 @Component({ name: "App" })
 export default class extends Vue {
@@ -80,8 +80,7 @@ export default class extends Vue {
   }
 
   public async mounted() {
-    const store = getStore();
-    await store.dispatch.restoreState();
+    await dispatchRestoreState(this.$store);
   }
 }
 </script>

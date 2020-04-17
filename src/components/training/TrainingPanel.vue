@@ -46,7 +46,6 @@
 </template>
 
 <script lang="ts">
-import { getStore } from "@/store";
 import allTechData, { getTechMetadata, TechId } from "@/tech/AllTechMetadata";
 import {
   AllTechVariants,
