@@ -50,7 +50,7 @@ interface RootState {
   };
 }
 
-const defaultState: MainState = {
+export const defaultMainState: MainState = {
   version: 1,
   local: {
     loaded: false,
@@ -70,7 +70,7 @@ type MainContext = ActionContext<MainState, RootState>;
 
 const mainStore = {
   namespaced: true,
-  state: defaultState,
+  state: defaultMainState,
   getters: {
     selectedCharacters(
       state: MainState,
@@ -172,6 +172,14 @@ const rootStore = new Vuex.Store({
 export type RootStore = typeof rootStore;
 
 export default rootStore;
+
+export function makeDefaultRootStore(): RootStore {
+  return new Vuex.Store({
+    modules: {
+      main: mainStore,
+    },
+  });
+}
 
 const { commit, read, dispatch } = getStoreAccessors<MainState, RootState>(
   "main",

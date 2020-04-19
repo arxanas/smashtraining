@@ -89,6 +89,7 @@ import CharacterSelector from "./CharacterSelector.vue";
 import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
 @Component({
+  name: "TrainingHeader",
   components: {
     CharacterSelector,
     TrainingPerformanceSelector,
