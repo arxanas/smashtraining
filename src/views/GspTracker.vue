@@ -5,14 +5,18 @@
         <v-card>
           <v-card-title>GSP Tracker</v-card-title>
           <v-card-text>
-            <canvas ref="chart"></canvas>
+            <v-responsive style="overflow: scroll">
+              <div style="height: 100%; min-width: 500px">
+                <canvas width="500px" ref="chart"></canvas>
+              </div>
+            </v-responsive>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col>
         <v-card>
           <v-card-title>Add entry</v-card-title>
           <v-card-text>
@@ -23,7 +27,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="8">
+                <v-col cols="6">
                   <v-text-field
                     label="GSP"
                     placeholder="GSP, ex. 1000000"
@@ -32,10 +36,10 @@
                     v-model="gsp"
                   />
                 </v-col>
-                <v-col cols="4">
-                  <v-btn color="primary" @click="recordGspDatum"
-                    >Add entry</v-btn
-                  >
+                <v-col cols="6">
+                  <v-btn color="primary" @click="recordGspDatum">
+                    Add entry
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -62,7 +66,7 @@ import Chart, { ChartDataSets, ChartOptions } from "chart.js";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { ELITE_GSP_DATA } from "../gsp/EliteGspData";
-import { calculatePercentile } from "../gsp/Gsp";
+import { calculatePercentile, shortenGspValueForAxis } from "../gsp/Gsp";
 
 interface GspDatum extends RawGspDatum {
   percentile: number;
@@ -159,11 +163,7 @@ export default class extends Vue {
             ticks: {
               callback(value, index, values) {
                 const valueNum = value as number;
-                if (valueNum >= 1e6) {
-                  return valueNum / 1e6 + "M";
-                } else {
-                  return valueNum / 1e3 + "k";
-                }
+                return shortenGspValueForAxis(valueNum);
               },
             },
           },

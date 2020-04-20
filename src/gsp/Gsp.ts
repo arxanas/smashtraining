@@ -50,3 +50,16 @@ export function calculatePercentile(
   const percentile = dist.cdf(gsp);
   return Math.round(percentile * 1000) / 10;
 }
+
+export function shortenGspValueForAxis(value: number): string {
+  const trimZerosAfterDecimal = (valueWithPrecision: string) => {
+    return valueWithPrecision.replace(/(\.[1-9]*)0+$/, "$1").replace(/\.$/, "");
+  };
+  if (value >= 1e6) {
+    return trimZerosAfterDecimal(Number(value / 1e6).toPrecision(3)) + "M";
+  } else if (value >= 1e3) {
+    return trimZerosAfterDecimal(Number(value / 1e3).toPrecision(3)) + "k";
+  } else {
+    return value + "";
+  }
+}

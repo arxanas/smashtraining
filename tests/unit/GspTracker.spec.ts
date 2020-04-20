@@ -1,7 +1,4 @@
-import vuetify from "@/plugins/vuetify";
 import { commitRecordGspDatum, makeDefaultRootStore } from "@/store";
-import GspTracker from "@/views/GspTracker.vue";
-import { mount } from "@vue/test-utils";
 import { flagConsoleErrors } from "../utils";
 
 describe("GspTracker.vue", () => {
