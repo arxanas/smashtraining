@@ -47,6 +47,46 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title>About GSP</v-card-title>
+          <v-card-text>
+            <p>
+              <b>Global Smash Power</b> (GSP) is a measure of how many players
+              you are stronger than, used in the
+              <b>Quickplay online mode</b> (higher is better). Each character
+              has an individual GSP ranking. It's used to help pair you against
+              players of similar strength.
+            </p>
+            <p>
+              Because your GSP depends on the number of active players, it may
+              change over time as more players become active online, even if you
+              don't play any games.
+            </p>
+            <p>
+              Most rating systems (such as
+              <a href="https://en.wikipedia.org/wiki/Elo_rating_system"
+                >the Elo rating system</a
+              >) assume a normal distribution of skill levels. It's reasonable
+              to assume that the internal calculations used by GSP operate
+              similarly. That means
+              <strong>GSP does not scale linearly</strong>. It's harder to gain
+              GSP at very low and very high values, and easier to gain at
+              middling values.
+            </p>
+            <p>
+              Since GSP varies over time, your GSP is also converted into a
+              <b>percentile</b> measurement, which is more meaningful since it
+              doesn't depend on the number of active online players. The
+              percentile data is sourced from historical data from
+              <a href="https://www.elitegsp.com/">elitegsp.com</a>.
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
