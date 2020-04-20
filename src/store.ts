@@ -154,9 +154,9 @@ const mainStore = {
       const gameData = (recordedRawGspData[gameId] || {}) as {
         [x: string]: RawGspDatum[];
       };
-      recordedRawGspData[gameId] = gameData;
+      Vue.set(recordedRawGspData, gameId, gameData);
       const characterData = gameData[characterId] || [];
-      gameData[characterId] = characterData;
+      Vue.set(gameData, characterId, characterData);
       characterData.push(gspDatum);
     },
     restoreState(state: MainState, newState: MainState) {
