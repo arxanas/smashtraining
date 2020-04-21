@@ -1,54 +1,30 @@
-[![CircleCI](https://circleci.com/gh/arxanas/smashtraining.svg?style=svg&circle-token=62070292aa6ff07692322252af7850f79a6701e6)](https://circleci.com/gh/arxanas/smashtraining)
+[![CircleCI](https://circleci.com/gh/arxanas/smashtraining.svg?style=svg&circle-token=62070292aa6ff07692322252af7850f79a6701e6)](https://circleci.com/gh/arxanas/smashtraining) [![Netlify Status](https://api.netlify.com/api/v1/badges/4b4a40dd-6b9d-412e-b997-9c13496cf34c/deploy-status)](https://app.netlify.com/sites/smashtraining/deploys)
 
-# smashtraining
+# Smash Training
 
-## Project setup
+_Smash Training_ is a spaced-repetition trainer for Super Smash Bros Ultimate. You can check it out at https://ssb.fit.
+
+# Project setup
+
+Set up the development environment:
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Compile and run for development:
 
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your tests
+Run tests:
 
 ```
 npm run test
 ```
 
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Run your end-to-end tests
-
-```
-npm run test:e2e
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## Credits
+# Credits
 
 Built with [TypeScript](http://www.typescriptlang.org/), [Vue.js](https://vuejs.org/), and [Vuetify](vuetifyjs.com).
 
