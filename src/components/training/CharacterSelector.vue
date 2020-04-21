@@ -12,22 +12,19 @@
     <template v-slot:selection="data">
       <v-chip>
         <v-avatar left tile size="24" style="margin-right: 5px">
-          <v-img :src="getUrlForHeadIcon(data.item)"></v-img>
+          <v-img :src="getUrlForHeadIcon(data.item)" />
         </v-avatar>
         {{ data.item.characterMetadata.displayName }}
       </v-chip>
     </template>
     <template v-slot:item="data">
-      <v-list-item-avatar tile>
-        <img :src="getUrlForHeadIcon(data.item)" />
+      <v-list-item-avatar tile size="24" class="pa-0">
+        <v-img :src="getUrlForHeadIcon(data.item)" />
       </v-list-item-avatar>
-      <v-list-item-content>
+      <v-list-item-content class="pa-0">
         <v-list-item-title>
           {{ data.item.characterMetadata.displayName }}
         </v-list-item-title>
-        <v-list-item-subtitle>
-          {{ data.item.characterMetadata.title }}
-        </v-list-item-subtitle>
       </v-list-item-content>
     </template>
   </v-autocomplete>
@@ -61,13 +58,20 @@ export default class extends Vue {
   public gameId!: GameId;
 
   get characters(): AutocompleteItem[] {
-    return Object.entries(allCharacterMetadata[this.gameId]).map(entry => {
-      const [characterId, characterMetadata] = entry;
-      return {
-        characterId,
-        characterMetadata,
-      };
-    });
+    return Object.entries(allCharacterMetadata[this.gameId])
+      .map(entry => {
+        const [characterId, characterMetadata] = entry;
+        return {
+          characterId,
+          characterMetadata,
+        };
+      })
+      .sort((lhs, rhs) => {
+        return lhs.characterMetadata.displayName <
+          rhs.characterMetadata.displayName
+          ? -1
+          : 1;
+      });
   }
 
   get selectedCharacterId() {
