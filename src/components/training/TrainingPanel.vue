@@ -38,7 +38,7 @@
           text
           color="secondary"
           :to="{ name: 'learn-tech', params: { techId }, query: variant }"
-          >Learn this tech</v-btn
+          >Learn</v-btn
         >
       </v-card-actions>
     </v-expansion-panel-content>

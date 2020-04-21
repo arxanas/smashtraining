@@ -6,7 +6,7 @@
       </v-col>
       <v-col :cols="12" :md="6" class="text-center text-md-right pt-1 py-md-2">
         <v-btn text small color="primary" :href="issueUrl">
-          <v-icon left>mdi-github-circle</v-icon>
+          <v-icon left>mdi-github</v-icon>
           Report an issue
         </v-btn>
       </v-col>

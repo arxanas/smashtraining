@@ -16,8 +16,8 @@
     <template v-slot:inputs>
       <ul>
         <li>
-          <ControlInputs inputs="fh ." />: Hold the jump button for longer than
-          3 frames. Your character will do a full hop and then return to the
+          <ControlInputs inputs="fh" />: Hold the jump button for longer than 3
+          frames. Your character will do a full hop and then return to the
           ground.
         </li>
         <li>
