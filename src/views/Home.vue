@@ -167,18 +167,18 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Strategy vs. tactics</v-card-title>
+          <v-card-title>Strategic vs. technical skill</v-card-title>
           <v-card-text>
             <p>
-              <b>Smash Training</b> can teach you tactical skills like spacing
+              <b>Smash Training</b> can teach you technical skills like spacing
               aerial attacks, but it can't teach you strategic skills like
               deciding which moves to use in a given situation. That's because
-              it's easier to automatically generate and assess tactical drills.
+              it's easier to automatically generate and assess technical drills.
             </p>
 
-            Nonetheless, having strong tactical skills is a prerequisite for
+            Nonetheless, having strong technical skills is a prerequisite for
             being a strong player. You won't be able to execute your strategy if
-            you don't hone your tactical skills first.
+            you don't hone your technical skills first.
           </v-card-text>
         </v-card>
       </v-col>
