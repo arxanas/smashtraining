@@ -44,7 +44,7 @@ import {
   RootStore,
 } from "@/store";
 import { compareItem, createItem } from "@/tech/SpacedRepetition";
-import { entries } from "@/utils";
+import { deepEqual, entries } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Store } from "vuex";
@@ -93,6 +93,16 @@ function createPanelsForTech(
       .filter(x => x[1])
       .map(x => x[0]),
   )
+    .filter(variant => {
+      const excludeVariants = techMetadata.excludeVariants;
+      if (excludeVariants === undefined) {
+        return true;
+      } else {
+        return !excludeVariants.some(excludeVariant =>
+          deepEqual(variant, excludeVariant),
+        );
+      }
+    })
     .filter(variant => isTechAvailable(satisfactoryTech, techId, variant))
     .map(variant => ({
       techId,

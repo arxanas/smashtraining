@@ -66,6 +66,9 @@ const allTechMetadata = {
       facing: true,
       jumpDistance: true,
     },
+    excludeVariants: [
+      { facing: "backward" as const, jumpDistance: "0.0" as const },
+    ],
   },
   "running-tilt": {
     name: "Running tilt",
@@ -83,6 +86,9 @@ const allTechMetadata = {
       facing: true,
       jumpDistance: true,
     },
+    excludeVariants: [
+      { facing: "backward" as const, jumpDistance: "0.0" as const },
+    ],
   },
   "fast-fall": {
     name: "Fast-fall",

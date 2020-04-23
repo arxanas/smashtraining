@@ -36,6 +36,7 @@ export interface TechMetadata {
     [game in GameId]: {};
   };
   variants: TechVariantConfig;
+  excludeVariants?: TechVariant[];
 }
 
 export type TechGame = keyof TechMetadata["games"];
