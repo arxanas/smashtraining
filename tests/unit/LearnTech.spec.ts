@@ -115,6 +115,7 @@ describe("LearnTech.vue", () => {
       const params = { techId };
       const query = generateVariantData(techMetadata);
       const wrapper = mount(LearnTech, {
+        vuetify: new Vuetify(),
         stubs: ["router-link"],
         mocks: {
           $route: {

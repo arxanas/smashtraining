@@ -1,15 +1,13 @@
 <template>
   <div>
-    <v-card v-if="component && !badVariantName">
-      <v-card-title>Learn: {{ techMetadata.name }}</v-card-title>
-      <v-card-text>
-        <component :is="component" :variant="variant" />
-      </v-card-text>
+    <div v-if="component && !badVariantName">
+      <h1 class="headline mt-0 mb-n2">Learn: {{ techMetadata.name }}</h1>
+      <component :is="component" :variant="variant" />
       <v-divider />
       <GithubReportIssueBanner>
         Can you help improve this information?
       </GithubReportIssueBanner>
-    </v-card>
+    </div>
     <v-card v-else>
       <v-card-title>
         Tech not found
@@ -22,7 +20,6 @@
         </div>
         <div v-else>Error: Unknown tech '{{ $route.params.techId }}'.</div>
       </v-card-text>
-      <v-divider />
       <GithubReportIssueBanner>
         Is this tech missing documentation?
       </GithubReportIssueBanner>

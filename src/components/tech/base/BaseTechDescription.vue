@@ -1,49 +1,135 @@
 <template>
-  <div class="text--primary">
-    <h2 id="exercise" class="subtitle-1">
-      Exercise
-      <v-tooltip top>
-        <template v-slot:activator="{ on }">
-          <v-icon small class="mt-n1" v-on="on">mdi-help-circle-outline</v-icon>
-        </template>
-        <span>Do the following steps for about 30 seconds per set.</span>
-      </v-tooltip>
-    </h2>
-    <slot name="exercise">
-      <i>No exercise routine is currently available.</i>
-    </slot>
+  <v-container id="top">
+    <v-row>
+      <v-col class="ma-0">
+        <v-card
+          style="border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+        >
+          <v-card-title id="exercise">
+            Exercise
+          </v-card-title>
+          <v-card-text>
+            <slot name="exercise">
+              <i>No exercise routine is currently available.</i>
+            </slot>
+          </v-card-text>
+          <v-divider />
+          <v-banner icon="mdi-information" class="banner-text">
+            <ul>
+              <li>
+                Go to <b>Games &amp; More</b> › <b>Training</b> and select the
+                "Training" stage.
+              </li>
+              <li>
+                Carry out these steps for about 30 seconds per set, or until
+                tired.
+              </li>
+            </ul>
+          </v-banner>
+        </v-card>
+      </v-col>
+    </v-row>
 
-    <h2 id="description" class="subtitle-1 mt-4">Description</h2>
-    <slot name="description">
-      <i>No description is currently available.</i>
-    </slot>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="description">
+            Description
+          </v-card-title>
+          <v-card-text>
+            <slot name="description">
+              <i>No description is currently available.</i>
+            </slot>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
-    <h2 id="inputs" class="subtitle-1 mt-4">
-      Inputs
-      <v-tooltip top>
-        <template v-slot:activator="{ on }">
-          <v-icon small class="mt-n1" v-on="on">mdi-help-circle-outline</v-icon>
-        </template>
-        <span>Try tapping or hovering on the icons for a description.</span>
-      </v-tooltip>
-    </h2>
-    <slot name="inputs">
-      <i>No inputs are currently available.</i>
-    </slot>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="inputs">
+            Inputs
+          </v-card-title>
+          <v-card-text>
+            <slot name="inputs">
+              <i>No inputs are currently available.</i>
+            </slot>
+          </v-card-text>
+          <v-divider />
+          <v-banner icon="mdi-information" class="banner-text">
+            Tap or hover on an input icon like <ControlInputs inputs="r" /> to
+            see its description.
+          </v-banner>
+        </v-card>
+      </v-col>
+    </v-row>
 
-    <h2 id="video" class="subtitle-1 mt-4">Video</h2>
-    <slot name="video">
-      <i>No video has been provided yet.</i>
-    </slot>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="video">Video</v-card-title>
+          <v-card-text>
+            <slot name="video">
+              <i>No video has been provided yet.</i>
+            </slot>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
-    <h2 id="common-mistakes" class="subtitle-1 mt-4">Common mistakes</h2>
-    <slot name="common-mistakes">
-      <i>No common mistakes are currently available.</i>
-    </slot>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="common-mistakes">
+            Common mistakes
+          </v-card-title>
+          <v-card-text>
+            <slot name="common-mistakes">
+              <i>No common mistakes are currently available.</i>
+            </slot>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
-    <h2 id="tips" class="subtitle-1 mt-4">Tips</h2>
-    <slot name="tips">
-      <i>No tips are currently available.</i>
-    </slot>
-  </div>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="tips">
+            Tips
+          </v-card-title>
+          <v-card-text>
+            <slot name="tips">
+              <i>No tips are currently available.</i>
+            </slot>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+
+<style>
+.v-card__text p:last-child {
+  margin-bottom: 0px;
+}
+</style>
+
+<style scoped>
+.banner-text {
+  font-size: 0.75em;
+  color: rgba(0, 0, 0, 0.6);
+}
+</style>
+
+<script lang="ts">
+import ControlInputs from "@/components/ControlInputs.vue";
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({
+  components: { ControlInputs },
+})
+export default class extends Vue {}
+</script>
