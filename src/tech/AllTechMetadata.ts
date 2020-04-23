@@ -16,6 +16,40 @@ const allTechMetadata = {
     },
     variants: {},
   },
+  "rapid-turnaround": {
+    name: "Rapid turnaround",
+    games: {
+      ssbu: {},
+    },
+    variants: {},
+  },
+  "running-jab": {
+    name: "Running jab",
+    games: {
+      ssbu: {},
+    },
+    variants: {
+      facing: true,
+    },
+  },
+  "dash-attack": {
+    name: "Dash attack",
+    games: {
+      ssbu: {},
+    },
+    variants: {
+      facing: true,
+    },
+  },
+  "running-nair": {
+    name: "Running neutral-aerial",
+    games: {
+      ssbu: {},
+    },
+    variants: {
+      facing: true,
+    },
+  },
   "b-reverse": {
     name: "B-reverse",
     games: {
@@ -156,7 +190,18 @@ export function getTechDependencies<T extends TechId>(
   switch (techId) {
     case "walk":
     case "dash":
+    case "rapid-turnaround":
       return [];
+
+    case "running-jab":
+    case "dash-attack":
+    case "running-nair":
+      return [dep("dash", {})];
+
+    case "running-tilt":
+      return [dep("dash", {})];
+    case "b-reverse":
+      return [dep("running-tilt", {})];
 
     case "short-hop":
     case "full-hop": {
@@ -215,11 +260,6 @@ export function getTechDependencies<T extends TechId>(
           return unreachable(fall, "fall check is exhaustive.");
       }
     }
-
-    case "running-tilt":
-      return [dep("dash", {})];
-    case "b-reverse":
-      return [dep("running-tilt", {})];
 
     default:
       return unreachable(techId, "techId check is exhaustive");
