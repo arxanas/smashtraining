@@ -7,9 +7,6 @@ export interface CharacterMetadata {
   title: string;
 }
 
-// tslint wants to be consistent about whether object keys are quoted or not.
-// However, Prettier quotes as-needed, and this behavior isn't configurable.
-// tslint:disable:object-literal-key-quotes
 const allCharacterMetadataInternal = {
   ssbu: {
     mario: {
