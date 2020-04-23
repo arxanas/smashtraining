@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app v-model="drawer">
       <v-list>
-        <v-list-item to="/">
+        <v-list-item :to="{ name: 'home' }">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -11,7 +11,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="training">
+        <v-list-item :to="{ name: 'training' }">
           <v-list-item-action>
             <v-icon>mdi-dumbbell</v-icon>
           </v-list-item-action>
@@ -20,7 +20,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="gsp-tracker">
+        <v-list-item :to="{ name: 'gsp-tracker' }">
           <v-list-item-action>
             <v-icon>mdi-trending-up</v-icon>
           </v-list-item-action>
@@ -29,7 +29,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="stats">
+        <v-list-item :to="{ name: 'stats' }">
           <v-list-item-action>
             <v-icon>mdi-poll-box</v-icon>
           </v-list-item-action>
@@ -38,7 +38,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="about">
+        <v-list-item :to="{ name: 'about' }">
           <v-list-item-action>
             <v-icon>mdi-information</v-icon>
           </v-list-item-action>
