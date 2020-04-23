@@ -1,10 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import GspTracker from "./views/GspTracker.vue";
-import Home from "./views/Home.vue";
-import LearnTech from "./views/LearnTech.vue";
-import Stats from "./views/Stats.vue";
-import Training from "./views/Training.vue";
 
 Vue.use(Router);
 
@@ -15,36 +10,38 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home,
+      component: () =>
+        import(/* webpackChunkName: "Home" */ "./views/Home.vue"),
     },
     {
       path: "/training",
       name: "training",
-      component: Training,
+      component: () =>
+        import(/* webpackChunkName: "Training" */ "./views/Training.vue"),
     },
     {
       path: "/gsp-tracker",
       name: "gsp-tracker",
-      component: GspTracker,
+      component: () =>
+        import(/* webpackChunkName: "GspTracker" */ "./views/GspTracker.vue"),
     },
     {
       path: "/stats",
       name: "stats",
-      component: Stats,
+      component: () =>
+        import(/* webpackChunkName: "Stats" */ "./views/Stats.vue"),
     },
     {
       path: "/tech/:techId",
       name: "learn-tech",
-      component: LearnTech,
+      component: () =>
+        import(/* webpackChunkName: "LearnTech" */ "./views/LearnTech.vue"),
     },
     {
       path: "/about",
       name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue"),
+        import(/* webpackChunkName: "About" */ "./views/About.vue"),
     },
   ],
   scrollBehavior(to, from, savedPosition) {
