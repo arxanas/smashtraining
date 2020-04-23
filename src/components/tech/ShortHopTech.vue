@@ -36,7 +36,7 @@
           scheme to use one or two shoulder buttons as jump buttons.
         </li>
         <li>
-          <ControlInputs inputs="u" />: Tap the control stick up for a very
+          <ControlInputs inputs="u ." />: Tap the control stick up for a very
           short period of time (3 frames). You must have Stick Jump enabled in
           your control scheme to do this.
         </li>

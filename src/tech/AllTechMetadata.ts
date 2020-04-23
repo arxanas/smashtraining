@@ -2,6 +2,20 @@ import { unreachable, upcast } from "@/utils";
 import { AllTechVariants, TechMetadata } from "./TechMetadata";
 
 const allTechMetadata = {
+  walk: {
+    name: "Walk",
+    games: {
+      ssbu: {},
+    },
+    variants: {},
+  },
+  dash: {
+    name: "Dash",
+    games: {
+      ssbu: {},
+    },
+    variants: {},
+  },
   "b-reverse": {
     name: "B-reverse",
     games: {
@@ -140,6 +154,10 @@ export function getTechDependencies<T extends TechId>(
 ): Array<TechDependency<TechId>> {
   const techId: TechId = upcast(techId_);
   switch (techId) {
+    case "walk":
+    case "dash":
+      return [];
+
     case "short-hop":
     case "full-hop": {
       const { facing, jumpDistance } = variant as TechVariantOf<typeof techId>;
@@ -199,7 +217,7 @@ export function getTechDependencies<T extends TechId>(
     }
 
     case "running-tilt":
-      return [];
+      return [dep("dash", {})];
     case "b-reverse":
       return [dep("running-tilt", {})];
 

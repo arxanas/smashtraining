@@ -1,9 +1,11 @@
 import BReverseTech from "@/components/tech/BReverseTech.vue";
+import DashTech from "@/components/tech/DashTech.vue";
 import FallingAerialTech from "@/components/tech/FallingAerialTech.vue";
 import FastFallTech from "@/components/tech/FastFallTech.vue";
 import FullHopTech from "@/components/tech/FullHopTech.vue";
 import RunningTiltTech from "@/components/tech/RunningTiltTech.vue";
 import ShortHopTech from "@/components/tech/ShortHopTech.vue";
+import WalkTech from "@/components/tech/WalkTech.vue";
 import { VueConstructor } from "vue";
 import { TechId } from "./AllTechMetadata";
 
@@ -12,6 +14,8 @@ import { TechId } from "./AllTechMetadata";
 // metadata for rendering. It causes a circular dependency to put them in the
 // same place.
 const allTechDataComponents: Record<TechId, VueConstructor> = {
+  walk: WalkTech,
+  dash: DashTech,
   "b-reverse": BReverseTech,
   "full-hop": FullHopTech,
   "running-tilt": RunningTiltTech,
