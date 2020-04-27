@@ -20,6 +20,18 @@ import Component from "vue-class-component";
 
 @Component
 export default class extends Vue {
-  public issueUrl: string = "https://github.com/arxanas/smashtraining/issues";
+  public repoGithubIssuesUrl: string =
+    "https://github.com/arxanas/smashtraining/issues/new";
+
+  get issueUrl(): string {
+    const url = new URL(this.repoGithubIssuesUrl);
+    url.searchParams.set(
+      "body",
+      `Page: ${window.location.toString()}
+
+<!-- fill in your issue body here -->`,
+    );
+    return url.toString();
+  }
 }
 </script>
