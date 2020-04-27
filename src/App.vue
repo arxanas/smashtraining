@@ -68,6 +68,13 @@
         </v-row>
       </v-container>
     </v-content>
+
+    <v-snackbar v-model="snackbarEnabled" :timeout="1000">
+      {{ snackbarText }}
+      <v-btn color="blue" text @click="snackbarEnabled = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -80,14 +87,41 @@ a {
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { dispatchRestoreState, dispatchSaveState } from "./store";
+import {
+  commitSnackbarText,
+  dispatchRestoreState,
+  dispatchSaveState,
+  readSnackbarText,
+} from "./store";
 
 @Component({ name: "App" })
 export default class extends Vue {
+  private snackbarEnabled!: boolean;
+  private snackbarText!: string;
+
   public data() {
     return {
       drawer: false,
+      snackbarEnabled: false,
+      snackbarText: "",
     };
+  }
+
+  public created() {
+    this.$watch(() => this.snackbarEnabled, function(snackbarEnabled) {
+      if (!snackbarEnabled) {
+        commitSnackbarText(this.$store, null);
+      }
+    });
+    this.$watch(() => readSnackbarText(this.$store), function(snackbarText) {
+      if (snackbarText !== null) {
+        this.snackbarEnabled = true;
+        this.snackbarText = snackbarText;
+      } else {
+        this.snackbarEnabled = false;
+        this.snackbarText = "";
+      }
+    });
   }
 
   public async mounted() {

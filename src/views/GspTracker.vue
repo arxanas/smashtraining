@@ -255,7 +255,6 @@ export default class extends Vue {
         gsp: this.gspValue,
       },
     });
-    alert("GSP saved.");
     await dispatchSaveState(this.$store);
 
     this.gsp = null;

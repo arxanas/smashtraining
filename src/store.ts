@@ -43,6 +43,7 @@ interface MainState {
     loaded: boolean;
     selectedGame: GameId;
     selectedCharacters: { [game in GameId]: CharacterId<game> | null };
+    snackbarText: string | null;
   };
   remote: {
     recordedRawGspData?: {
@@ -66,6 +67,7 @@ export const defaultMainState: MainState = {
     selectedCharacters: {
       ssbu: null,
     },
+    snackbarText: null,
   },
   remote: {
     recordedRawGspData: {
@@ -87,6 +89,9 @@ const mainStore = {
       state: MainState,
     ): MainState["local"]["selectedCharacters"] {
       return state.local.selectedCharacters;
+    },
+    snackbarText(state: MainState): MainState["local"]["snackbarText"] {
+      return state.local.snackbarText;
     },
     recordedPracticeSets(
       state: MainState,
@@ -134,6 +139,9 @@ const mainStore = {
     unselectCharacter(state: MainState, gameId: GameId): void {
       state.local.selectedCharacters[gameId] = null;
     },
+    setSnackbarText(state: MainState, snackbarText: string | null): void {
+      state.local.snackbarText = snackbarText;
+    },
     recordPracticeSet<T extends TechId>(
       state: MainState,
       practiceSet: PracticeSet<T>,
@@ -167,6 +175,7 @@ const mainStore = {
     async saveState(context: MainContext): Promise<void> {
       const state = { ...context.state, loaded: false };
       localStorage.setItem("state", JSON.stringify(state));
+      context.state.local.snackbarText = "Data saved.";
     },
     async restoreState(context: MainContext): Promise<void> {
       if (context.state.local.loaded) {
@@ -230,6 +239,7 @@ export const readRawGspData = read(mainStore.getters.recordedRawGspData);
 export const readSelectedCharacters = read(
   mainStore.getters.selectedCharacters,
 );
+export const readSnackbarText = read(mainStore.getters.snackbarText);
 export const dispatchRestoreState = dispatch(mainStore.actions.restoreState);
 export const dispatchSaveState = dispatch(mainStore.actions.saveState);
 export const commitRecordPracticeSet = commit(
@@ -242,3 +252,4 @@ export const commitSelectCharacter = commit(
 export const commitUnselectCharacter = commit(
   mainStore.mutations.unselectCharacter,
 );
+export const commitSnackbarText = commit(mainStore.mutations.setSnackbarText);
