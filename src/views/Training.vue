@@ -22,7 +22,10 @@
           :num-sets="panel.numSets"
         />
       </v-expansion-panels>
-      <p class="title text-center pa-4 text--secondary">
+      <p class="subtitle text-center pt-4 mb-0 text--secondary">
+        Done with these exercises? Refresh to see more.
+      </p>
+      <p class="text-center">
         <v-btn text v-on:click="refresh">
           <v-icon>mdi-refresh</v-icon>
           Refresh
