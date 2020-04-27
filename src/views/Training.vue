@@ -15,8 +15,9 @@
       <v-expansion-panels multiple :value="shownExpansionPanels">
         <TrainingPanel
           v-for="(panel, i) in panels"
-          v-on:recorded="onRecorded(i, $event)"
           :key="i"
+          v-on:recorded="onRecorded(i, $event)"
+          :anchor-id="'tech-' + i"
           :tech-id="panel.techId"
           :variant="panel.variant"
           :num-sets="panel.numSets"
@@ -240,6 +241,12 @@ export default class extends Vue {
       if (maxSeenPanel + 1 < maxNumPanels) {
         this.shownExpansionPanels.push(maxSeenPanel + 1);
       }
+
+      // Dumb hack: since the expansion panel is still animating, if we don't
+      // wait for it to complete, we'll get scrolled too early on the page.
+      setTimeout(() => {
+        this.$vuetify.goTo("#tech-" + this.shownExpansionPanels[0].toString());
+      }, 200);
     }
   }
 }
