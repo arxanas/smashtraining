@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel>
+  <v-expansion-panel :id="anchorId || ''">
     <v-expansion-panel-header disable-icon-rotate class="py-2 subtitle-1">
       <div>
         {{ techMetadata.name }}
@@ -71,6 +71,9 @@ export default class extends Vue {
 
   @Prop({ type: Number, required: true })
   public numSets!: number;
+
+  @Prop({ type: String, required: true })
+  public anchorId!: string;
 
   // defined in `data`
   public setResults!: number[];
