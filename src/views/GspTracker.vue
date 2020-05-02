@@ -159,8 +159,9 @@ export default class extends Vue {
   }
 
   public getGspDataset(rawDataset: RawGspDatum[]): ChartDataSets {
+    const color = "orange";
     return {
-      borderColor: "black",
+      borderColor: color,
       label: "GSP",
       yAxisID: "gsp-axis",
       data: rawDataset.map(datum => ({
@@ -168,15 +169,16 @@ export default class extends Vue {
         y: datum.gsp,
       })),
       fill: false,
-      pointBackgroundColor: "black",
+      pointBackgroundColor: color,
       cubicInterpolationMode: "monotone",
     };
   }
 
   public getPercentileDataset(rawDataset: RawGspDatum[]): ChartDataSets {
     const eliteGspData = ELITE_GSP_DATA;
+    const color = "blue";
     return {
-      borderColor: "blue",
+      borderColor: color,
       label: "Percentile",
       yAxisID: "percentile-axis",
       data: rawDataset.map(datum => ({
@@ -184,7 +186,7 @@ export default class extends Vue {
         y: calculatePercentile(eliteGspData, datum.gsp, datum.timestamp),
       })),
       fill: false,
-      pointBackgroundColor: "black",
+      pointBackgroundColor: color,
       cubicInterpolationMode: "monotone",
     };
   }
