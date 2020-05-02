@@ -39,11 +39,11 @@ export interface PracticeSet<T extends TechId> {
 
 interface MainState {
   version: 1;
+  snackbarText: string | null;
   local: {
     loaded: boolean;
     selectedGame: GameId;
     selectedCharacters: { [game in GameId]: CharacterId<game> | null };
-    snackbarText: string | null;
   };
   remote: {
     recordedRawGspData?: {
@@ -61,13 +61,13 @@ interface RootState {
 
 export const defaultMainState: MainState = {
   version: 1,
+  snackbarText: null,
   local: {
     loaded: false,
     selectedGame: "ssbu",
     selectedCharacters: {
       ssbu: null,
     },
-    snackbarText: null,
   },
   remote: {
     recordedRawGspData: {
@@ -90,8 +90,8 @@ const mainStore = {
     ): MainState["local"]["selectedCharacters"] {
       return state.local.selectedCharacters;
     },
-    snackbarText(state: MainState): MainState["local"]["snackbarText"] {
-      return state.local.snackbarText;
+    snackbarText(state: MainState): MainState["snackbarText"] {
+      return state.snackbarText;
     },
     recordedPracticeSets(
       state: MainState,
@@ -140,7 +140,7 @@ const mainStore = {
       state.local.selectedCharacters[gameId] = null;
     },
     setSnackbarText(state: MainState, snackbarText: string | null): void {
-      state.local.snackbarText = snackbarText;
+      state.snackbarText = snackbarText;
     },
     recordPracticeSet<T extends TechId>(
       state: MainState,
@@ -175,7 +175,7 @@ const mainStore = {
     async saveState(context: MainContext): Promise<void> {
       const state = { ...context.state, loaded: false };
       localStorage.setItem("state", JSON.stringify(state));
-      context.state.local.snackbarText = "Data saved.";
+      context.state.snackbarText = "Data saved.";
     },
     async restoreState(context: MainContext): Promise<void> {
       if (context.state.local.loaded) {
