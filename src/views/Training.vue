@@ -39,6 +39,7 @@
 <script lang="ts">
 import {
   commitRecordPracticeSet,
+  commitSnackbarText,
   dispatchRestoreState,
   dispatchSaveState,
   PracticeSet,
@@ -234,6 +235,7 @@ export default class extends Vue {
         practiceSet,
       });
       await dispatchSaveState(this.$store);
+      commitSnackbarText(this.$store, "Practice set recorded");
     }
   }
 
