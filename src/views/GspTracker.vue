@@ -5,48 +5,62 @@
         <v-card>
           <v-card-title>GSP Tracker</v-card-title>
           <v-card-text>
-            <v-responsive style="overflow: scroll">
-              <div style="height: 100%; min-width: 500px">
-                <canvas width="500px" ref="chart"></canvas>
-              </div>
-            </v-responsive>
+            <v-row>
+              <v-col cols="12">
+                <CharacterSelector gameId="ssbu" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-responsive style="overflow: scroll">
+                <div style="height: 100%; min-width: 500px">
+                  <canvas width="500px" ref="chart"></canvas>
+                </div>
+              </v-responsive>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-btn
+                  fab
+                  color="pink"
+                  dark
+                  bottom
+                  right
+                  absolute
+                  @click="dialog = true"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title>Add entry</v-card-title>
-          <v-card-text>
-            <v-form ref="form">
-              <v-row>
-                <v-col cols="12">
-                  <CharacterSelector gameId="ssbu" />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="6">
-                  <v-text-field
-                    label="GSP"
-                    placeholder="GSP, ex. 1000000"
-                    required
-                    :rules="gspValueRules"
-                    v-model="gsp"
-                  />
-                </v-col>
-                <v-col cols="6">
-                  <v-btn color="primary" @click="recordGspDatum">
-                    Add entry
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          Add new GSP entry
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="form">
+            <v-text-field
+              label="GSP"
+              placeholder="GSP, ex. 1000000"
+              required
+              :rules="gspValueRules"
+              v-model="gsp"
+            />
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text color="primary" @click="recordGspDatum">
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-row>
       <v-col>
@@ -120,14 +134,9 @@ interface GspDatum extends RawGspDatum {
   },
 })
 export default class extends Vue {
-  private gsp!: string | null;
+  private gsp: string | null = null;
+  private dialog: boolean = false;
   private gameId: GameId = "ssbu";
-
-  public data() {
-    return {
-      gsp: null,
-    };
-  }
 
   public mounted() {
     this.$watch(
@@ -248,6 +257,7 @@ export default class extends Vue {
       return;
     }
 
+    this.dialog = false;
     commitRecordGspDatum(this.$store, {
       gameAndCharacterId: {
         gameId: "ssbu",
