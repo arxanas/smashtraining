@@ -10,12 +10,8 @@
                 <CharacterSelector gameId="ssbu" />
               </v-col>
             </v-row>
-            <v-row>
-              <v-responsive style="overflow: scroll">
-                <div style="height: 100%; min-width: 500px">
-                  <canvas width="500px" ref="chart"></canvas>
-                </div>
-              </v-responsive>
+            <v-row style="min-height: 300px">
+              <canvas ref="chart"></canvas>
             </v-row>
             <v-row>
               <v-col>
@@ -203,6 +199,8 @@ export default class extends Vue {
 
   get chartOptions(): ChartOptions {
     return {
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         xAxes: [
           {

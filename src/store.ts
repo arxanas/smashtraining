@@ -80,6 +80,14 @@ Vue.use(Vuex);
 
 type MainContext = ActionContext<MainState, RootState>;
 
+function vueSet<T extends {}, Key extends (keyof T) & (number | string)>(
+  object: T,
+  key: Key,
+  value: T[Key],
+): void {
+  Vue.set(object, key, value);
+}
+
 const mainStore = {
   namespaced: true,
   state: defaultMainState,
@@ -181,13 +189,13 @@ const mainStore = {
       const { gameAndCharacterId, practiceSet } = params;
       const { gameId, characterId } = gameAndCharacterId;
       const recordedPracticeSets = state.remote.recordedPracticeSets || {};
-      state.remote.recordedPracticeSets = recordedPracticeSets;
+      vueSet(state.remote, "recordedPracticeSets", recordedPracticeSets);
       const gamePracticeSets = (recordedPracticeSets[gameId] || {}) as {
         [c in CharacterId<typeof gameId>]: Array<PracticeSet<TechId>>;
       };
-      Vue.set(recordedPracticeSets, gameId, gamePracticeSets);
+      vueSet(recordedPracticeSets, gameId, gamePracticeSets);
       const characterPracticeSets = gamePracticeSets[characterId] || [];
-      Vue.set(gamePracticeSets, characterId, characterPracticeSets);
+      vueSet(gamePracticeSets, characterId, characterPracticeSets);
       characterPracticeSets.push(practiceSet);
     },
     recordGspDatum<T extends GameId>(
@@ -200,13 +208,13 @@ const mainStore = {
       const { gameAndCharacterId, gspDatum } = param;
       const { gameId, characterId } = gameAndCharacterId;
       const recordedRawGspData = state.remote.recordedRawGspData || {};
-      state.remote.recordedRawGspData = recordedRawGspData;
+      vueSet(state.remote, "recordedRawGspData", recordedRawGspData);
       const gameData = (recordedRawGspData[gameId] || {}) as {
         [x: string]: RawGspDatum[];
       };
-      Vue.set(recordedRawGspData, gameId, gameData);
+      vueSet(recordedRawGspData, gameId, gameData);
       const characterData = gameData[characterId] || [];
-      Vue.set(gameData, characterId, characterData);
+      vueSet(gameData, characterId, characterData);
       characterData.push(gspDatum);
     },
     restoreState(state: MainState, newState: MainState) {
