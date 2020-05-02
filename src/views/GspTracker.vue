@@ -94,6 +94,7 @@
 import CharacterSelector from "@/components/training/CharacterSelector.vue";
 import {
   commitRecordGspDatum,
+  commitSnackbarText,
   RawGspDatum,
   readRawGspData,
   readRecordedPracticeSets,
@@ -258,6 +259,7 @@ export default class extends Vue {
       },
     });
     await dispatchSaveState(this.$store);
+    commitSnackbarText(this.$store, "GSP recorded.");
 
     this.gsp = null;
     const form = (this.$refs.form as unknown) as {

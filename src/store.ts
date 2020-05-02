@@ -217,7 +217,6 @@ const mainStore = {
     async saveState(context: MainContext): Promise<void> {
       const state = { ...context.state, loaded: false };
       localStorage.setItem("state", JSON.stringify(state));
-      context.state.snackbarText = "Data saved.";
     },
     async restoreState(context: MainContext): Promise<void> {
       if (context.state.local.loaded) {
