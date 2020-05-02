@@ -246,22 +246,44 @@ export function getTechDependencies<T extends TechId>(
       }
     }
 
+    // We require *all* jump distances be mastered before adding in falling
+    // aerials.
     case "falling-aerial": {
-      const { facing, fall, jumpDistance, hop } = variant as TechVariantOf<
-        typeof techId
-      >;
+      const { facing, fall, hop } = variant as TechVariantOf<typeof techId>;
       switch (fall) {
         case "normal":
           switch (hop) {
             case "short":
-              return [dep("short-hop", { facing, jumpDistance })];
+              return [
+                dep("short-hop", { facing, jumpDistance: "0.0" }),
+                dep("short-hop", { facing, jumpDistance: "0.5" }),
+                dep("short-hop", { facing, jumpDistance: "1.0" }),
+                dep("short-hop", { facing, jumpDistance: "1.5" }),
+                dep("short-hop", { facing, jumpDistance: "2.0" }),
+                dep("short-hop", { facing, jumpDistance: "max" }),
+              ];
             case "full":
-              return [dep("full-hop", { facing, jumpDistance })];
+              return [
+                dep("full-hop", { facing, jumpDistance: "0.0" }),
+                dep("full-hop", { facing, jumpDistance: "0.5" }),
+                dep("full-hop", { facing, jumpDistance: "1.0" }),
+                dep("full-hop", { facing, jumpDistance: "1.5" }),
+                dep("full-hop", { facing, jumpDistance: "2.0" }),
+                dep("full-hop", { facing, jumpDistance: "max" }),
+              ];
             default:
               return unreachable(hop, "hop check is exhaustive");
           }
         case "fast":
-          return [dep("fast-fall", { facing, hop, jumpDistance })];
+          return [
+            dep("fast-fall", { facing, hop, jumpDistance: "0.0" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "0.5" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "1.0" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "1.5" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "2.0" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "2.5" }),
+            dep("fast-fall", { facing, hop, jumpDistance: "max" }),
+          ];
         default:
           return unreachable(fall, "fall check is exhaustive.");
       }
