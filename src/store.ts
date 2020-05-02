@@ -19,7 +19,7 @@ import {
   TechId,
   TechVariantOf,
 } from "./tech/AllTechMetadata";
-import { log } from "./utils";
+import { entries, log } from "./utils";
 
 export interface Rep {
   performance: Performance;
@@ -51,7 +51,11 @@ interface MainState {
         [character in CharacterId<gameId>]?: RawGspDatum[];
       };
     };
-    recordedPracticeSets: Array<PracticeSet<TechId>>;
+    recordedPracticeSets?: {
+      [gameId in GameId]?: {
+        [character in CharacterId<gameId>]?: Array<PracticeSet<TechId>>;
+      };
+    };
   };
 }
 
@@ -69,12 +73,7 @@ export const defaultMainState: MainState = {
       ssbu: null,
     },
   },
-  remote: {
-    recordedRawGspData: {
-      ssbu: {},
-    },
-    recordedPracticeSets: [],
-  },
+  remote: {},
 };
 
 Vue.use(Vuex);
@@ -105,21 +104,54 @@ const mainStore = {
     },
     spacedRepetitionItems(
       state: MainState,
-    ): Map<SerializedTechVariant, SpacedRepetitionItem> {
-      const result = new Map<SerializedTechVariant, SpacedRepetitionItem>();
-      for (const practiceSet of state.remote.recordedPracticeSets) {
-        const key = serializeTechVariant(
-          practiceSet.techId,
-          practiceSet.techVariant,
-        );
-        const currentItemOpt = result.get(key);
-        const currentItem =
-          currentItemOpt !== undefined ? currentItemOpt : createItem();
-        const performance = averagePerformance(
-          practiceSet.reps.map(rep => rep.performance),
-        );
-        const newItem = updateItem(currentItem, performance);
-        result.set(key, newItem);
+    ): {
+      [gameId in GameId]: {
+        [characterId in CharacterId<gameId>]: Map<
+          SerializedTechVariant,
+          SpacedRepetitionItem
+        >;
+      };
+    } {
+      const result: {
+        [gameId in GameId]: {
+          [characterId in CharacterId<gameId>]: Map<
+            SerializedTechVariant,
+            SpacedRepetitionItem
+          >;
+        };
+      } = { ssbu: {} };
+      const recordedPracticeSets = state.remote.recordedPracticeSets || {};
+      for (const gameEntry of entries(recordedPracticeSets)) {
+        const [gameId, gameInfo] = gameEntry;
+        const gameResult: {
+          [characterId in CharacterId<typeof gameId>]: Map<
+            SerializedTechVariant,
+            SpacedRepetitionItem
+          >;
+        } = {};
+        for (const characterEntry of entries(gameInfo)) {
+          const [characterId, characterInfo] = characterEntry;
+          const characterResult = new Map<
+            SerializedTechVariant,
+            SpacedRepetitionItem
+          >();
+          for (const practiceSet of characterInfo) {
+            const key = serializeTechVariant(
+              practiceSet.techId,
+              practiceSet.techVariant,
+            );
+            const currentItemOpt = characterResult.get(key);
+            const currentItem =
+              currentItemOpt !== undefined ? currentItemOpt : createItem();
+            const performance = averagePerformance(
+              practiceSet.reps.map(rep => rep.performance),
+            );
+            const newItem = updateItem(currentItem, performance);
+            characterResult.set(key, newItem);
+          }
+          gameResult[characterId] = characterResult;
+        }
+        result[gameId] = gameResult;
       }
       return result;
     },
@@ -131,9 +163,6 @@ const mainStore = {
     ): void {
       const { gameId, characterId } = gameAndCharacterId;
       const selectedCharacters = state.local.selectedCharacters;
-      // @ts-ignore TypeScript doesn't seem to know that `gameId` and
-      // `characterId` have some relationship. Even casting the right-hand side
-      // with `characterId as CharacterId<typeof gameId>` doesn't work.
       selectedCharacters[gameId] = characterId;
     },
     unselectCharacter(state: MainState, gameId: GameId): void {
@@ -142,11 +171,24 @@ const mainStore = {
     setSnackbarText(state: MainState, snackbarText: string | null): void {
       state.snackbarText = snackbarText;
     },
-    recordPracticeSet<T extends TechId>(
+    recordPracticeSet<G extends GameId, T extends TechId>(
       state: MainState,
-      practiceSet: PracticeSet<T>,
+      params: {
+        gameAndCharacterId: GameAndCharacterId<G>;
+        practiceSet: PracticeSet<T>;
+      },
     ): void {
-      state.remote.recordedPracticeSets.push(practiceSet);
+      const { gameAndCharacterId, practiceSet } = params;
+      const { gameId, characterId } = gameAndCharacterId;
+      const recordedPracticeSets = state.remote.recordedPracticeSets || {};
+      state.remote.recordedPracticeSets = recordedPracticeSets;
+      const gamePracticeSets = (recordedPracticeSets[gameId] || {}) as {
+        [c in CharacterId<typeof gameId>]: Array<PracticeSet<TechId>>;
+      };
+      Vue.set(recordedPracticeSets, gameId, gamePracticeSets);
+      const characterPracticeSets = gamePracticeSets[characterId] || [];
+      Vue.set(gamePracticeSets, characterId, characterPracticeSets);
+      characterPracticeSets.push(practiceSet);
     },
     recordGspDatum<T extends GameId>(
       state: MainState,
@@ -194,6 +236,11 @@ const mainStore = {
           "Version mismatch when local state from `localStorage`. " +
             `Old version was ${oldVersion} and current version is ${currentVersion}`,
         );
+      }
+
+      // Backward-compatibility.
+      if (Array.isArray(previousState.remote.recordedPracticeSets)) {
+        previousState.remote.recordedPracticeSets = {};
       }
 
       previousState.local.loaded = true;
