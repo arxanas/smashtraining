@@ -168,13 +168,11 @@ export default class extends Vue {
   public gameId: GameId = "ssbu";
 
   public shownExpansionPanels!: number[];
-  public hiddenExpansionPanels!: number[];
 
   public data() {
     return {
       panels: "loading",
       shownExpansionPanels: [0],
-      hiddenExpansionPanels: [],
     };
   }
 
@@ -210,7 +208,6 @@ export default class extends Vue {
   ): void {
     this.panels = createPanels(this.$store, gameAndCharacterId);
     this.shownExpansionPanels = [0];
-    this.hiddenExpansionPanels = [];
   }
 
   public async onRecorded(
@@ -224,30 +221,6 @@ export default class extends Vue {
 
   public hidePanel(i: number): void {
     this.shownExpansionPanels = this.shownExpansionPanels.filter(j => j !== i);
-    this.hiddenExpansionPanels.push(i);
-
-    // Show the next available panel, if any. If the user already has another
-    // open panel, don't open any other panels.
-    if (
-      this.panels !== "no-character-selected" &&
-      this.panels !== "loading" &&
-      this.shownExpansionPanels.length === 0
-    ) {
-      const maxNumPanels = this.panels.length;
-      const maxSeenPanel = this.hiddenExpansionPanels.reduce(
-        (acc, j) => Math.max(acc, j),
-        -1,
-      );
-      if (maxSeenPanel + 1 < maxNumPanels) {
-        this.shownExpansionPanels.push(maxSeenPanel + 1);
-      }
-
-      // Dumb hack: since the expansion panel is still animating, if we don't
-      // wait for it to complete, we'll get scrolled too early on the page.
-      setTimeout(() => {
-        this.$vuetify.goTo("#tech-" + this.shownExpansionPanels[0].toString());
-      }, 200);
-    }
   }
 }
 </script>
