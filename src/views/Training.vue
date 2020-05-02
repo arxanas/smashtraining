@@ -48,7 +48,7 @@ import {
   RootStore,
 } from "@/store";
 import { compareItem, createItem } from "@/tech/SpacedRepetition";
-import { deepEqual, entries } from "@/utils";
+import { assert, deepEqual, entries } from "@/utils";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Store } from "vuex";
@@ -121,8 +121,12 @@ function getSatisfactoryTech<T extends GameId>(
 ): SatisfactoryTech {
   const { gameId, characterId } = gameAndCharacterId;
   const satisfactoryTech: SatisfactoryTech = {};
-  const recordedPracticeSets = readRecordedPracticeSets(store);
-  for (const practiceSet of recordedPracticeSets) {
+  const recordedPracticeSets = readRecordedPracticeSets(store) || {};
+  const gamePracticeSets = (recordedPracticeSets[gameId] || {}) as {
+    [c in CharacterId<typeof gameId>]: Array<PracticeSet<TechId>>;
+  };
+  const characterPracticeSets = gamePracticeSets[characterId] || [];
+  for (const practiceSet of characterPracticeSets) {
     const { techId, techVariant } = practiceSet;
     if (isSatisfactoryPracticeSet(practiceSet)) {
       const serializedTechVariant = serializeTechVariant(techId, techVariant);
@@ -136,7 +140,11 @@ function createPanels<T extends GameId>(
   store: RootStore,
   gameAndCharacterId: GameAndCharacterId<T>,
 ): PanelData[] {
-  const spacedRepetitionItems = readSpacedRepetitionItems(store);
+  const { gameId, characterId } = gameAndCharacterId;
+  const allSpacedRepetitionItems = readSpacedRepetitionItems(store);
+  const gameSpacedRepetitionItems = allSpacedRepetitionItems[gameId] || {};
+  const characterSpacedRepetitionItems =
+    gameSpacedRepetitionItems[characterId] || new Map();
   const satisfactoryTech = getSatisfactoryTech(store, gameAndCharacterId);
   return entries(allTechMetadata)
     .flatMap(entry => {
@@ -144,10 +152,10 @@ function createPanels<T extends GameId>(
       return createPanelsForTech(satisfactoryTech, techId, techMetadata);
     })
     .sort((lhs, rhs) => {
-      const lhsItem = spacedRepetitionItems.get(
+      const lhsItem = characterSpacedRepetitionItems.get(
         serializeTechVariant(lhs.techId, lhs.variant),
       );
-      const rhsItem = spacedRepetitionItems.get(
+      const rhsItem = characterSpacedRepetitionItems.get(
         serializeTechVariant(rhs.techId, rhs.variant),
       );
       const result = compareItem(
@@ -215,8 +223,18 @@ export default class extends Vue {
     practiceSet: PracticeSet<TechId>,
   ): Promise<void> {
     this.hidePanel(i);
-    commitRecordPracticeSet(this.$store, practiceSet);
-    await dispatchSaveState(this.$store);
+    const gameId = this.gameId;
+    const characterId = readSelectedCharacters(this.$store)[gameId];
+    if (characterId !== null) {
+      commitRecordPracticeSet(this.$store, {
+        gameAndCharacterId: {
+          gameId,
+          characterId,
+        },
+        practiceSet,
+      });
+      await dispatchSaveState(this.$store);
+    }
   }
 
   public hidePanel(i: number): void {
