@@ -40,6 +40,7 @@ export interface PracticeSet<T extends TechId> {
 interface MainState {
   version: 1;
   snackbarText: string | null;
+  drawer: boolean;
   local: {
     loaded: boolean;
     selectedGame: GameId;
@@ -66,6 +67,7 @@ interface RootState {
 export const defaultMainState: MainState = {
   version: 1,
   snackbarText: null,
+  drawer: false,
   local: {
     loaded: false,
     selectedGame: "ssbu",
@@ -99,6 +101,9 @@ const mainStore = {
     },
     snackbarText(state: MainState): MainState["snackbarText"] {
       return state.snackbarText;
+    },
+    drawer(state: MainState): MainState["drawer"] {
+      return state.drawer;
     },
     recordedPracticeSets(
       state: MainState,
@@ -178,6 +183,9 @@ const mainStore = {
     },
     setSnackbarText(state: MainState, snackbarText: string | null): void {
       state.snackbarText = snackbarText;
+    },
+    setDrawer(state: MainState, drawer: boolean): void {
+      state.drawer = drawer;
     },
     recordPracticeSet<G extends GameId, T extends TechId>(
       state: MainState,
@@ -294,6 +302,7 @@ export const readSelectedCharacters = read(
   mainStore.getters.selectedCharacters,
 );
 export const readSnackbarText = read(mainStore.getters.snackbarText);
+export const readDrawer = read(mainStore.getters.drawer);
 export const dispatchRestoreState = dispatch(mainStore.actions.restoreState);
 export const dispatchSaveState = dispatch(mainStore.actions.saveState);
 export const commitRecordPracticeSet = commit(
@@ -307,3 +316,4 @@ export const commitUnselectCharacter = commit(
   mainStore.mutations.unselectCharacter,
 );
 export const commitSnackbarText = commit(mainStore.mutations.setSnackbarText);
+export const commitDrawer = commit(mainStore.mutations.setDrawer);
