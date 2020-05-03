@@ -16,6 +16,11 @@ describe("Training.vue", () => {
   afterEach(token.afterEach);
 
   it("should close the Select Character dialog when selected", async () => {
+    // https://github.com/vuetifyjs/vuetify/issues/1210#issuecomment-319624495
+    const app = document.createElement("div");
+    app.setAttribute("data-app", "data-app");
+    document.body.appendChild(app);
+
     const store = makeDefaultRootStore();
     const wrapper = mount(Training, {
       router,
