@@ -1,7 +1,21 @@
 <template>
-  <v-btn :color="color" icon @click="tap()">
-    <v-icon>{{ icon }}</v-icon>
-  </v-btn>
+  <div>
+    <v-slider
+      v-model="valueInternal"
+      @click="onChange"
+      @input="onChange"
+      ticks="always"
+      :tick-size="4"
+      :min="1"
+      :max="5"
+      :step="1"
+      :track-color="color"
+      :track-fill-color="color"
+      :color="color"
+      :label="title"
+      :messages="hint"
+    ></v-slider>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,54 +23,29 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
-type State = 0 | 1 | 2 | 3 | 4 | null;
-
-function nextState(currentState: State): State {
-  switch (currentState) {
-    case null:
-      return 4;
-    case 4:
-      return 3;
-    case 3:
-      return 2;
-    case 2:
-      return 1;
-    case 1:
-      return 0;
-    case 0:
-      return null;
-    default:
-      throw new Error("Expected only six states to be possible");
-  }
-}
+type State = 1 | 2 | 3 | 4 | 5 | null;
 
 @Component
 export default class extends Vue {
-  @Prop({ required: false, default: false })
-  public disabled!: boolean;
-
-  @Prop({ required: false, default: null })
-  public value!: boolean | null;
-
-  get icon() {
+  get hint() {
     switch (this.value as State) {
       case null:
-        return "mdi-circle-edit-outline";
+        return "";
+
+      case 5:
+        return "All or nearly all reps correct";
 
       case 4:
-        return "mdi-emoticon-excited-outline";
+        return "Most reps correct";
 
       case 3:
-        return "mdi-emoticon-happy-outline";
+        return "Some reps correct";
 
       case 2:
-        return "mdi-emoticon-neutral-outline";
+        return "Most reps incorrect";
 
       case 1:
-        return "mdi-emoticon-sad-outline";
-
-      case 0:
-        return "mdi-emoticon-cry-outline";
+        return "All or nearly all reps incorrect";
 
       default:
         throw new Error(
@@ -65,25 +54,25 @@ export default class extends Vue {
     }
   }
 
+  // see https://vuetifyjs.com/en/styles/colors#material-colors
   get color() {
-    // see https://vuetifyjs.com/en/styles/colors#material-colors
     switch (this.value as State) {
       case null:
         return null;
 
-      case 4:
-        return "light-green";
-
-      case 3:
+      case 5:
         return "light-green darken-2";
 
-      case 2:
+      case 4:
+        return "light-green lighten-1";
+
+      case 3:
         return "amber";
 
-      case 1:
+      case 2:
         return "deep-orange lighten-2";
 
-      case 0:
+      case 1:
         return "deep-orange darken-2";
 
       default:
@@ -92,9 +81,21 @@ export default class extends Vue {
         );
     }
   }
+  @Prop({ required: false, default: false })
+  public disabled!: boolean;
 
-  public tap(): void {
-    this.$emit("input", nextState(this.value as State));
+  public value: State | null = null;
+
+  @Prop({ required: true })
+  public title!: string;
+
+  private valueInternal: State = 1;
+
+  public onChange() {
+    // If the user hasn't yet interacted with the slider, then we should treat
+    // `value` as `null`, not the default slider value (which is `0`).
+    this.value = this.valueInternal;
+    this.$emit("input", this.value);
   }
 }
 </script>

@@ -12,7 +12,7 @@
     <template v-slot:selection="data">
       <v-chip>
         <v-avatar left tile size="24" style="margin-right: 5px">
-          <v-img :src="getUrlForHeadIcon(data.item)" />
+          <img :src="getUrlForHeadIcon(data.item)" />
         </v-avatar>
         {{ data.item.characterMetadata.displayName }}
       </v-chip>

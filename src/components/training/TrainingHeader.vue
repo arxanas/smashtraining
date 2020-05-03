@@ -4,45 +4,20 @@
       <v-expansion-panel-header>How to use</v-expansion-panel-header>
       <v-expansion-panel-content eager class="body-2">
         <p>
-          Do the exercises at the top of the list regularly. The trainer will
-          learn your weak points and drill you on them.
+          Do as many exercises as you like.
+        </p>
+        <p>
+          The trainer will learn your weak points and drill you on them later.
+          It'll also unlock new exercises.
         </p>
         <ul>
-          <li>For each set, complete about 30 seconds worth of reps.</li>
-          <li>
-            In between sets, take a short break, or start a set of a different
-            exercise.
-          </li>
+          <li>For each set, complete about 20 seconds worth of reps.</li>
           <li>
             When you've filled out every set of an exercise, tap "Record".
           </li>
-        </ul>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-    <v-expansion-panel>
-      <v-expansion-panel-header>Legend</v-expansion-panel-header>
-      <v-expansion-panel-content eager class="body-2">
-        <ul>
           <li>
-            <TrainingPerformanceSelector :value="null" /> Unset. Tap to cycle
-            through values.
-          </li>
-          <li>
-            <TrainingPerformanceSelector :value="4" /> All/nearly all reps
-            completed correctly.
-          </li>
-          <li>
-            <TrainingPerformanceSelector :value="3" /> Most reps completed
-            correctly.
-          </li>
-          <li>
-            <TrainingPerformanceSelector :value="2" /> Some reps completed
-            correctly.
-          </li>
-          <li><TrainingPerformanceSelector :value="1" /> Most reps failed.</li>
-          <li>
-            <TrainingPerformanceSelector :value="0" /> All/nearly all reps
-            failed.
+            In between sets, take a short break, or start a set of a different
+            exercise.
           </li>
         </ul>
       </v-expansion-panel-content>
@@ -51,16 +26,14 @@
       <v-expansion-panel-header disable-icon-rotate>
         <template>
           <v-row no-gutters>
-            <v-col cols="4">
-              Select Character
+            <v-col class="flex-grow-0">
+              Character
             </v-col>
 
             <v-col
-              cols="8"
               v-if="selectedCharacterName !== null"
-              class="text--secondary"
+              class="pl-4 flex-grow-1 text--secondary"
             >
-              Current:
               {{ selectedCharacterName }}
             </v-col>
           </v-row>
@@ -86,13 +59,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { dispatchRestoreState, readSelectedCharacters } from "../../store";
 import CharacterSelector from "./CharacterSelector.vue";
-import TrainingPerformanceSelector from "./TrainingPerformanceSelector.vue";
 
 @Component({
   name: "TrainingHeader",
   components: {
     CharacterSelector,
-    TrainingPerformanceSelector,
   },
 })
 export default class extends Vue {
@@ -107,7 +78,7 @@ export default class extends Vue {
   get selectedCharacterName(): string {
     const selectedCharacter = this.selectedCharacter;
     if (selectedCharacter === null) {
-      return "not selected";
+      return "Not selected";
     } else {
       return allCharacterMetadata[this.gameId][selectedCharacter].displayName;
     }

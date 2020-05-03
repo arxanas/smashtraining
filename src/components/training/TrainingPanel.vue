@@ -15,13 +15,13 @@
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content eager class="pb-0">
-      <v-row align="center" justify="center" class="pa-0">
-        <v-col class="text-center" v-for="i in setResults.length" :key="i">
+      <v-row v-for="i in setResults.length" :key="i" class="pa-0">
+        <v-col class="py-0">
           <TrainingPerformanceSelector
+            :title="`Set ${i}`"
             :value="setResults[i - 1]"
             @input="setResults.splice(i - 1, 1, $event)"
-          /><br />
-          Set {{ i }}
+          />
         </v-col>
       </v-row>
       <v-card-actions right class="pa-0">
@@ -124,11 +124,11 @@ export default class extends Vue {
       techVariant: this.variant,
       reps: this.setResults.map(performance => {
         switch (performance) {
-          case 0:
           case 1:
           case 2:
           case 3:
           case 4:
+          case 5:
             return { performance };
           default:
             return unreachable(
