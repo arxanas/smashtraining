@@ -90,24 +90,19 @@ a {
 import Vue from "vue";
 import Component from "vue-class-component";
 import {
+  commitDrawer,
   commitSnackbarText,
   dispatchRestoreState,
   dispatchSaveState,
+  readDrawer,
   readSnackbarText,
 } from "./store";
 
 @Component({ name: "App" })
 export default class extends Vue {
-  private snackbarEnabled!: boolean;
-  private snackbarText!: string;
-
-  public data() {
-    return {
-      drawer: false,
-      snackbarEnabled: false,
-      snackbarText: "",
-    };
-  }
+  private snackbarEnabled: boolean = false;
+  private snackbarText: string = "";
+  private drawer: boolean = false;
 
   public created() {
     this.$watch(() => this.snackbarEnabled, function(snackbarEnabled) {
@@ -123,6 +118,13 @@ export default class extends Vue {
         this.snackbarEnabled = false;
         this.snackbarText = "";
       }
+    });
+
+    this.$watch(() => this.drawer, function(drawer) {
+      commitDrawer(this.$store, drawer);
+    });
+    this.$watch(() => readDrawer(this.$store), function(drawer) {
+      this.drawer = drawer;
     });
   }
 
