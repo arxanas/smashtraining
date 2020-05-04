@@ -108,16 +108,16 @@
                 your current weak points.
               </li>
               <li>
-                You do the drills and record how well you did.
+                Complete drills and record how well you did.
                 <b>Smash Training</b> uses a spaced-repetition algorithm to
-                update its model of exercises to work on.
+                update its model of your exercises to improve.
               </li>
               <li>
                 You rest for a day or two, then come back for more practice.
               </li>
             </ol>
 
-            No login necessary. Your data is stored on your device.
+            No login necessary &mdash; your data is stored on your device!
           </v-card-text>
           <v-card-actions>
             <v-container>
