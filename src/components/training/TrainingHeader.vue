@@ -2,7 +2,9 @@
   <div>
     <v-expansion-panels accordion :value="value">
       <v-expansion-panel>
-        <v-expansion-panel-header>How to use</v-expansion-panel-header>
+        <v-expansion-panel-header class="py-2 subtitle-1">
+          How to use
+        </v-expansion-panel-header>
         <v-expansion-panel-content eager class="body-2">
           <p>
             Do as many exercises as you like.
@@ -24,7 +26,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
-        <v-expansion-panel-header disable-icon-rotate>
+        <v-expansion-panel-header class="py-2 subtitle-1" disable-icon-rotate>
           <template>
             <v-row no-gutters>
               <v-col class="flex-grow-0">
