@@ -235,7 +235,7 @@ export default class extends Vue {
         practiceSet,
       });
       await dispatchSaveState(this.$store);
-      commitSnackbarText(this.$store, "Practice set recorded");
+      commitSnackbarText(this.$store, "Practice set recorded.");
     }
   }
 
