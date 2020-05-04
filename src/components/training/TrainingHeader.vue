@@ -67,6 +67,7 @@
 import { allCharacterMetadata, GameId } from "@/tech/AllCharacterMetadata";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 import {
   commitDrawer,
   dispatchRestoreState,
@@ -85,6 +86,9 @@ export default class extends Vue {
   public gameId: GameId = "ssbu";
   public value: number | null | undefined = null;
 
+  @Prop({ required: true, type: Boolean })
+  public firstTime!: boolean;
+
   get selectedCharacter() {
     const selectedCharacters = readSelectedCharacters(this.$store);
     return selectedCharacters[this.gameId];
@@ -99,21 +103,23 @@ export default class extends Vue {
     }
   }
 
-  public async created() {
+  public async created(): Promise<void> {
     await dispatchRestoreState(this.$store);
-    if (this.selectedCharacter === null) {
-      this.value = 2;
-    }
-
     this.$watch(
       function() {
-        return this.selectedCharacter;
+        return [this.selectedCharacter, this.firstTime];
       },
-      function(newSelectedCharacter) {
-        if (newSelectedCharacter !== null) {
+      function(value) {
+        const [newSelectedCharacter, newFirstTime] = value;
+        if (newSelectedCharacter === null) {
+          this.value = 1;
+        } else if (newFirstTime) {
+          this.value = 0;
+        } else {
           this.value = undefined;
         }
       },
+      { immediate: true },
     );
   }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TrainingHeader ref="trainingHeader" />
+    <TrainingHeader :first-time="panels.firstTime || false" />
     <v-overlay v-if="panels === 'loading'">
       <v-progress-circular indeterminate></v-progress-circular>
       Loading your training data...
@@ -14,7 +14,7 @@
       <h1 class="headline mt-4 mb-2">Exercises</h1>
       <v-expansion-panels multiple :value="shownExpansionPanels">
         <TrainingPanel
-          v-for="(panel, i) in panels"
+          v-for="(panel, i) in panels.panelData"
           :key="i"
           v-on:recorded="onRecorded(i, $event)"
           :anchor-id="'tech-' + i"
@@ -84,7 +84,12 @@ interface PanelData {
   numSets: number;
 }
 
-type Panels = "loading" | "no-character-selected" | PanelData[];
+interface PanelInfo {
+  panelData: PanelData[];
+  firstTime: boolean;
+}
+
+type Panels = "loading" | "no-character-selected" | PanelInfo;
 
 const MAX_NUM_EXERCISES: number = 8;
 
@@ -140,14 +145,15 @@ function getSatisfactoryTech<T extends GameId>(
 function createPanels<T extends GameId>(
   store: RootStore,
   gameAndCharacterId: GameAndCharacterId<T>,
-): PanelData[] {
+): PanelInfo {
   const { gameId, characterId } = gameAndCharacterId;
   const allSpacedRepetitionItems = readSpacedRepetitionItems(store);
   const gameSpacedRepetitionItems = allSpacedRepetitionItems[gameId] || {};
   const characterSpacedRepetitionItems =
     gameSpacedRepetitionItems[characterId] || new Map();
+  const firstTime = characterSpacedRepetitionItems.size === 0;
   const satisfactoryTech = getSatisfactoryTech(store, gameAndCharacterId);
-  return entries(allTechMetadata)
+  const panelData = entries(allTechMetadata)
     .flatMap(entry => {
       const [techId, techMetadata] = entry;
       return createPanelsForTech(satisfactoryTech, techId, techMetadata);
@@ -166,6 +172,7 @@ function createPanels<T extends GameId>(
       return result;
     })
     .slice(0, MAX_NUM_EXERCISES);
+  return { panelData, firstTime };
 }
 
 @Component({
@@ -173,17 +180,9 @@ function createPanels<T extends GameId>(
   components: { TrainingHeader, TrainingPanel },
 })
 export default class extends Vue {
-  public panels: Panels = "loading";
   public gameId: GameId = "ssbu";
-
-  public shownExpansionPanels!: number[];
-
-  public data() {
-    return {
-      panels: "loading",
-      shownExpansionPanels: [0],
-    };
-  }
+  public panels: Panels = "loading";
+  public shownExpansionPanels: number[] = [0];
 
   public async created() {
     await dispatchRestoreState(this.$store);
