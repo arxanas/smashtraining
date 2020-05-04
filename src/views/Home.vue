@@ -74,16 +74,15 @@
             broken onto different lines, only render the effect for the word
             "TRAINING". -->
             <h1 class="header hidden-lg-and-up">
-              <!-- prettier-ignore -->
               <span class="header-text" aria-label="Smash Training">
-              <span class="word">
-                <span class="letter-3">Smash</span>
+                <span class="word">
+                  <span class="letter-3">Smash</span>
+                </span>
+                <br />
+                <span class="word word-smaller">
+                  <span class="letter-3">Training</span>
+                </span>
               </span>
-              <br />
-              <span class="word word-smaller">
-                <span class="letter-3">Training</span>
-              </span>
-            </span>
 
               <br />
 
@@ -204,7 +203,7 @@
   margin-top: 5px;
   border-top: solid black 3px;
   /* From https://stackoverflow.com/a/41609487/344643 */
-  border-radius: 100%/30px 30px 30px 30px;
+  border-radius: 100%/30px 30px 0px 0px;
   color: white;
 }
 
