@@ -110,7 +110,7 @@
               <li>
                 You do the drills and record how well you did.
                 <b>Smash Training</b> uses a spaced-repetition algorithm to
-                update its model of which exercises you should work on.
+                update its model of exercises to work on.
               </li>
               <li>
                 You rest for a day or two, then come back for more practice.
