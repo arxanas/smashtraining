@@ -262,6 +262,8 @@ const mainStore = {
       context.commit("restoreState", {
         ...previousState,
         version: currentVersion,
+        drawer: false,
+        snackbarText: null,
       });
     },
   },
