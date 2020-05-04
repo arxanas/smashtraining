@@ -15,16 +15,8 @@
           </v-card-text>
           <v-divider />
           <v-banner icon="mdi-information" class="banner-text">
-            <ul>
-              <li>
-                Go to <b>Games &amp; More</b> › <b>Training</b> and select the
-                "Training" stage.
-              </li>
-              <li>
-                Carry out these steps for about 30 seconds per set, or until
-                tired.
-              </li>
-            </ul>
+            Go to <b>Games &amp; More</b> › <b>Training</b> and select the
+            "Training" stage.
           </v-banner>
         </v-card>
       </v-col>

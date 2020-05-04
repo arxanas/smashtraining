@@ -7,7 +7,8 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content eager class="body-2">
           <p>
-            Do as many exercises as you like.
+            Go to Games &amp; More › Training and select the "Training" stage.
+            Then do as many of the following exercises as you have time for.
           </p>
           <p>
             The trainer will learn your weak points and drill you on them later.
