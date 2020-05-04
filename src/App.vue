@@ -71,7 +71,7 @@
       </v-container>
     </v-content>
 
-    <v-snackbar v-model="snackbarEnabled" :timeout="1000">
+    <v-snackbar v-model="snackbarEnabled" :timeout="timeout">
       {{ snackbarText }}
       <v-btn color="blue" text @click="snackbarEnabled = false">
         Close
@@ -98,11 +98,16 @@ import {
   readSnackbarText,
 } from "./store";
 
+const SMALL_TIMEOUT = 1250;
+const LARGE_TIMEOUT = 3000;
+
 @Component({ name: "App" })
 export default class extends Vue {
   private snackbarEnabled: boolean = false;
   private snackbarText: string = "";
   private drawer: boolean = false;
+  private seenSnackbarTexts: { [x in string]: boolean } = {};
+  private timeout: number = SMALL_TIMEOUT;
 
   public created() {
     this.$watch(() => this.snackbarEnabled, function(snackbarEnabled) {
@@ -114,6 +119,13 @@ export default class extends Vue {
       if (snackbarText !== null) {
         this.snackbarEnabled = true;
         this.snackbarText = snackbarText;
+
+        if (this.seenSnackbarTexts[snackbarText]) {
+          this.timeout = SMALL_TIMEOUT;
+        } else {
+          this.timeout = LARGE_TIMEOUT;
+        }
+        this.seenSnackbarTexts[snackbarText] = true;
       } else {
         this.snackbarEnabled = false;
         this.snackbarText = "";
