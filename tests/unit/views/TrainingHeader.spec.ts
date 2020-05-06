@@ -31,13 +31,24 @@ describe("Training.vue", () => {
     const trainingHeader = wrapper.find({ name: "TrainingHeader" });
     await trainingHeader.vm.$nextTick();
     expect(readSelectedCharacters(store).ssbu).toBeNull();
-    expect(trainingHeader.vm.$data.value).toBe(2); // select character panel open
+    expect(
+      wrapper
+        .findAll({ name: "v-expansion-panel-header" })
+        .at(trainingHeader.vm.$data.value)
+        .text()
+        .toLowerCase(),
+    ).toContain("character");
 
     const autocomplete = wrapper.find({ name: "v-autocomplete" });
     autocomplete.vm.$emit("change", "chrom");
 
-    await trainingHeader.vm.$nextTick();
     expect(readSelectedCharacters(store).ssbu).toBe("chrom");
-    expect(trainingHeader.vm.$data.value).toBe(undefined); // no panel open
+    expect(
+      wrapper
+        .findAll({ name: "v-expansion-panel-header" })
+        .at(trainingHeader.vm.$data.value)
+        .text()
+        .toLowerCase(),
+    ).toContain("how to use");
   });
 });
