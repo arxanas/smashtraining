@@ -24,22 +24,22 @@
           />
         </v-col>
       </v-row>
-      <v-card-actions right class="pa-0">
+      <v-card-actions class="px-0">
         <v-btn
-          text
           color="primary"
           :disabled="!allSetsEntered || recorded"
           @click="recordSet"
         >
           Record
         </v-btn>
-
+        <v-spacer />
         <v-btn
           text
-          color="secondary"
+          color="primary"
           :to="{ name: 'learn-tech', params: { techId }, query: variant }"
-          >Learn</v-btn
         >
+          Learn exercise <v-icon>mdi-arrow-right</v-icon>
+        </v-btn>
       </v-card-actions>
     </v-expansion-panel-content>
   </v-expansion-panel>
