@@ -1,15 +1,15 @@
 <template>
   <v-expansion-panel :id="anchorId || ''">
-    <v-expansion-panel-header disable-icon-rotate class="py-2 subtitle-1">
+    <v-expansion-panel-header
+      :disable-icon-rotate="recorded"
+      class="py-2 subtitle-1"
+    >
       <div>
         {{ techMetadata.name }}
         <span class="grey--text" v-if="techVariantDescription">{{
           techVariantDescription
         }}</span>
       </div>
-      <v-btn icon class="flex-grow-0" v-on:click.stop
-        ><v-icon small>mdi-settings</v-icon></v-btn
-      >
       <template v-slot:actions v-if="recorded">
         <v-icon color="teal">mdi-check</v-icon>
       </template>
