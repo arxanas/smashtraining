@@ -8,20 +8,19 @@
         <v-expansion-panel-content eager class="body-2">
           <p>
             Go to Games &amp; More › Training and select the "Training" stage.
-            Then do as many of the following exercises as you have time for.
+            Complete all of the exercises you have time for.
           </p>
           <p>
-            The trainer will learn your weak points and drill you on them later.
+            The trainer will detect your weakest skills and drill you on them later.
             It'll also unlock new exercises.
           </p>
           <ul>
-            <li>For each set, complete about 20 seconds worth of reps.</li>
+            <li>Complete about 20 seconds worth of reps for each set.</li>
             <li>
-              When you've filled out every set of an exercise, tap "Record".
+               Tap "Record" when you've filled out (all or each) sets of an exercise.
             </li>
             <li>
-              In between sets, take a short break, or start a set of a different
-              exercise.
+              Take a short break or start a different exercise between sets.
             </li>
           </ul>
         </v-expansion-panel-content>
