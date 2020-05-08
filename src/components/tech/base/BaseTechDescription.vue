@@ -25,21 +25,6 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title id="description">
-            Description
-          </v-card-title>
-          <v-card-text>
-            <slot name="description">
-              <i>No description is currently available.</i>
-            </slot>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col>
-        <v-card>
           <v-card-title id="inputs">
             Inputs
           </v-card-title>
@@ -60,10 +45,12 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title id="video">Video</v-card-title>
+          <v-card-title id="description">
+            Description
+          </v-card-title>
           <v-card-text>
-            <slot name="video">
-              <i>No video has been provided yet.</i>
+            <slot name="description">
+              <i>No description is currently available.</i>
             </slot>
           </v-card-text>
         </v-card>
@@ -94,6 +81,19 @@
           <v-card-text>
             <slot name="tips">
               <i>No tips are currently available.</i>
+            </slot>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title id="video">Video</v-card-title>
+          <v-card-text>
+            <slot name="video">
+              <i>No video has been provided yet.</i>
             </slot>
           </v-card-text>
         </v-card>
