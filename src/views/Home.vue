@@ -145,10 +145,10 @@
                 href="https://en.wikipedia.org/wiki/Practice_(learning_method)#Deliberate_practice"
                 >Deliberate practice</a
               >
-              is the best way to improve your skills in any given domain. The
-              key idea is to seriously focus on practicing techniques at the
-              boundary of your comfort zone. Ten minutes of deliberate practice
-              beats an hour of mindless repetitions. This training system only
+              is the best way to improve your skills in any given domain. Ten minutes of deliberate practice
+              beats an entire hour of mindless repetition. The
+              goal is to intensely focus on practicing techniques at the
+              edge of your comfort zone.  This training system only
               works if you practice deliberately.
             </p>
 
