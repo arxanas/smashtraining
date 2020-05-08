@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <v-slider
-      v-model="valueInternal"
-      @click="onChange"
-      @input="onChange"
-      ticks="always"
-      :tick-size="4"
-      :min="1"
-      :max="5"
-      :step="1"
-      :track-color="color"
-      :track-fill-color="color"
-      :color="color"
-      :label="title"
-      :messages="hint"
-    ></v-slider>
-  </div>
+  <v-slider
+    v-model="valueInternal"
+    @click="onChange"
+    @input="onChange"
+    ticks="always"
+    :tick-size="4"
+    :min="1"
+    :max="5"
+    :step="1"
+    :track-color="color"
+    :track-fill-color="color"
+    :color="color"
+    :label="title"
+    :messages="hint"
+  />
 </template>
 
 <script lang="ts">
