@@ -2,11 +2,7 @@
   <span>
     <v-tooltip top v-for="(input, i) in this.inputIcons" v-bind:key="i">
       <template v-slot:activator="{ on }">
-        <v-icon
-          :small="!input.extraSmall"
-          :x-small="input.extraSmall"
-          v-on="on"
-        >
+        <v-icon :small="input.small" v-on="on">
           {{ input.iconName }}
         </v-icon>
       </template>
@@ -22,7 +18,7 @@ import { Component, Prop } from "vue-property-decorator";
 interface InputInfo {
   iconName: string;
   description: string;
-  extraSmall?: boolean;
+  small?: boolean;
 }
 
 function inputToIconName(input: string): InputInfo {
@@ -110,7 +106,7 @@ function inputToIconName(input: string): InputInfo {
 
     case ".":
       return {
-        iconName: "mdi-circle-small",
+        iconName: "mdi-circle-medium",
         description: "Release controls",
       };
     case "-":
@@ -122,7 +118,7 @@ function inputToIconName(input: string): InputInfo {
       return {
         iconName: "mdi-plus",
         description: "Simultaneous input",
-        extraSmall: true,
+        small: true,
       };
 
     default:
