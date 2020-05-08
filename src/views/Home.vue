@@ -138,7 +138,7 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Deliberate practice</v-card-title>
+          <v-card-title>Deliberate Practice</v-card-title>
           <v-card-text>
             <p>
               <a
