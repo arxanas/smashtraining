@@ -166,18 +166,17 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Strategic vs. technical skill</v-card-title>
+          <v-card-title>Strategic vs. Technical Skill</v-card-title>
           <v-card-text>
             <p>
               <b>Smash Training</b> can teach you technical skills like spacing
-              aerial attacks, but it can't teach you strategic skills like
+              aerial attacks, because they improve with practice. <b>Smash Training</b> can't teach you strategic skills like
               deciding which moves to use in a given situation. That's because
               it's easier to automatically generate and assess technical drills.
             </p>
 
-            Nonetheless, having strong technical skills is a prerequisite for
-            being a strong player. You won't be able to execute your strategy if
-            you don't hone your technical skills first.
+            Nonetheless, having strong technical skills is necessary to
+            become a strong player. You need to hone your technical skills to to execute your strategy.
           </v-card-text>
         </v-card>
       </v-col>
