@@ -104,16 +104,16 @@
 
             <ol>
               <li>
-                <b>Smash Training</b> gives you a set of drills to do based on
-                your current weak points.
+                <b>Smash Training</b> provides a set of drills to do based on
+                your current skill level.
               </li>
               <li>
-                You do the drills and record how well you did.
+                You complete drills and record how well you did.
                 <b>Smash Training</b> uses a spaced-repetition algorithm to
-                update its model of which exercises you should work on.
+                updates its model of exercises you should improve.
               </li>
               <li>
-                You rest for a day or two, then come back for more practice.
+                You rest for a day or two, then return for more training.
               </li>
             </ol>
 
