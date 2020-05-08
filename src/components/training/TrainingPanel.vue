@@ -15,7 +15,7 @@
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content eager class="pb-0">
-      <v-row v-for="i in setResults.length" :key="i" class="pa-0">
+      <v-row v-for="i in setResults.length" :key="i" class="py-2">
         <v-col class="py-0">
           <TrainingPerformanceSelector
             :title="`Set ${i}`"
