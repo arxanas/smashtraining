@@ -35,8 +35,9 @@
           </v-card-text>
           <v-divider />
           <v-banner icon="mdi-information" class="banner-text">
-            Tap or hover on an input icon like <ControlInputs inputs="r" /> to
-            see its description.
+            In the text above, tap or hover on an icon like
+            <ControlInputs inputs="x" />
+            to see its meaning.
           </v-banner>
         </v-card>
       </v-col>
