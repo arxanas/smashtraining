@@ -55,7 +55,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <v-banner icon="mdi-information">
-      Want to track your improvement? Try the
+      To track improvement use the 
       <a @click="openGspTracker">GSP Tracker</a>
       in the sidebar.
     </v-banner>
