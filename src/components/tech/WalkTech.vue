@@ -2,15 +2,16 @@
   <BaseTechDescription>
     <template v-slot:description>
       <p>
-        Walking is one of two primary forms of ground-based movement (the other
-        being <TechLink tech-id="dash">dashing</TechLink>). It's a slower form
-        of movement than dashing. Although it isn't the most common form of
-        movement, walking can be useful to space yourself precisely.
+        Walking is one of two primary forms of ground-based movement. It's a
+        slower form of movement than
+        <TechLink tech-id="dash">dashing</TechLink>. Although it isn't the most
+        common form of movement, walking can be useful to space yourself
+        precisely.
       </p>
 
       <p>
-        There are three different intensities of walking, depending on how hard
-        you tilt the control stick.
+        The three intensities of walking speeds depend on how hard you tilt the
+        control stick.
       </p>
     </template>
     <template v-slot:inputs>
