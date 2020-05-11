@@ -17,7 +17,7 @@
           <ul>
             <li>Complete about 20 seconds worth of reps for each set.</li>
             <li>
-               Tap "Record" when you've filled out (all or each) sets of an exercise.
+               Tap "Record" when you've filled out all sets of an exercise.
             </li>
             <li>
               Take a short break or start a different exercise between sets.
@@ -55,7 +55,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <v-banner icon="mdi-information">
-      To track improvement use the 
+      To track improvement use the
       <a @click="openGspTracker">GSP Tracker</a>
       in the sidebar.
     </v-banner>
