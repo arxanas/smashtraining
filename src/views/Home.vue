@@ -166,7 +166,7 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Strategic vs. Technical Skill</v-card-title>
+          <v-card-title>Strategic vs. technical skill</v-card-title>
           <v-card-text>
             <p>
               <b>Smash Training</b> can teach you technical skills like spacing
