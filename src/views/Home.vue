@@ -145,11 +145,11 @@
                 href="https://en.wikipedia.org/wiki/Practice_(learning_method)#Deliberate_practice"
                 >Deliberate practice</a
               >
-              is the best way to improve your skills in any given domain. Ten minutes of deliberate practice
-              beats an entire hour of mindless repetition. The
-              goal is to intensely focus on practicing techniques at the
-              edge of your comfort zone.  This training system only
-              works if you practice deliberately.
+              is the best way to improve your skills in any given domain. Ten
+              minutes of deliberate practice beats an entire hour of mindless
+              repetition. The goal is to intensely focus on practicing
+              techniques at the edge of your comfort zone. This training system
+              only works if you practice deliberately.
             </p>
 
             I recommend
@@ -170,14 +170,15 @@
           <v-card-text>
             <p>
               <b>Smash Training</b> can teach you technical skills like spacing
-              aerial attacks, but it can't teach you strategic skills like
+              aerial attacks, because they improve with practice.
+              <b>Smash Training</b> can't teach you strategic skills like
               deciding which moves to use in a given situation. That's because
               it's easier to automatically generate and assess technical drills.
             </p>
 
-            Nonetheless, having strong technical skills is a prerequisite for
-            being a strong player. You won't be able to execute your strategy if
-            you don't hone your technical skills first.
+            Nonetheless, having strong technical skills is necessary to become a
+            strong player. You need to hone your technical skills to to execute
+            your strategy.
           </v-card-text>
         </v-card>
       </v-col>
