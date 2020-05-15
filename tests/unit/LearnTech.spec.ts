@@ -14,6 +14,15 @@ function generateVariantData(techMetadata: TechMetadata): TechVariant {
   if (techMetadata.variants.aerialType) {
     result.aerialType = "fair";
   }
+  if (techMetadata.variants.facing) {
+    result.facing = "forward";
+  }
+  if (techMetadata.variants.fall) {
+    result.fall = "normal";
+  }
+  if (techMetadata.variants.hop) {
+    result.hop = "full";
+  }
   return result;
 }
 

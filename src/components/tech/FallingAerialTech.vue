@@ -1,14 +1,25 @@
 <template>
   <BaseTechDescription>
-    <template v-slot:description
-      >TODO</template
-    >
+    <template v-slot:description>
+      A falling aerial is an aerial attack performed just before reaching the
+      ground. These attacks have low landing lag and are relatively safe
+      attacks. As such, they are integral parts of many characters' toolkits.
+    </template>
     <template v-slot:inputs>
       <p>
         <ControlInputs :inputs="controlInputs" />: Hop {{ jumpDirection }}, then
-        TODO: fast-fall?? initiate a fast-fall with
-        <ControlInputs inputs="d" />. While falling, perform the aerial attack
-        before reaching the ground.
+        initiate a
+        <TechLink
+          tech-id="fast-fall"
+          :variant="{
+            facing: variant.facing,
+            jumpDistance: variant.jumpDistance,
+            hop: variant.hop,
+          }"
+          >fast-fall</TechLink
+        >
+        with <ControlInputs inputs="d" />. While falling, perform the aerial
+        attack before reaching the ground.
       </p>
       <p>
         The exact timing of the aerial attack depends on your character, as some
@@ -68,7 +79,18 @@
         </li>
       </ul>
     </template>
-    <template v-slot:hints> </template>
+    <template v-slot:video>
+      <TechVideo video-id="DrBWKkO9OeU" start-time="4:31">
+        From IzAw's
+        <i
+          ><a
+            href="https://www.youtube.com/playlist?list=PL4SzCzeORbSRRI72fLpdCCDI-SZIwqFyJ"
+            >Art of Smash Ultimate</a
+          ></i
+        >
+        series.
+      </TechVideo>
+    </template>
   </BaseTechDescription>
 </template>
 
