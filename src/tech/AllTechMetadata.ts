@@ -28,27 +28,21 @@ const allTechMetadata = {
     games: {
       ssbu: {},
     },
-    variants: {
-      facing: true,
-    },
+    variants: {},
   },
   "dash-attack": {
     name: "Dash attack",
     games: {
       ssbu: {},
     },
-    variants: {
-      facing: true,
-    },
+    variants: {},
   },
   "running-nair": {
     name: "Running neutral-aerial",
     games: {
       ssbu: {},
     },
-    variants: {
-      facing: true,
-    },
+    variants: {},
   },
   "b-reverse": {
     name: "B-reverse",
@@ -201,8 +195,13 @@ export function getTechDependencies<T extends TechId>(
 
     case "running-jab":
     case "dash-attack":
-    case "running-nair":
       return [dep("dash", {})];
+
+    case "running-nair":
+      return [
+        dep("dash", {}),
+        dep("short-hop", { facing: "forward", jumpDistance: "0.0" }),
+      ];
 
     case "running-tilt":
       return [dep("dash", {})];
@@ -260,6 +259,7 @@ export function getTechDependencies<T extends TechId>(
                 dep("short-hop", { facing, jumpDistance: "1.0" }),
                 dep("short-hop", { facing, jumpDistance: "1.5" }),
                 dep("short-hop", { facing, jumpDistance: "2.0" }),
+                dep("short-hop", { facing, jumpDistance: "2.5" }),
                 dep("short-hop", { facing, jumpDistance: "max" }),
               ];
             case "full":
@@ -269,6 +269,7 @@ export function getTechDependencies<T extends TechId>(
                 dep("full-hop", { facing, jumpDistance: "1.0" }),
                 dep("full-hop", { facing, jumpDistance: "1.5" }),
                 dep("full-hop", { facing, jumpDistance: "2.0" }),
+                dep("full-hop", { facing, jumpDistance: "2.5" }),
                 dep("full-hop", { facing, jumpDistance: "max" }),
               ];
             default:

@@ -38,15 +38,17 @@
       </ol>
     </template>
     <template v-slot:common-mistakes>
-      <li>
-        <b>Character short-hops instead of full-hopping</b>: You have not held
-        the jump button for long enough.
-      </li>
-      <li>
-        <b>Character turns around when hopping back to original position</b>:
-        You pressed <ControlInputs inputs="l" /> just before you jumped. Try
-        pressing it slightly after you do the jump input.
-      </li>
+      <ul>
+        <li>
+          <b>Character short-hops instead of full-hopping</b>: You have not held
+          the jump button for long enough.
+        </li>
+        <li>
+          <b>Character turns around when hopping back to original position</b>:
+          You pressed <ControlInputs inputs="l" /> just before you jumped. Try
+          pressing it slightly after you do the jump input.
+        </li>
+      </ul>
     </template>
     <template v-slot:video>
       <TechVideo video-id="ta3L35wsE6o" start-time="1:43">

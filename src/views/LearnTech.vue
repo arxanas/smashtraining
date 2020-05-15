@@ -44,7 +44,7 @@ import Component from "vue-class-component";
 export default class extends Vue {
   public data() {
     const { techId } = this.$route.params;
-    const { jumpDistance, aerialType } = this.$route.query;
+    const { jumpDistance, aerialType, facing, fall, hop } = this.$route.query;
 
     const techData = getTechMetadata(techId);
     if (techData === null) {
@@ -64,6 +64,21 @@ export default class extends Vue {
           component: null,
           badVariantName: "aerialType",
         };
+      } else if (!verifyVariantValue(techMetadata, "facing", facing)) {
+        return {
+          component: null,
+          badVariantName: "facing",
+        };
+      } else if (!verifyVariantValue(techMetadata, "fall", fall)) {
+        return {
+          component: null,
+          badVariantName: "fall",
+        };
+      } else if (!verifyVariantValue(techMetadata, "hop", hop)) {
+        return {
+          component: null,
+          badVariantName: "hop",
+        };
       } else {
         return {
           component: allTechDataDescriptions[techData.techId],
@@ -72,6 +87,9 @@ export default class extends Vue {
           variant: {
             jumpDistance,
             aerialType,
+            facing,
+            fall,
+            hop,
           },
         };
       }
