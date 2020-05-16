@@ -495,6 +495,12 @@ const allCharacterMetadataInternal = {
       displayName: "Terry",
       title: "The Legendary Wolf",
     },
+    byleth: {
+      idNumber: 75,
+      isEchoFighter: false,
+      displayName: "Byleth",
+      title: "Ashen Demon",
+    },
   },
 };
 
