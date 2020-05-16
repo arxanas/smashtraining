@@ -29,3 +29,13 @@ npm run test
 Built with [TypeScript](http://www.typescriptlang.org/), [Vue.js](https://vuejs.org/), and [Vuetify](vuetifyjs.com).
 
 Spaced repetition system from [Supermemo2.js](https://github.com/sunaiwen/supermemo2.js/).
+
+Icons are from https://www.ssbwiki.com/Category:Head_icons_(SSBU), licensed under Attribution-Share Alike 3.0 Unported.
+
+And thanks to the following contributors:
+
+* [**@anna-wasewicz**](https://github.com/anna-wasewicz) — user testing.
+* [**@daniel-wasewicz**](https://github.com/daniel-wasewicz) — user testing.
+* [**@leenak17**](https://github.com/leenak17) — copyediting, user testing.
+* [**@meintjes**](https://github.com/meintjes) — design feedback, user testing.
+* [**@richard-gebbia**](https://github.com/richard-gebbia) — added Byleth <img src="https://raw.githubusercontent.com/arxanas/smashtraining/master/public/head-icons/byleth.png" alt="Byleth icon" width="20" height="20" />.
