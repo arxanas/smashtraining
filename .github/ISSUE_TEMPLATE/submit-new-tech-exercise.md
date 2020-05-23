@@ -7,6 +7,10 @@ assignees: ''
 
 ---
 
+If this tech is specific to certain character/characters, please make a a note of that here. Otherwise, put down "all".
+
+* Applicable characters: [fill in]
+
 Fill out the below fields, and I'll write up the tech and add it to the app.
 
 ## Exercise
