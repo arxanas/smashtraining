@@ -298,5 +298,6 @@ export const ELITE_GSP_DATA: GspDataRow[] = [
   { timestamp: 1594135518854, averageGsp: 7391178, maxGsp: 7659252 },
   { timestamp: 1594164330420, averageGsp: 7387658, maxGsp: 7655604 },
   { timestamp: 1594193142074, averageGsp: 7394075, maxGsp: 7662254 },
+  { timestamp: 1594221953604, averageGsp: 7406516, maxGsp: 7675146 },
   // END DATA
 ];
