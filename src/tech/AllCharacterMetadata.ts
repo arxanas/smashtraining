@@ -4,6 +4,9 @@ export interface CharacterMetadata {
   idNumber: number;
   isEchoFighter: boolean;
   displayName: string;
+
+  // The character's title according to the boxing ring stage. See the table
+  // here: https://www.ssbwiki.com/Boxing_Ring#Character_titles
   title: string;
 }
 
@@ -500,6 +503,12 @@ const allCharacterMetadataInternal = {
       isEchoFighter: false,
       displayName: "Byleth",
       title: "Ashen Demon",
+    },
+    "min-min": {
+      idNumber: 76,
+      isEchoFighter: false,
+      displayName: "Min Min",
+      title: "The Ramen Bomber",
     },
   },
 };
