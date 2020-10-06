@@ -15,7 +15,6 @@
     "core-js": "^2.6.11",
     "mem": "^5.1.1",
     "moment": "^2.24.0",
-    "normal-distribution": "0.0.9",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.1",
