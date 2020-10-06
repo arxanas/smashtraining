@@ -1,5 +1,30 @@
 <template>
   <v-container>
+    <v-row v-if="latestReleaseInfo !== null">
+      <v-col cols="12">
+        <v-card>
+          <v-card-text>
+            <v-icon left>mdi-information</v-icon>
+            <b>Smash Training {{ latestReleaseInfo.tag_name }}</b> (&ldquo;{{
+              latestReleaseInfo.name
+            }}&rdquo;) was released <b>{{ releaseTime }}</b
+            >.
+          </v-card-text>
+          <v-divider />
+          <v-card-text>
+            {{ latestReleaseInfo.body.split("\n")[0] }}
+            <a :href="latestReleaseInfo.html_url">See more...</a>
+          </v-card-text>
+          <v-divider />
+          <v-card-text>
+            Can you contribute exercises?
+            <a :href="contactHref">Contact me</a> or visit the
+            <a :href="githubUrl">Github repo</a>.
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col cols="12">
         <v-card>
@@ -252,16 +277,57 @@
   vertical-align: text-top;
   width: 1rem;
 }
+
+.release-info-title {
+  color: #666;
+  font-weight: 700;
+  text-transform: uppercase;
+}
 </style>
 
 <script lang="ts">
 import CharacterSelector from "@/components/training/CharacterSelector.vue";
+import {
+  CONTACT_HREF,
+  REPO_GITHUB_RELEASES_API_URL,
+  REPO_GITHUB_URL,
+} from "@/constants";
+import moment, { HTML5_FMT } from "moment";
 import Vue from "vue";
 import Component from "vue-class-component";
+
+interface ReleaseInfo {
+  tag_name: string;
+  html_url: string;
+  created_at: string;
+  published_at: string;
+  name: string;
+  body: string;
+}
 
 @Component({
   name: "home",
   components: { CharacterSelector },
 })
-export default class extends Vue {}
+export default class extends Vue {
+  public contactHref = CONTACT_HREF;
+  public githubUrl = REPO_GITHUB_URL;
+  public latestReleaseInfo: ReleaseInfo | null = null;
+
+  public async created() {
+    const latestReleaseInfoRequest = await fetch(REPO_GITHUB_RELEASES_API_URL);
+    this.latestReleaseInfo = await latestReleaseInfoRequest.json();
+  }
+
+  get releaseTime(): string {
+    if (this.latestReleaseInfo === null) {
+      return "unknown release time";
+    } else {
+      return moment(
+        this.latestReleaseInfo.created_at,
+        "YYYY-MM-DDTHH:mm:ssZ",
+      ).fromNow();
+    }
+  }
+}
 </script>

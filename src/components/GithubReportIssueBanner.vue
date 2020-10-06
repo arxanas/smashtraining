@@ -15,16 +15,14 @@
 </template>
 
 <script lang="ts">
+import { REPO_GITHUB_ISSUES_URL } from "@/constants";
 import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component
 export default class extends Vue {
-  public repoGithubIssuesUrl: string =
-    "https://github.com/arxanas/smashtraining/issues/new";
-
   get issueUrl(): string {
-    const url = new URL(this.repoGithubIssuesUrl);
+    const url = new URL(REPO_GITHUB_ISSUES_URL);
     url.searchParams.set(
       "body",
       `Page: ${window.location.toString()}
