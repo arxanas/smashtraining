@@ -14,6 +14,7 @@ describe("Training.vue", () => {
   const token = flagConsoleErrors();
   beforeEach(token.beforeEach);
   afterEach(token.afterEach);
+  window.scrollTo = jest.fn();
 
   it("should close the Select Character dialog when selected", async () => {
     // https://github.com/vuetifyjs/vuetify/issues/1210#issuecomment-319624495
