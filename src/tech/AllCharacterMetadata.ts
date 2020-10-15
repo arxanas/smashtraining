@@ -510,6 +510,12 @@ const allCharacterMetadataInternal = {
       displayName: "Min Min",
       title: "The Ramen Bomber",
     },
+    steve: {
+      idNumber: 77,
+      isEchoFighter: false,
+      displayName: "Steve",
+      title: "World Crafter",
+    },
   },
 };
 
