@@ -516,6 +516,12 @@ const allCharacterMetadataInternal = {
       displayName: "Steve",
       title: "World Crafter",
     },
+    sephiroth: {
+      idNumber: 78,
+      isEchoFighter: false,
+      displayName: "Sephiroth",
+      title: "One-Winged Angel",
+    },
   },
 };
 
