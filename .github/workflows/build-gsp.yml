@@ -1,0 +1,19 @@
+# See https://simonwillison.net/2020/Oct/9/git-scraping/
+name: "Build GSP"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run once a day (arbitrary time chosen).
+    - cron: "10 9 * * *"
+
+jobs:
+  build-gsp:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: c-hive/gha-npm-cache@v1
+    - name: Install dependencies
+      run: npm install
+    - name: Build GSP
+      run: ./bin/update-gsp.sh
