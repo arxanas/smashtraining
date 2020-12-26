@@ -13,12 +13,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-	# Since we sometimes run `git push -f` to amend the most recent commit,
-	# we need to be sure that we have the entire repository history when
-	# doing so. If not, then we accidentally overwrite the entire
-	# repository history with a single commit. Setting `fetch-depth: 0`
-	# causes `actions/checkout@v2` to fetch the entire history, instead of
-	# just the most recent commit.
+        # Since we sometimes run `git push -f` to amend the most recent commit,
+        # we need to be sure that we have the entire repository history when
+        # doing so. If not, then we accidentally overwrite the entire
+        # repository history with a single commit. Setting `fetch-depth: 0`
+        # causes `actions/checkout@v2` to fetch the entire history, instead of
+        # just the most recent commit.
         fetch-depth: 0
     - uses: c-hive/gha-npm-cache@v1
     - name: Install dependencies
