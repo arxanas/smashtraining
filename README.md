@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/arxanas/smashtraining.svg?style=svg&circle-token=62070292aa6ff07692322252af7850f79a6701e6)](https://circleci.com/gh/arxanas/smashtraining) [![Netlify Status](https://api.netlify.com/api/v1/badges/4b4a40dd-6b9d-412e-b997-9c13496cf34c/deploy-status)](https://app.netlify.com/sites/smashtraining/deploys)
+[![CI](https://github.com/arxanas/smashtraining/workflows/CI/badge.svg)](https://github.com/arxanas/smashtraining/actions?query=workflow%3ACI) [![Netlify Status](https://api.netlify.com/api/v1/badges/4b4a40dd-6b9d-412e-b997-9c13496cf34c/deploy-status)](https://app.netlify.com/sites/smashtraining/deploys)
 
 # Smash Training
 
@@ -34,8 +34,8 @@ Icons are from https://www.ssbwiki.com/Category:Head_icons_(SSBU), licensed unde
 
 And thanks to the following contributors:
 
-* [**@anna-wasewicz**](https://github.com/anna-wasewicz) — user testing.
-* [**@daniel-wasewicz**](https://github.com/daniel-wasewicz) — user testing.
-* [**@leenak17**](https://github.com/leenak17) — copyediting, user testing.
-* [**@meintjes**](https://github.com/meintjes) — design feedback, user testing.
-* [**@richard-gebbia**](https://github.com/richard-gebbia) — added Byleth <img src="https://raw.githubusercontent.com/arxanas/smashtraining/master/public/head-icons/byleth.png" alt="Byleth icon" width="20" height="20" />.
+- [**@anna-wasewicz**](https://github.com/anna-wasewicz) — user testing.
+- [**@daniel-wasewicz**](https://github.com/daniel-wasewicz) — user testing.
+- [**@leenak17**](https://github.com/leenak17) — copyediting, user testing.
+- [**@meintjes**](https://github.com/meintjes) — design feedback, user testing.
+- [**@richard-gebbia**](https://github.com/richard-gebbia) — added Byleth <img src="https://raw.githubusercontent.com/arxanas/smashtraining/master/public/head-icons/byleth.png" alt="Byleth icon" width="20" height="20" />.
