@@ -572,5 +572,13 @@ export const ELITE_GSP_DATA: GspDataRow[] = [
   { timestamp: 1609014601910, averageGsp: 7985081, maxGsp: 8703738 },
   { timestamp: 1609061741242, averageGsp: 8003186, maxGsp: 8723473 },
   { timestamp: 1609148234526, averageGsp: 8008119, maxGsp: 8728850 },
+  { timestamp: 1609234704071, averageGsp: 8031084, maxGsp: 8753882 },
+  { timestamp: 1609321112004, averageGsp: 8049042, maxGsp: 8773456 },
+  { timestamp: 1609407712054, averageGsp: 8057604, maxGsp: 8782788 },
+  { timestamp: 1609494054479, averageGsp: 8069588, maxGsp: 8795851 },
+  { timestamp: 1609580347561, averageGsp: 8081044, maxGsp: 8808338 },
+  { timestamp: 1609666839780, averageGsp: 8099754, maxGsp: 8828732 },
+  { timestamp: 1609753411148, averageGsp: 8106365, maxGsp: 8835938 },
+  { timestamp: 1609839857521, averageGsp: 8115014, maxGsp: 8845365 },
   // END DATA
 ];
