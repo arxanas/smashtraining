@@ -522,6 +522,18 @@ const allCharacterMetadataInternal = {
       displayName: "Sephiroth",
       title: "One-Winged Angel",
     },
+    pyra: {
+      idNumber: 79,
+      isEchoFighter: false,
+      displayName: "Pyra",
+      title: "The Aegis",
+    },
+    mythra: {
+      idNumber: 80,
+      isEchoFighter: false,
+      displayName: "Mythra",
+      title: "The Aegis",
+    },
   },
 };
 
