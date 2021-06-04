@@ -1,25 +1,20 @@
 <template>
   <v-container>
-    <v-row v-if="latestReleaseInfo !== null">
+    <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-text>
+          <v-card-text v-if="latestReleaseInfo !== null">
             <v-icon left>mdi-information</v-icon>
             <b>Smash Training {{ latestReleaseInfo.tag_name }}</b> (&ldquo;{{
               latestReleaseInfo.name
             }}&rdquo;) was released <b>{{ releaseTime }}</b
             >.
+            <a :href="latestReleaseInfo.html_url">See details...</a>
           </v-card-text>
           <v-divider />
           <v-card-text>
-            {{ latestReleaseInfo.body.split("\n")[0] }}
-            <a :href="latestReleaseInfo.html_url">See more...</a>
-          </v-card-text>
-          <v-divider />
-          <v-card-text>
-            Can you contribute exercises?
-            <a :href="contactHref">Contact me</a> or visit the
-            <a :href="githubUrl">Github repo</a>.
+            <v-icon left>mdi-patreon</v-icon>
+            <a :href="patreonUrl">Support Smash Training on Patreon!</a>
           </v-card-text>
         </v-card>
       </v-col>
@@ -289,10 +284,11 @@
 import CharacterSelector from "@/components/training/CharacterSelector.vue";
 import {
   CONTACT_HREF,
+  PATREON_URL,
   REPO_GITHUB_RELEASES_API_URL,
   REPO_GITHUB_URL,
 } from "@/constants";
-import moment, { HTML5_FMT } from "moment";
+import moment from "moment";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -313,6 +309,7 @@ export default class extends Vue {
   public contactHref = CONTACT_HREF;
   public githubUrl = REPO_GITHUB_URL;
   public latestReleaseInfo: ReleaseInfo | null = null;
+  public patreonUrl = PATREON_URL;
 
   public async created() {
     const latestReleaseInfoRequest = await fetch(REPO_GITHUB_RELEASES_API_URL);
