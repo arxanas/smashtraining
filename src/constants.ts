@@ -8,4 +8,4 @@ export const REPO_GITHUB_RELEASES_API_URL =
 
 export const CONTACT_HREF = "mailto:me@waleedkhan.name";
 
-export const PATREON_URL = "https://www.patreon.com/bePatron?u=3276976";
+export const PATREON_URL = "https://www.patreon.com/arxanas";
