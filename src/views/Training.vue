@@ -12,7 +12,7 @@
     </div>
     <div v-else>
       <h1 class="headline mt-4 mb-2">Exercises</h1>
-      <v-expansion-panels multiple :value="shownExpansionPanels">
+      <v-expansion-panels multiple v-model="shownExpansionPanels">
         <TrainingPanel
           v-for="(panel, i) in panels.panelData"
           :key="i"
