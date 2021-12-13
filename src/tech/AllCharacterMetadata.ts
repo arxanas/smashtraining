@@ -534,6 +534,18 @@ const allCharacterMetadataInternal = {
       displayName: "Mythra",
       title: "The Aegis",
     },
+    kazuya: {
+      idNumber: 81,
+      isEchoFighter: false,
+      displayName: "Kazuya",
+      title: "The Iron Fist of Darkness",
+    },
+    sora: {
+      idNumber: 82,
+      isEchoFighter: false,
+      displayName: "Sora",
+      title: "Chosen by the Keyblade",
+    },
   },
 };
 
