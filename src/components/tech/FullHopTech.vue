@@ -4,7 +4,7 @@
       <p>
         Full-hopping is one of two levels of jumping (the other being
         <TechLink tech-id="short-hop" :variant="variant">short-hopping</TechLink
-        >). Full-hopping is a taller jump than full-hopping, about twice the
+        >). Full-hopping is a taller jump than short-hopping, about twice the
         height.
       </p>
       <p>
