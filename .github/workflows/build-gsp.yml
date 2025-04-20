@@ -20,7 +20,6 @@ jobs:
         # causes `actions/checkout@v2` to fetch the entire history, instead of
         # just the most recent commit.
         fetch-depth: 0
-    - uses: c-hive/gha-npm-cache@v1
     - name: Install dependencies
       run: npm install
     - name: Build GSP
