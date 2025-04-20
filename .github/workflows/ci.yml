@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-      - uses: c-hive/gha-npm-cache@v1
       - name: Install dependencies
         run: npm install
       - name: Run tests
